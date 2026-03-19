@@ -815,7 +815,7 @@
             z-index: 1;
         }
 
-        .tc-
+        .tc-header { text-align: center; margin-bottom: 2.5rem; }
         .tc-badge {
             display: inline-block;
             padding: 0.35rem 1rem;
