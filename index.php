@@ -1970,6 +1970,9 @@
             }
             .books-horizontal .book-details p {
                 font-size: 0.78rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .celeb-btn {
