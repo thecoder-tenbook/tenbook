@@ -2281,8 +2281,6 @@
                     <div class="celebrity-quote">"Читайте 500 сторінок щодня. Так працює знання."</div>
                 </div>
                 <div class="celeb-books">
-                </div>
-                <div>
                     <div class="books-horizontal">
                         <div class="book-item-h">
                             <div class="book-cover-h" style="background: #F5F2E4;">
