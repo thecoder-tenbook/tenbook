@@ -15,6 +15,28 @@
   "tags": ["Історія", "Антропологія", "Еволюція", "Цивілізація", "Філософія", "Суспільство"],
   "rating": 4.7,
 
+  "display": {
+    "badge": "Топ",
+    "badge_color": "#0ea5e9",
+    "category_labels": ["Історія", "Наука", "Антропологія"],
+    "breadcrumb_category": "Історія",
+    "hero_desc": "Юваль Ной Харарі розповідає всю історію людства — від перших Homo sapiens до сучасного суспільства — і ставить незручні питання про наше майбутнє.",
+    "leaders": [
+      {"twitter": "billgates", "name": "Білл Гейтс"},
+      {"twitter": "MarkZuckerberg", "name": "Марк Цукерберг"}
+    ],
+    "leaders_text": "Білл Гейтс, Марк Цукерберг та інші",
+    "related_books": [
+      {"id": "principles", "title": "Принципи", "author": "Рей Даліо", "cover": "covers_ua/Principles.svg", "cover_bg": "#EDEEE9", "rating": "4.7", "href": "book_page_principles"},
+      {"id": "zero-to-one", "title": "Від Нуля до Одиниці", "author": "Пітер Тіль", "cover": "covers_ua/Zero to One.svg", "cover_bg": "#E4EBF5", "rating": "4.8", "href": "book_page_zero_to_one"},
+      {"id": "atomic-habits", "title": "Атомні Звички", "author": "Джеймс Клір", "cover": "covers_ua/Atomic Habits.svg", "cover_bg": "#EBF8EF", "rating": "4.9", "href": "book_page_atomic_habits"}
+    ],
+    "author_subtitle": "Історик, професор Єврейського університету в Єрусалимі",
+    "author_card_title": "Профессор Єврейського університету · @yuval_noah_harari",
+    "reviews_count": 38,
+    "reviews_rating": "4.9"
+  },
+
   "seo": {
     "page_title": "Сапієнс — короткий зміст і ключові ідеї | TENBOOK",
     "meta_description": "Короткий зміст «Сапієнса» Юваля Ноя Харарі: 8 ключових ідей за 20 хвилин. 70 000 років людської історії — від першого вогню до штучного інтелекту.",

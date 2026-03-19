@@ -15,6 +15,28 @@
   "rating": 4.9,
   "reviews_count": 47,
 
+  "display": {
+    "badge": "Топ",
+    "badge_color": "#0ea5e9",
+    "category_labels": ["Саморозвиток", "Психологія", "Продуктивність"],
+    "breadcrumb_category": "Саморозвиток",
+    "hero_desc": "Джеймс Клір розкрив механіку звичок і показав, як маленькі зміни на 1% щодня перетворюються на дивовижні результати через роки.",
+    "leaders": [
+      {"twitter": "elonmusk", "name": "Ілон Маск"},
+      {"twitter": "billgates", "name": "Білл Гейтс"}
+    ],
+    "leaders_text": "Ілон Маск, Білл Гейтс та інші",
+    "related_books": [
+      {"id": "7habits", "title": "7 Навичок", "author": "Стівен Кові", "cover": "covers_ua/The 7 Habits.svg", "cover_bg": "#EEF4F8", "rating": "4.6", "href": "book_page_7habits"},
+      {"id": "principles", "title": "Принципи", "author": "Рей Даліо", "cover": "covers_ua/Principles.svg", "cover_bg": "#EDEEE9", "rating": "4.7", "href": "book_page_principles"},
+      {"id": "zero-to-one", "title": "Від Нуля до Одиниці", "author": "Пітер Тіль", "cover": "covers_ua/Zero to One.svg", "cover_bg": "#E4EBF5", "rating": "4.8", "href": "book_page_zero_to_one"}
+    ],
+    "author_subtitle": "Автор, дослідник звичок і поведінки",
+    "author_card_title": "Автор «Атомних Звичок» · @JamesClear",
+    "reviews_count": 47,
+    "reviews_rating": "4.9"
+  },
+
   "seo": {
     "page_title": "Атомні Звички — короткий зміст і ключові ідеї | TENBOOK",
     "meta_description": "Короткий зміст «Атомних Звичок» Джеймса Кліра: 8 ключових ідей за 15 хвилин. Чотири закони зміни поведінки, правило 1% та система формування звичок.",

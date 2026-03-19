@@ -14,6 +14,28 @@
   "tags": ["Стартапи", "Інновації", "Підприємництво", "Монополія", "Технології", "Майбутнє"],
   "rating": 4.8,
 
+  "display": {
+    "badge": "Бестселер",
+    "badge_color": "#f59e0b",
+    "category_labels": ["Бізнес", "Стартапи", "Інновації"],
+    "breadcrumb_category": "Бізнес",
+    "hero_desc": "Засновник PayPal і перший інвестор Facebook розповідає, як будувати компанії, що справді змінюють світ. Не копіювати — а створювати.",
+    "leaders": [
+      {"twitter": "elonmusk", "name": "Ілон Маск"},
+      {"twitter": "billgates", "name": "Білл Гейтс"}
+    ],
+    "leaders_text": "Ілон Маск, Білл Гейтс та інші",
+    "related_books": [
+      {"id": "principles", "title": "Принципи", "author": "Рей Даліо", "cover": "covers_ua/Principles.svg", "cover_bg": "#EDEEE9", "rating": "4.7", "href": "book_page_principles"},
+      {"id": "atomic-habits", "title": "Атомні Звички", "author": "Джеймс Клір", "cover": "covers_ua/Atomic Habits.svg", "cover_bg": "#EBF8EF", "rating": "4.9", "href": "book_page_atomic_habits"},
+      {"id": "sapiens", "title": "Сапієнс", "author": "Юваль Ной Харарі", "cover": "covers_ua/Sapiens.svg", "cover_bg": "#F6F1E8", "rating": "4.7", "href": "book_page_sapiens"}
+    ],
+    "author_subtitle": "Підприємець, інвестор, засновник PayPal",
+    "author_card_title": "Засновник PayPal · Palantir · Founders Fund",
+    "reviews_count": 47,
+    "reviews_rating": "4.8"
+  },
+
   "seo": {
     "page_title": "Від Нуля до Одиниці — короткий зміст і ключові ідеї | TENBOOK",
     "meta_description": "Короткий зміст «Від Нуля до Одиниці» Пітера Тіля: 8 ключових ідей за 15 хвилин. Чому монополія краща за конкуренцію і як будувати компанії, що змінюють світ.",
