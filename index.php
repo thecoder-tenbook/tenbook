@@ -1916,7 +1916,18 @@
             }
 
             .books-horizontal {
-                grid-template-columns: repeat(2, 1fr);
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding-bottom: 0.5rem;
+                scrollbar-width: none;
+            }
+            .books-horizontal::-webkit-scrollbar { display: none; }
+            .books-horizontal .book-item-h {
+                flex: 0 0 140px;
+                scroll-snap-align: start;
             }
 
             .view-all-btn {
@@ -1958,10 +1969,6 @@
             .celebrities {
                 padding: 4rem 1rem;
                 overflow-x: hidden;
-            }
-
-            .books-horizontal {
-                grid-template-columns: repeat(2, 1fr);
             }
 
 
