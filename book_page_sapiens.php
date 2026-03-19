@@ -1418,11 +1418,8 @@
             </div>
             <div class="author-card">
                 <div class="author-header">
-                    <div class="author-avatar">ЮХ</div>
-                    <div>
-                        <div class="author-name">Юваль Ной Харарі</div>
+                    <div class="author-name">Юваль Ной Харарі</div>
                         <div class="author-title">ynharari.com · @ylnharari</div>
-                    </div>
                 </div>
                 <div class="author-bio">Ізраїльський історик, автор тріади про людство: «Сапієнс», «Homo Deus» і «21 урок для 21 століття». Досліджує перетин історії, біології, технологій і філософії. Виступає на World Economic Forum у Давосі.</div>
             </div>

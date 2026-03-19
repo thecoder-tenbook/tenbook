@@ -1248,11 +1248,8 @@
             </div>
             <div class="author-card">
                 <div class="author-header">
-                    <div class="author-avatar">РД</div>
-                    <div>
-                        <div class="author-name">Рей Даліо</div>
+                    <div class="author-name">Рей Даліо</div>
                         <div class="author-title">Засновник Bridgewater Associates · @RayDalio</div>
-                    </div>
                 </div>
                 <div class="author-bio">Американський інвестор і підприємець. Засновник Bridgewater Associates — найбільшого у світі хедж-фонду з активами понад $160 млрд. Один із 100 найвпливовіших людей світу за версією Time. Автор «Принципів» і YouTube-відео «Як працює економічна машина».</div>
             </div>

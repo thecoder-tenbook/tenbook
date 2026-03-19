@@ -1402,11 +1402,8 @@
             </div>
             <div class="author-card">
                 <div class="author-header">
-                    <div class="author-avatar">ДК</div>
-                    <div>
-                        <div class="author-name">Джеймс Клір</div>
+                    <div class="author-name">Джеймс Клір</div>
                         <div class="author-title">jamesclear.com · @JamesClear</div>
-                    </div>
                 </div>
                 <div class="author-bio">Автор «Атомних Звичок» та творець системи 1% покращень. Вивчає перетин звичок, прийняття рішень та людського потенціалу.</div>
             </div>

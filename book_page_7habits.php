@@ -468,11 +468,8 @@
             <h2 class="section-heading">Stephen R. Covey</h2>
             <div class="author-card">
                 <div class="author-header">
-                    <div class="author-avatar">SC</div>
-                    <div>
-                        <div class="author-name">Stephen R. Covey</div>
+                    <div class="author-name">Stephen R. Covey</div>
                         <div class="author-title">1932–2012 · Педагог, автор, бізнес-консультант</div>
-                    </div>
                 </div>
                 <div class="author-bio">
                     <p>Стівен Кові — американський педагог, автор і бізнес-консультант, доктор Гарвардського університету. Понад 25 років викладав в університеті Бригама Янга, де очолював Центр лідерства.</p>

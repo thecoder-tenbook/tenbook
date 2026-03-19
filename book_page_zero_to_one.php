@@ -490,11 +490,8 @@
 
             <div class="author-card">
                 <div class="author-header">
-                    <div class="author-avatar">ПТ</div>
-                    <div>
-                        <div class="author-name">Пітер Тіль</div>
+                    <div class="author-name">Пітер Тіль</div>
                         <div class="author-title">Підприємець, інвестор, засновник PayPal</div>
-                    </div>
                 </div>
                 <div class="author-bio">
                     <p>Пітер Тіль народився в 1967 році в Франкфурті-на-Майні, Німеччина, виріс у США. Закінчив Стенфордський університет із відзнакою з філософії, потім — юридичну школу Стенфорду. Свій перший бізнес — юридичну компанію — закинув заради Кремнієвої долини.</p>
