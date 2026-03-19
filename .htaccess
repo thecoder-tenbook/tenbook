@@ -1,9 +1,14 @@
 Options -Indexes
-DirectoryIndex index.html
+DirectoryIndex index.php index.html
 
 RewriteEngine On
 
-# Serve clean URLs without .html
+# Serve clean URLs without extension (.php first, then .html)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
