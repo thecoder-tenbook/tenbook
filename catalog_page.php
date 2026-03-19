@@ -39,10 +39,10 @@
         .catalog-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 8rem 2rem 4rem;
+            padding: 6rem 2rem 4rem;
         }
 
-        .catalog-
+        .catalog-header { margin-bottom: 1.5rem; }
 
         .catalog-header h1 {
             font-size: 3rem;
@@ -58,7 +58,7 @@
         .catalog-controls {
             display: flex;
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             align-items: center;
             flex-wrap: wrap;
         }
