@@ -69,6 +69,7 @@
         @media (max-width: 900px) { .hero-inner { grid-template-columns: auto 1fr; } .hero-stats { display: none; } .content-wrap { grid-template-columns: 1fr; } .sidebar { display: none; } }
         @media (max-width: 600px) { .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 2rem; } .hero-photo { margin: 0 auto; } .hero-quote { border-left: none; border-top: 4px solid #0ea5e9; padding-left: 0; padding-top: 0.8rem; } .books-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
+<?php include 'header_styles.php'; ?>
 </head>
 <body>
 <?php include 'header.php'; ?>

@@ -457,6 +457,7 @@
             }
         }
     </style>
+<?php include 'header_styles.php'; ?>
 </head>
 <body>
 <?php include 'header.php'; ?>

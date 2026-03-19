@@ -60,6 +60,7 @@
             .books-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
+<?php include 'header_styles.php'; ?>
 </head>
 <body>
 <?php include 'header.php'; ?>

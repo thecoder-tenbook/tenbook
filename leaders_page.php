@@ -174,6 +174,7 @@
             .leaders-grid { grid-template-columns: 1fr; }
         }
     </style>
+<?php include 'header_styles.php'; ?>
 </head>
 <body>
 <?php include 'header.php'; ?>

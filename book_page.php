@@ -1117,6 +1117,7 @@ function starsHtml($rating) {
             .btn-fav.active { color: #e11d48; border-color: #fecdd3; background: #fff1f2; }
         .btn-fav.active svg { fill: #e11d48; stroke: #e11d48; }
     </style>
+<?php include 'header_styles.php'; ?>
 </head>
 <body data-book-id="<?= str_replace('-', '_', $book_id) ?>">
 <?php include 'header.php'; ?>
