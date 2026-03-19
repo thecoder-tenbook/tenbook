@@ -122,7 +122,9 @@
     }
 
     function signOut() {
-        auth.signOut();
+        auth.signOut().then(function() {
+            window.location.href = 'index';
+        });
     }
 
     function renderNotLoggedIn() {
