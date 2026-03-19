@@ -63,6 +63,7 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <main id="mainContent">
         <!-- Заповнюється JS -->
     </main>
@@ -180,6 +181,5 @@
         }
     });
     </script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </body>
 </html>
