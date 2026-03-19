@@ -38,11 +38,11 @@
         .section-title { font-size: 1.2rem; font-weight: 800; color: #1e293b; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
         .section-title span { font-size: 0.8rem; font-weight: 600; color: #94a3b8; background: #f1f5f9; padding: 0.2rem 0.6rem; border-radius: 20px; }
 
-        .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+        .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
         .book-card { background: white; border-radius: 20px; border: 1px solid #f1f5f9; overflow: hidden; transition: all 0.25s; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .book-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
-        .book-cover { height: 200px; position: relative; overflow: hidden; cursor: pointer; }
-        .book-info { padding: 1.1rem 1.2rem; }
+        .book-cover { width: 100%; aspect-ratio: 2/3; position: relative; overflow: hidden; cursor: pointer; }
+        .book-info { padding: 1rem 1.1rem 1.1rem; }
         .book-title { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 0.25rem; }
         .book-author { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.9rem; }
         .book-actions { display: flex; gap: 0.5rem; }
