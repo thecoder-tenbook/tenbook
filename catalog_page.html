@@ -600,7 +600,7 @@
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo">TENBOOK</a>
+            <a href="/" class="logo">TENBOOK</a>
             <div class="nav-menu">
                 <div class="nav-item">
                     <span class="nav-link">Категорії ▾</span>
@@ -615,7 +615,7 @@
                         <a href="#" onclick="selectCategory('history');return false;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Історія</a>
                     </div>
                 </div>
-                <a href="leaders_page.html" class="nav-link">Лідери</a>
+                <a href="leaders_page" class="nav-link">Лідери</a>
                 <a href="#features" class="nav-link">Можливості</a>
                 <a href="#pricing" class="nav-link">Ціни</a>
                 <div class="lang-selector">
@@ -851,7 +851,7 @@
             document.getElementById('resultsCount').textContent = filteredBooks.length;
 
             grid.innerHTML = filteredBooks.map(book => `
-                <div class="book-card" ${book.title === 'Атомні Звички' ? "onclick=\"window.location='book_page_atomic_habits.html'\"" : book.title === '7 Звичок' ? "onclick=\"window.location='book_page_7habits.html'\"" : book.title === 'Від Нуля до Одиниці' ? "onclick=\"window.location='book_page_zero_to_one.html'\"" : book.title === 'Сапієнс' ? "onclick=\"window.location='book_page_sapiens.html'\"" : book.title === 'Принципи' ? "onclick=\"window.location='book_page_principles.html'\"" : ''} style="${book.title === 'Атомні Звички' || book.title === '7 Звичок' || book.title === 'Від Нуля до Одиниці' || book.title === 'Сапієнс' || book.title === 'Принципи' ? 'cursor:pointer;' : ''}">
+                <div class="book-card" ${book.title === 'Атомні Звички' ? "onclick=\"window.location='book_page_atomic_habits'\"" : book.title === '7 Звичок' ? "onclick=\"window.location='book_page_7habits'\"" : book.title === 'Від Нуля до Одиниці' ? "onclick=\"window.location='book_page_zero_to_one'\"" : book.title === 'Сапієнс' ? "onclick=\"window.location='book_page_sapiens'\"" : book.title === 'Принципи' ? "onclick=\"window.location='book_page_principles'\"" : ''} style="${book.title === 'Атомні Звички' || book.title === '7 Звичок' || book.title === 'Від Нуля до Одиниці' || book.title === 'Сапієнс' || book.title === 'Принципи' ? 'cursor:pointer;' : ''}">
                     <div class="book-cover" style="background: ${book.title === 'Сапієнс' ? '#F6F1E8' : book.title === 'Принципи' ? '#EDEEE9' : book.title === 'Від Нуля до Одиниці' ? '#E4EBF5' : book.title === 'Атомні Звички' ? '#EBF8EF' : book.gradient};">
                         ${bookCovers[book.title] || ''}
                         <button class="book-fav-btn ${favorites.has(book.title) ? 'active' : ''}" onclick="toggleFavorite('${book.title.replace(/'/g, "\\'")}', this, event)" title="Додати в обрані">
