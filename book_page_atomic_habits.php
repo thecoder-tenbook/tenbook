@@ -1143,7 +1143,7 @@
             border-radius: 14px;
             padding: 1.2rem 1.4rem;
         }
-        .review-card-
+        .review-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
         .review-userpic {
             width: 36px;
             height: 36px;
