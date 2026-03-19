@@ -611,8 +611,7 @@
             margin-top: 2rem;
         }
 
-        .author-
-
+        .author-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
         .author-avatar {
             width: 60px;
             height: 60px;

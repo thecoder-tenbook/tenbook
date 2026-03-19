@@ -166,7 +166,7 @@
 
         /* AUTHOR CARD */
         .author-card { background: white; border-radius: 16px; padding: 1.8rem; border: 1px solid #f1f5f9; margin-top: 2rem; }
-        .author-
+        .author-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
         .author-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #1a237e 0%, #0ea5e9 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; }
         .author-name { font-size: 1rem; font-weight: 700; color: #0f172a; }
         .author-title { font-size: 0.8rem; color: #94a3b8; margin-top: 0.15rem; }
