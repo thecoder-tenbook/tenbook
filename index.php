@@ -430,8 +430,14 @@
             padding: 2.5rem;
             margin-bottom: 2rem;
             display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 3rem;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: auto auto 1fr;
+            grid-template-areas:
+                "celeb-profile celeb-books"
+                "celeb-quote   celeb-books"
+                "celeb-btn     celeb-books";
+            column-gap: 3rem;
+            row-gap: 1.5rem;
             align-items: start;
             transition: all 0.3s;
         }
@@ -441,12 +447,17 @@
             transform: translateY(-5px);
         }
 
-        .celebrity-profile {
+        .celeb-profile {
+            grid-area: celeb-profile;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
+
+        .celeb-quote-wrap { grid-area: celeb-quote; }
+        .celeb-books { grid-area: celeb-books; }
+        .celeb-btn { grid-area: celeb-btn; }
 
         .celebrity-photo {
             width: 160px;
@@ -467,7 +478,7 @@
 
         .celebrity-info p {
             color: #64748b;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
         }
 
         .celebrity-quote {
@@ -477,7 +488,6 @@
             padding: 1rem;
             background: #f8fafc;
             border-radius: 8px;
-            margin-top: 1rem;
         }
 
         .books-horizontal {
@@ -1908,18 +1918,17 @@
 
             .celebrity-showcase {
                 grid-template-columns: 1fr;
-                text-align: center;
+                grid-template-areas:
+                    "celeb-profile"
+                    "celeb-quote"
+                    "celeb-books"
+                    "celeb-btn";
                 overflow: hidden;
+                padding: 1.5rem;
             }
 
-            .celebrity-profile {
-                align-items: center;
-            }
-
-            .celebrity-showcase > div {
-                min-width: 0;
-                overflow: hidden;
-            }
+            .celeb-profile { text-align: center; align-items: center; }
+            .celeb-books { min-width: 0; overflow: hidden; }
 
             .books-horizontal {
                 display: flex;
@@ -1936,10 +1945,11 @@
                 scroll-snap-align: start;
             }
 
-            .view-all-btn {
+            .celeb-btn {
                 width: 100%;
                 text-align: center;
                 box-sizing: border-box;
+                margin-top: 0;
             }
 
             .stats-grid {
@@ -2169,18 +2179,19 @@
             </div>
 
             <div class="celebrity-showcase">
-                <div class="celebrity-profile">
+                <div class="celeb-profile">
                     <div class="celebrity-photo" style="background: none; overflow: hidden;">
                         <img src="leaders-photos/elon-musk.jpg" alt="Ілон Маск" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: grayscale(100%);">
                     </div>
                     <div class="celebrity-info">
                         <h3>Ілон Маск</h3>
                         <p>CEO Tesla & SpaceX</p>
-                        <div class="celebrity-quote">"Читайте багато книг. Це найкращий спосіб навчання."</div>
                     </div>
-                    <a href="leaders_elon_musk" class="view-all-btn">Переглянути усі (24 книги) →</a>
                 </div>
-                <div>
+                <div class="celeb-quote-wrap">
+                    <div class="celebrity-quote">"Читайте багато книг. Це найкращий спосіб навчання."</div>
+                </div>
+                <div class="celeb-books">
                     <div class="books-horizontal">
                         <div class="book-item-h" onclick="window.location='book_page_zero_to_one'" style="cursor:pointer;">
                             <div class="book-cover-h" style="background: #E4EBF5;">
@@ -2208,21 +2219,23 @@
                         </div>
                     </div>
                 </div>
+                <a href="leaders_elon_musk" class="view-all-btn celeb-btn">Переглянути усі (24 книги) →</a>
             </div>
 
             <div class="celebrity-showcase">
-                <div class="celebrity-profile">
+                <div class="celeb-profile">
                     <div class="celebrity-photo" style="background: none; overflow: hidden;">
                         <img src="leaders-photos/bill-gates.jpg" alt="Білл Гейтс" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: grayscale(100%);">
                     </div>
                     <div class="celebrity-info">
                         <h3>Білл Гейтс</h3>
                         <p>Засновник Microsoft</p>
-                        <div class="celebrity-quote">"Читання досі є основним способом, яким я вчуся."</div>
                     </div>
-                    <a href="leaders_bill_gates" class="view-all-btn">Переглянути усі (52 книги) →</a>
                 </div>
-                <div>
+                <div class="celeb-quote-wrap">
+                    <div class="celebrity-quote">"Читання досі є основним способом, яким я вчуся."</div>
+                </div>
+                <div class="celeb-books">
                     <div class="books-horizontal">
                         <div class="book-item-h" onclick="window.location='book_page_principles'" style="cursor:pointer;">
                             <div class="book-cover-h" style="background: #1B2E50;">
@@ -2246,23 +2259,27 @@
                             <div class="book-cover-h" style="background: #EEF4F8;">
                                 <img src="covers_ua/The 7 Habits.svg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;">
                             </div>
-                            <div class="book-details"><h4><a href="book_page_7habits" style="color:inherit;text-decoration:none;">7 Звичок</a></h4><p>Стівен Кові</p></div>
+                            <div class="book-details"><h4>7 Звичок</h4><p>Стівен Кові</p></div>
                         </div>
                     </div>
                 </div>
+                <a href="leaders_bill_gates" class="view-all-btn celeb-btn">Переглянути усі (52 книги) →</a>
             </div>
 
             <div class="celebrity-showcase">
-                <div class="celebrity-profile">
+                <div class="celeb-profile">
                     <div class="celebrity-photo" style="background: none; overflow: hidden;">
                         <img src="leaders-photos/warren-buffett.jpg" alt="Уоррен Баффет" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: grayscale(100%);">
                     </div>
                     <div class="celebrity-info">
                         <h3>Уоррен Баффет</h3>
                         <p>Інвестор, CEO Berkshire</p>
-                        <div class="celebrity-quote">"Читайте 500 сторінок щодня. Так працює знання."</div>
                     </div>
-                    <a href="leaders_warren_buffett" class="view-all-btn">Переглянути усі (38 книг) →</a>
+                </div>
+                <div class="celeb-quote-wrap">
+                    <div class="celebrity-quote">"Читайте 500 сторінок щодня. Так працює знання."</div>
+                </div>
+                <div class="celeb-books">
                 </div>
                 <div>
                     <div class="books-horizontal">
@@ -2292,6 +2309,7 @@
                         </div>
                     </div>
                 </div>
+                <a href="leaders_warren_buffett" class="view-all-btn celeb-btn">Переглянути усі (38 книг) →</a>
             </div>
         </div>
     </section>
