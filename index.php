@@ -1909,10 +1909,16 @@
             .celebrity-showcase {
                 grid-template-columns: 1fr;
                 text-align: center;
+                overflow: hidden;
             }
 
             .celebrity-profile {
                 align-items: center;
+            }
+
+            .celebrity-showcase > div {
+                min-width: 0;
+                overflow: hidden;
             }
 
             .books-horizontal {
