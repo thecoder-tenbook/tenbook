@@ -1927,7 +1927,20 @@
                 padding: 1.5rem;
             }
 
-            .celeb-profile { text-align: center; align-items: center; }
+            .celeb-profile {
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
+                gap: 1rem;
+            }
+            .celeb-profile .celebrity-photo {
+                width: 64px;
+                height: 64px;
+                min-width: 64px;
+                margin-bottom: 0;
+            }
+            .celeb-profile .celebrity-info h3 { font-size: 1.1rem; }
+            .celeb-profile .celebrity-info p { font-size: 0.85rem; }
             .celeb-books { min-width: 0; overflow: hidden; }
 
             .books-horizontal {
