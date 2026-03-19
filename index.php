@@ -1941,7 +1941,8 @@
             }
             .books-horizontal::-webkit-scrollbar { display: none; }
             .books-horizontal .book-item-h {
-                flex: 0 0 140px;
+                flex: 0 0 124px;
+                box-sizing: border-box;
                 scroll-snap-align: start;
             }
 
