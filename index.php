@@ -1954,26 +1954,37 @@
             }
             .books-horizontal::-webkit-scrollbar { display: none; }
             .books-horizontal .book-item-h {
-                flex: 0 0 140px;
+                flex: 0 0 130px;
+                min-width: 130px;
+                max-width: 130px;
                 box-sizing: border-box;
                 scroll-snap-align: start;
                 display: flex;
                 flex-direction: column;
+                padding: 0.8rem;
+            }
+            .books-horizontal .book-cover-h {
+                height: 155px;
+                aspect-ratio: unset;
+                margin-bottom: 0.6rem;
             }
             .books-horizontal .book-details h4 {
+                font-size: 0.8rem;
+                font-weight: 700;
+                line-height: 1.3;
+                height: 2.1em;
+                overflow: hidden;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
-                overflow: hidden;
-                font-size: 0.85rem;
-                height: 2.6em;
-                line-height: 1.3;
+                margin-bottom: 0.25rem;
             }
             .books-horizontal .book-details p {
-                font-size: 0.78rem;
+                font-size: 0.72rem;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                color: #64748b;
             }
 
             .celeb-btn {
