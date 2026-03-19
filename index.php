@@ -2038,7 +2038,7 @@
             }
 
             .features-cta-desktop { display: none !important; }
-            .features-cta-mobile { text-align: center; margin-top: 1.5rem; }
+            .features-cta-mobile { display: block; text-align: center; margin-top: 1.5rem; }
             .features-cta-mobile .view-all-btn { font-size: 0.95rem; padding: 0.75rem 2rem; }
             .hero { padding: 6rem 1.5rem 3rem; }
             .features { padding: 1.5rem 1rem; }
