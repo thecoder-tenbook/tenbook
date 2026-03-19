@@ -1971,12 +1971,9 @@
             .books-horizontal .book-details h4 {
                 font-size: 0.8rem;
                 font-weight: 700;
-                line-height: 1.3;
-                height: 2.1em;
+                line-height: 1.4;
+                height: 2.8em;
                 overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
                 margin-bottom: 0.25rem;
             }
             .books-horizontal .book-details p {
