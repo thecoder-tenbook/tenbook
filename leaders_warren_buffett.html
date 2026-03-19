@@ -357,5 +357,28 @@
     </div>
 </div>
 
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script>
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+            apiKey: "AIzaSyBITou6TONUHIR1IPcc2yXmUCrSiA7KoJA",
+            authDomain: "tenbook-bd3eb.firebaseapp.com",
+            projectId: "tenbook-bd3eb",
+            storageBucket: "tenbook-bd3eb.firebasestorage.app",
+            messagingSenderId: "619158652539",
+            appId: "1:619158652539:web:4619616a2fa66d1a1204de"
+        });
+    }
+    firebase.auth().onAuthStateChanged(function(user) {
+        var btn = document.querySelector('.nav-account-btn');
+        if (!btn) return;
+        btn.onclick = function() { window.location.href = 'cabinet'; };
+        if (user && user.photoURL) {
+            btn.innerHTML = '<img src="' + user.photoURL + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">';
+        }
+    });
+    </script>
 </body>
 </html>

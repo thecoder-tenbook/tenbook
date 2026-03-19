@@ -758,19 +758,46 @@
             "Кради як Художник": `<img src="covers_ua/Steal Like an Artist.svg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;">`
         };
 
+        // Title → Firebase book ID
+        const TITLE_TO_ID = {
+            'Атомні Звички': 'atomic_habits',
+            'Від Нуля до Одиниці': 'zero_to_one',
+            'Сапієнс': 'sapiens',
+            'Принципи': 'principles',
+            '7 Звичок': '7habits',
+        };
+
         const favorites = new Set();
+
+        function getBookId(title) {
+            return TITLE_TO_ID[title] || title.toLowerCase().replace(/\s+/g, '_');
+        }
 
         function toggleFavorite(title, btn, e) {
             e.stopPropagation();
-            if (favorites.has(title)) {
-                favorites.delete(title);
-                btn.classList.remove('active');
-                btn.querySelector('svg').setAttribute('fill', 'none');
-            } else {
-                favorites.add(title);
-                btn.classList.add('active');
-                btn.querySelector('svg').setAttribute('fill', '#ec4899');
+            const bookId = getBookId(title);
+            if (!window._fbUser) {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).catch(console.error);
+                return;
             }
+            const ref = firebase.firestore().collection('users').doc(window._fbUser.uid);
+            ref.get().then(doc => {
+                let favs = doc.exists ? (doc.data().favorites || []) : [];
+                const idx = favs.indexOf(bookId);
+                if (idx !== -1) {
+                    favs.splice(idx, 1);
+                    favorites.delete(bookId);
+                    btn.classList.remove('active');
+                    btn.querySelector('svg').setAttribute('fill', 'none');
+                } else {
+                    favs.push(bookId);
+                    favorites.add(bookId);
+                    btn.classList.add('active');
+                    btn.querySelector('svg').setAttribute('fill', '#ec4899');
+                }
+                ref.set({ favorites: favs }, { merge: true });
+            });
         }
 
         const books = [
@@ -857,8 +884,8 @@
                 <div class="book-card" ${book.title === 'Атомні Звички' ? "onclick=\"window.location='book_page_atomic_habits'\"" : book.title === '7 Звичок' ? "onclick=\"window.location='book_page_7habits'\"" : book.title === 'Від Нуля до Одиниці' ? "onclick=\"window.location='book_page_zero_to_one'\"" : book.title === 'Сапієнс' ? "onclick=\"window.location='book_page_sapiens'\"" : book.title === 'Принципи' ? "onclick=\"window.location='book_page_principles'\"" : ''} style="${book.title === 'Атомні Звички' || book.title === '7 Звичок' || book.title === 'Від Нуля до Одиниці' || book.title === 'Сапієнс' || book.title === 'Принципи' ? 'cursor:pointer;' : ''}">
                     <div class="book-cover" style="background: ${book.title === 'Сапієнс' ? '#F6F1E8' : book.title === 'Принципи' ? '#EDEEE9' : book.title === 'Від Нуля до Одиниці' ? '#E4EBF5' : book.title === 'Атомні Звички' ? '#EBF8EF' : book.gradient};">
                         ${bookCovers[book.title] || ''}
-                        <button class="book-fav-btn ${favorites.has(book.title) ? 'active' : ''}" onclick="toggleFavorite('${book.title.replace(/'/g, "\\'")}', this, event)" title="Додати в обрані">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="${favorites.has(book.title) ? '#ec4899' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <button class="book-fav-btn ${favorites.has(getBookId(book.title)) ? 'active' : ''}" onclick="toggleFavorite('${book.title.replace(/'/g, "\\'")}', this, event)" title="Додати в обрані">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="${favorites.has(getBookId(book.title)) ? '#ec4899' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                         </button>
                     </div>
                     <div class="book-category">${categoryNames[book.category].toUpperCase()}</div>
@@ -956,6 +983,44 @@
                 btn.classList.add('active');
             });
         });
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script>
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+            apiKey: "AIzaSyBITou6TONUHIR1IPcc2yXmUCrSiA7KoJA",
+            authDomain: "tenbook-bd3eb.firebaseapp.com",
+            projectId: "tenbook-bd3eb",
+            storageBucket: "tenbook-bd3eb.firebasestorage.app",
+            messagingSenderId: "619158652539",
+            appId: "1:619158652539:web:4619616a2fa66d1a1204de"
+        });
+    }
+    firebase.auth().onAuthStateChanged(function(user) {
+        window._fbUser = user;
+        var accountBtn = document.querySelector('.nav-account-btn');
+        if (user) {
+            if (accountBtn) {
+                accountBtn.innerHTML = user.photoURL
+                    ? '<img src="' + user.photoURL + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">'
+                    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+                accountBtn.onclick = function() { window.location.href = 'cabinet'; };
+            }
+            // Завантажити обрані
+            firebase.firestore().collection('users').doc(user.uid).get().then(function(doc) {
+                var favs = doc.exists ? (doc.data().favorites || []) : [];
+                favs.forEach(function(id) { favorites.add(id); });
+                renderBooks();
+            });
+        } else {
+            if (accountBtn) {
+                accountBtn.onclick = function() { window.location.href = 'cabinet'; };
+            }
+        }
+    });
     </script>
 </body>
 </html>
