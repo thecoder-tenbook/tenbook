@@ -76,30 +76,13 @@
     }
     </script>
     <style>
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; }
 
         /* NAVBAR */
-                header { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f0f0f0; }
-        nav { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.75rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-        .nav-menu { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-item { position: relative; }
-        .nav-link { text-decoration: none; color: #4a5568; font-weight: 500; display: flex; align-items: center; gap: 0.3rem; cursor: pointer; transition: color 0.3s; }
-        .nav-link:hover { color: #0ea5e9; }
-        .dropdown { position: absolute; top: 100%; left: 0; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); padding: 1rem 0; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; }
-        .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
-        .dropdown a { display: block; padding: 0.75rem 1.5rem; color: #4a5568; text-decoration: none; transition: all 0.2s; }
-        .dropdown a:hover { background: #f8fafc; color: #0ea5e9; }
-        .lang-selector { display: flex; gap: 0.5rem; padding: 0.5rem; background: #f8fafc; border-radius: 8px; }
-        .lang-btn { padding: 0.4rem 0.8rem; border: none; background: transparent; cursor: pointer; border-radius: 6px; font-weight: 500; transition: all 0.3s; }
-        .lang-btn.active { background: white; color: #0ea5e9; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .nav-account-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #e2e8f0; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; transition: all 0.2s; flex-shrink: 0; }
-        .nav-account-btn:hover { border-color: #0ea5e9; color: #0ea5e9; background: #f0f9ff; }
         .nav-header-btn { padding: 0.55rem 1.4rem; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.9rem; transition: opacity 0.2s; }
         .nav-header-btn:hover { opacity: 0.9; }
-        @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .nav-menu { display: none; } }
+        @media (max-width: 768px) { }
         .btn-primary { padding: 0.55rem 1.4rem; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
 
         /* BREADCRUMB */
@@ -181,7 +164,7 @@
 
         /* AUTHOR CARD */
         .author-card { background: white; border-radius: 16px; padding: 1.8rem; border: 1px solid #f1f5f9; margin-top: 2rem; }
-        .author-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+        .author-
         .author-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #0f2457 0%, #0ea5e9 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; }
         .author-name { font-size: 1rem; font-weight: 700; color: #0f172a; }
         .author-title { font-size: 0.8rem; color: #94a3b8; margin-top: 0.15rem; }
@@ -245,7 +228,7 @@
         .review-submit-btn:hover { opacity: 0.88; }
         .reviews-list { display: flex; flex-direction: column; gap: 1.2rem; }
         .review-card { border: 1px solid #e8edf2; border-radius: 14px; padding: 1.2rem 1.4rem; }
-        .review-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
+        .review-card-
         .review-userpic { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: white; flex-shrink: 0; }
         .review-user-info { flex: 1; }
         .review-username { font-size: 0.88rem; font-weight: 700; color: #0f172a; }
@@ -259,16 +242,9 @@
 
         /* MOBILE */
         @media (max-width: 768px) {
-                    header { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f0f0f0; }
-        nav { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.75rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-        .nav-menu { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-item { position: relative; }
-        .nav-link { text-decoration: none; color: #4a5568; font-weight: 500; display: flex; align-items: center; gap: 0.3rem; cursor: pointer; transition: color 0.3s; }
-        .nav-link:hover { color: #0ea5e9; }
         .nav-header-btn { padding: 0.55rem 1.4rem; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.9rem; transition: opacity 0.2s; }
         .nav-header-btn:hover { opacity: 0.9; }
-        @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .nav-menu { display: none; } }
+        @media (max-width: 768px) { }
             .btn-primary { padding: 0.5rem 1rem; font-size: 0.82rem; }
             .breadcrumb { padding: 1rem 1.2rem 0; font-size: 0.78rem; }
             .page-layout { grid-template-columns: 1fr; padding: 0; gap: 0; }
@@ -306,24 +282,17 @@
 
         /* TABLET */
         @media (min-width: 769px) and (max-width: 1024px) {
-            .nav-links { gap: 1.2rem; }
             .nav-lang { display: none; }
             .page-layout { grid-template-columns: 220px 1fr; gap: 2rem; padding: 0 1.5rem; }
             .content-wrapper { grid-template-columns: 1fr 260px; padding: 2rem 0 3rem; gap: 1.8rem; }
             .hero-title { font-size: 2rem; }
         }
-
-        .nav-cta-btn { background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; border: none; cursor: pointer; font-size: 0.95rem; }
-        .nav-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(14,165,233,0.3); }
             .btn-fav.active { color: #e11d48; border-color: #fecdd3; background: #fff1f2; }
         .btn-fav.active svg { fill: #e11d48; stroke: #e11d48; }
-    
     </style>
 </head>
 <body>
 <?php include 'header.php'; ?>
-
-
 <main style="padding-top: 96px;">
 <!-- PAGE LAYOUT -->
 <div class="page-layout">

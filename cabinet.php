@@ -6,20 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Особистий кабінет — TENBOOK</title>
     <style>
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; background: #f8fafc; color: #1e293b; }
-
-        header { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f0f0f0; }
-        nav { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.75rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-        .nav-menu { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-link { text-decoration: none; color: #4a5568; font-weight: 500; transition: color 0.3s; }
-        .nav-link:hover { color: #0ea5e9; }
-        .nav-account-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #e2e8f0; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; transition: all 0.2s; flex-shrink: 0; overflow: hidden; }
-        .nav-account-btn:hover { border-color: #0ea5e9; }
-        .nav-cta-btn { background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; border: none; cursor: pointer; font-size: 0.95rem; }
-        .nav-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(14,165,233,0.3); }
 
         main { max-width: 1100px; margin: 0 auto; padding: 7rem 2rem 4rem; }
 
@@ -70,17 +58,12 @@
         @media (max-width: 640px) {
             .profile-stats { display: none; }
             .books-grid { grid-template-columns: repeat(2, 1fr); }
-            nav { padding: 1rem; }
-            .nav-menu { gap: 1rem; }
         }
-    
     </style>
 </head>
 <body>
 <?php include 'header.php'; ?>
-
-
-    <main id="mainContent">
+<main id="mainContent">
         <!-- Заповнюється JS -->
     </main>
     <script>

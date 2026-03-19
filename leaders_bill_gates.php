@@ -7,15 +7,8 @@
     <title>Книги Білла Гейтса — що читає співзасновник Microsoft | TENBOOK</title>
     <meta name="description" content="Білл Гейтс читає 50 книг на рік. Ось підборка книг, які він рекомендує — від науки до бізнесу та психології.">
     <style>
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1a1a1a; }
-        header { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f0f0f0; }
-        nav { max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.75rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-        .nav-menu { display: flex; gap: 2rem; align-items: center; }
-        .nav-link { text-decoration: none; color: #4a5568; font-weight: 500; transition: color 0.2s; font-size: 0.95rem; }
-        .nav-link:hover { color: #0ea5e9; }
         .btn-primary { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; padding: 0.6rem 1.4rem; border-radius: 20px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.9rem; }
         .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #94a3b8; }
         .breadcrumb a { color: #94a3b8; text-decoration: none; }
@@ -74,29 +67,11 @@
         .other-arrow { margin-left: auto; color: #cbd5e1; font-size: 1rem; }
 
         @media (max-width: 900px) { .hero-inner { grid-template-columns: auto 1fr; } .hero-stats { display: none; } .content-wrap { grid-template-columns: 1fr; } .sidebar { display: none; } }
-        @media (max-width: 600px) { .nav-menu { display: none; } .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 2rem; } .hero-photo { margin: 0 auto; } .hero-quote { border-left: none; border-top: 4px solid #0ea5e9; padding-left: 0; padding-top: 0.8rem; } .books-grid { grid-template-columns: repeat(2, 1fr); } }
-
-        .nav-item { position: relative; }
-        .nav-link { display: flex; align-items: center; gap: 0.3rem; }
-        .dropdown { position: absolute; top: 100%; left: 0; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); padding: 1rem 0; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 100; }
-        .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
-        .dropdown a { display: block; padding: 0.75rem 1.5rem; color: #4a5568; text-decoration: none; transition: all 0.2s; }
-        .dropdown a:hover { background: #f8fafc; color: #0ea5e9; }
-        .lang-selector { display: flex; gap: 0.5rem; padding: 0.5rem; background: #f8fafc; border-radius: 8px; }
-        .lang-btn { padding: 0.4rem 0.8rem; border: none; background: transparent; cursor: pointer; border-radius: 6px; font-weight: 500; transition: all 0.3s; }
-        .lang-btn.active { background: white; color: #0ea5e9; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .nav-account-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #e2e8f0; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; transition: all 0.2s; flex-shrink: 0; }
-        .nav-account-btn:hover { border-color: #0ea5e9; color: #0ea5e9; background: #f0f9ff; }
-
-        .nav-cta-btn { background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; border: none; cursor: pointer; font-size: 0.95rem; }
-        .nav-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(14,165,233,0.3); }
-    
+        @media (max-width: 600px) { .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 2rem; } .hero-photo { margin: 0 auto; } .hero-quote { border-left: none; border-top: 4px solid #0ea5e9; padding-left: 0; padding-top: 0.8rem; } .books-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
 <?php include 'header.php'; ?>
-
-
 <div class="hero">
     <div class="hero-inner">
         <div class="hero-photo">
