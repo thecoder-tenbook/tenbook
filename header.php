@@ -174,7 +174,7 @@ nav {
 
 <header>
     <nav>
-        <a href="index" class="nav-logo">TENBOOK</a>
+        <a href="/" class="nav-logo">TENBOOK</a>
 
         <!-- Desktop menu -->
         <div class="nav-menu">
@@ -190,8 +190,8 @@ nav {
                 </div>
             </div>
             <a href="leaders_page" class="nav-link <?= $active_page==='leaders' ? 'active' : '' ?>">Лідери</a>
-            <a href="index#features" class="nav-link">Можливості</a>
-            <a href="index#pricing" class="nav-link">Ціни</a>
+            <a href="/#features" class="nav-link">Можливості</a>
+            <a href="/#pricing" class="nav-link">Ціни</a>
             <div class="lang-selector">
                 <button class="lang-btn active" onclick="setLang('ua',this)">UA</button>
                 <button class="lang-btn" onclick="setLang('en',this)">EN</button>
@@ -200,7 +200,7 @@ nav {
             <button class="nav-account-btn" id="navAccountBtn" title="Особистий кабінет">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </button>
-            <a href="index#pricing" class="nav-cta-btn">Спробувати</a>
+            <a href="/#pricing" class="nav-cta-btn">Спробувати</a>
         </div>
 
         <!-- Mobile controls -->
@@ -226,11 +226,11 @@ nav {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             Лідери думок
         </a>
-        <a href="index#features" class="drawer-link">
+        <a href="/#features" class="drawer-link">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Можливості
         </a>
-        <a href="index#pricing" class="drawer-link">
+        <a href="/#pricing" class="drawer-link">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v2m0 8v2M9.5 9.5A2.5 2.5 0 0 1 12 8h.5a2.5 2.5 0 0 1 0 5h-1a2.5 2.5 0 0 0 0 5H12a2.5 2.5 0 0 0 2.5-1.5"/></svg>
             Ціни
         </a>
@@ -240,7 +240,7 @@ nav {
             <button onclick="setLang('en',this)">EN</button>
             <button onclick="setLang('pl',this)">PL</button>
         </div>
-        <a href="index#pricing" class="drawer-cta">Спробувати безкоштовно</a>
+        <a href="/#pricing" class="drawer-cta">Спробувати безкоштовно</a>
     </div>
 </div>
 
