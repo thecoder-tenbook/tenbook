@@ -13,7 +13,11 @@
       "Bash(grep -v \"^--$\")",
       "Bash(node --check /Users/ruslan/Desktop/Tenbook/reader_sapiens.html)",
       "Bash(python3:*)",
-      "Bash(grep -rn \"Схожі\\\\|related\\\\|СХОЖІ\" /Users/ruslan/Desktop/Tenbook/*.html)"
+      "Bash(grep -rn \"Схожі\\\\|related\\\\|СХОЖІ\" /Users/ruslan/Desktop/Tenbook/*.html)",
+      "Bash(for f:*)",
+      "Bash(do sed:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
