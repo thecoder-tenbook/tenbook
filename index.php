@@ -1966,7 +1966,8 @@
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 font-size: 0.85rem;
-                min-height: 2.4em;
+                height: 2.6em;
+                line-height: 1.3;
             }
             .books-horizontal .book-details p {
                 font-size: 0.78rem;
