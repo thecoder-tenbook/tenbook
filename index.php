@@ -975,6 +975,8 @@
             margin-bottom: 2rem;
         }
 
+        .features-cta-mobile { display: none; }
+
         .features-left-cta {
             display: inline-flex;
             align-items: center;
@@ -2035,6 +2037,9 @@
                 overflow-x: hidden;
             }
 
+            .features-cta-desktop { display: none !important; }
+            .features-cta-mobile { text-align: center; margin-top: 1.5rem; }
+            .features-cta-mobile .view-all-btn { font-size: 0.95rem; padding: 0.75rem 2rem; }
             .hero { padding: 6rem 1.5rem 3rem; }
             .features { padding: 1.5rem 1rem; }
             .new-releases { padding: 1.5rem 1rem; }
@@ -2660,7 +2665,7 @@
                 <div class="features-left">
                     <h2>Все що потрібно для <span>ефективного</span> читання</h2>
                     <p>Tenbook — це не просто скорочення. Це повноцінна система, яка допомагає читати більше, засвоювати краще і витрачати менше часу.</p>
-                    <button class="features-left-cta">
+                    <button class="features-left-cta features-cta-desktop">
                         Спробувати безкоштовно
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                     </button>
@@ -2724,6 +2729,9 @@
                     </div>
                 </div>
 
+            </div>
+            <div class="features-cta-mobile">
+                <a href="register" class="view-all-btn" style="display:inline-block;">Спробувати безкоштовно →</a>
             </div>
         </div>
     </section>
