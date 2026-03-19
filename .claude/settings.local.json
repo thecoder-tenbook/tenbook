@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc \"/Users/ruslan/Downloads/7_Habits_Summary_UA_Full.docx\" -o /tmp/7habits.md --track-changes=all)",
+      "Read(//Users/ruslan/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/814192b0-8fd9-44a6-be9a-454cf3503c16/cc8a9e9f-6efd-4e16-917f-731eac343810/skills/docx/**)",
+      "Bash(python scripts/office/unpack.py \"/Users/ruslan/Downloads/7_Habits_Summary_UA_Full.docx\" /tmp/7habits_unpacked/)",
+      "Bash(python3 scripts/office/unpack.py \"/Users/ruslan/Downloads/7_Habits_Summary_UA_Full.docx\" /tmp/7habits_unpacked/)",
+      "Bash(grep -v \"^\\\\s*$\")",
+      "Bash(done)",
+      "Bash(sed -i '' \"s/window\\\\.location=''book_page\\\\.html''/window.location=''book_page_atomic_habits.html''/g\" /Users/ruslan/Desktop/Tenbook/book_summary_landing.html)",
+      "Bash(sed -i '' \"s/href=\"\"book_page\\\\.html\"\"/href=\"\"book_page_atomic_habits.html\"\"/g\" /Users/ruslan/Desktop/Tenbook/book_summary_landing.html)",
+      "Bash(sed -i '' \"s/window\\\\.location=''book_page\\\\.html''/window.location=''book_page_atomic_habits.html''/g\" /Users/ruslan/Desktop/Tenbook/catalog_page.html)",
+      "Bash(grep -v \"^--$\")",
+      "Bash(node --check /Users/ruslan/Desktop/Tenbook/reader_sapiens.html)",
+      "Bash(python3:*)",
+      "Bash(grep -rn \"Схожі\\\\|related\\\\|СХОЖІ\" /Users/ruslan/Desktop/Tenbook/*.html)"
+    ]
+  }
+}

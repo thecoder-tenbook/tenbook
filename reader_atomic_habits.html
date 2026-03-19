@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atomic Habits — Читання · TENBOOK</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --border: #e8edf2;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --accent: #0ea5e9;
+        --font-size: 17px;
+        --line-height: 1.85;
+    }
+
+    body.dark {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --border: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+    }
+
+    body.sepia {
+        --bg: #f5f0e8;
+        --surface: #ede8dc;
+        --border: #d4c9b0;
+        --text-primary: #2c1f0e;
+        --text-secondary: #5c4a2a;
+        --text-muted: #8c7a5a;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: 'Georgia', 'Times New Roman', serif;
+        transition: background 0.3s, color 0.3s;
+        min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: 52px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1.5rem;
+        z-index: 100;
+        transition: background 0.3s, border-color 0.3s;
+    }
+
+    .topbar-logo {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-weight: 900;
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+
+    .topbar-title {
+        flex: 1;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        flex-shrink: 0;
+    }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        transition: background 0.15s, color 0.15s;
+    }
+    .icon-btn:hover { background: var(--surface); color: var(--text-primary); }
+    .icon-btn.active { color: var(--accent); }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+        position: fixed;
+        top: 52px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--border);
+        z-index: 99;
+    }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+        transition: width 0.3s;
+        border-radius: 0 2px 2px 0;
+    }
+
+    /* ── SETTINGS PANEL ── */
+    .settings-panel {
+        position: fixed;
+        top: 55px;
+        right: 1rem;
+        width: 280px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        padding: 1.2rem;
+        z-index: 200;
+        display: none;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+    .settings-panel.open { display: block; }
+
+    .settings-section { margin-bottom: 1.1rem; }
+    .settings-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+    }
+
+    /* Font size */
+    .font-size-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .font-size-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text-primary);
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.15s;
+    }
+    .font-size-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .font-size-val {
+        flex: 1;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    /* Theme */
+    .theme-row { display: flex; gap: 0.5rem; }
+    .theme-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transition: border-color 0.15s;
+        display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .theme-btn.light { background: #ffffff; color: #0f172a; }
+    .theme-btn.sepia { background: #f5f0e8; color: #2c1f0e; }
+    .theme-btn.dark  { background: #0f172a; color: #f1f5f9; }
+    .theme-btn.active { border-color: var(--accent); }
+
+    /* Font family */
+    .font-row { display: flex; gap: 0.5rem; }
+    .font-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        background: var(--surface);
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        transition: all 0.15s;
+    }
+    .font-btn.serif { font-family: Georgia, serif; }
+    .font-btn.sans  { font-family: -apple-system, sans-serif; }
+    .font-btn.active { border-color: var(--accent); color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .reader-wrap {
+        min-height: 100vh;
+        padding-top: 55px;
+    }
+
+    /* ── SIDEBAR / TOC ── */
+    .toc-sidebar {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        bottom: 0;
+        width: 260px;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+        transition: transform 0.3s, background 0.3s, border-color 0.3s;
+        z-index: 80;
+        padding: 1.5rem 0;
+    }
+
+    .toc-header {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 0 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .toc-book-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0 1.2rem 1.2rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1rem;
+    }
+
+    .toc-cover {
+        width: 38px;
+        height: 57px;
+        border-radius: 5px;
+        overflow: hidden;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .toc-cover svg { width: 100%; height: 100%; display: block; }
+
+    .toc-book-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+    .toc-book-author {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .toc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.7rem;
+        padding: 0.6rem 1.2rem;
+        cursor: pointer;
+        transition: background 0.15s;
+        border-left: 3px solid transparent;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        text-decoration: none;
+    }
+    .toc-item:hover { background: var(--bg); }
+    .toc-item.active {
+        background: var(--bg);
+        border-left-color: var(--accent);
+    }
+
+    .toc-num {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        min-width: 18px;
+        padding-top: 2px;
+    }
+    .toc-item.active .toc-num { color: var(--accent); }
+
+    .toc-text {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.35;
+    }
+    .toc-item.active .toc-text { color: var(--text-primary); font-weight: 600; }
+
+    .toc-done {
+        margin-left: auto;
+        color: #10b981;
+        flex-shrink: 0;
+        padding-top: 2px;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .reader-main {
+        margin-left: 260px;
+        min-height: 100vh;
+    }
+
+    .reader-content {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 3rem 2rem 6rem;
+    }
+
+    /* Chapter header */
+    .chapter-label {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.8rem;
+    }
+
+    .chapter-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1.2;
+        letter-spacing: -0.4px;
+        margin-bottom: 0.6rem;
+    }
+
+    .chapter-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .chapter-time {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    /* Body text */
+    .reader-body {
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        color: var(--text-secondary);
+    }
+
+    .reader-body p {
+        margin-bottom: 1.5em;
+    }
+
+    .reader-body h3 {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 2em 0 0.8em;
+    }
+
+    /* Pull quote */
+    .pull-quote {
+        margin: 2rem 0;
+        padding: 1.5rem 1.8rem;
+        background: var(--surface);
+        border-left: 4px solid var(--accent);
+        border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+        font-size: 1.1em;
+        font-style: italic;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.65;
+    }
+
+    /* Key point highlight */
+    .key-point {
+        display: flex;
+        gap: 1rem;
+        margin: 1.8rem 0;
+        padding: 1.2rem 1.4rem;
+        background: rgba(245,158,11,0.06);
+        border: 1px solid rgba(245,158,11,0.22);
+        border-radius: 12px;
+        align-items: flex-start;
+    }
+    .key-point-icon {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    .key-point-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* ── CHAPTER NAVIGATION ── */
+    .chapter-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+        gap: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+
+    .nav-prev, .nav-next {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        background: none;
+        text-decoration: none;
+        transition: all 0.2s;
+        max-width: 48%;
+    }
+    .nav-prev:hover, .nav-next:hover {
+        border-color: var(--accent);
+        background: var(--surface);
+    }
+    .nav-next { text-align: right; margin-left: auto; }
+
+    .nav-direction {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .nav-next .nav-direction { justify-content: flex-end; }
+    .nav-chapter-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+
+    .nav-center {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+        .toc-sidebar {
+            transform: translateX(-100%);
+        }
+        .toc-sidebar.open {
+            transform: translateX(0);
+            box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+        }
+        .toc-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 79;
+        }
+        .toc-overlay.open { display: block; }
+
+        .reader-main { margin-left: 0; }
+
+        .reader-content {
+            padding: 2rem 1.2rem 5rem;
+        }
+
+        .chapter-title { font-size: 1.45rem; }
+
+        .chapter-nav { flex-wrap: wrap; }
+        .nav-prev, .nav-next { max-width: 100%; flex: 1; }
+        .nav-center { width: 100%; text-align: center; order: -1; }
+
+        .settings-panel { right: 0.5rem; left: 0.5rem; width: auto; }
+    }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+    <a href="book_page_atomic_habits.html" class="topbar-logo">TENBOOK</a>
+    <div class="topbar-title">Атомні Звички · Що всередині</div>
+    <div class="topbar-actions">
+        <button class="icon-btn" id="tocToggle" title="Зміст" onclick="toggleToc()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="15" y2="12"/>
+                <line x1="3" y1="18" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <button class="icon-btn" id="settingsToggle" title="Налаштування" onclick="toggleSettings()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+        </button>
+        <a href="book_page_atomic_habits.html" class="icon-btn" title="Закрити">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 14%"></div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-section">
+        <div class="settings-label">Розмір тексту</div>
+        <div class="font-size-row">
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A−</button>
+            <div class="font-size-val" id="fontSizeVal">17px</div>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-label">Шрифт</div>
+        <div class="font-row">
+            <button class="font-btn serif active" id="fontSerif" onclick="setFont('serif')">Serif</button>
+            <button class="font-btn sans" id="fontSans" onclick="setFont('sans')">Sans</button>
+        </div>
+    </div>
+    <div class="settings-section" style="margin-bottom:0">
+        <div class="settings-label">Тема</div>
+        <div class="theme-row">
+            <button class="theme-btn light active" id="themeLight" onclick="setTheme('light')">☀️ Світла</button>
+            <button class="theme-btn sepia" id="themeSepia" onclick="setTheme('sepia')">📜 Сепія</button>
+            <button class="theme-btn dark" id="themeDark" onclick="setTheme('dark')">🌙 Темна</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOC OVERLAY (mobile) -->
+<div class="toc-overlay" id="tocOverlay" onclick="toggleToc()"></div>
+
+<!-- TOC SIDEBAR -->
+<aside class="toc-sidebar" id="tocSidebar">
+    <div class="toc-book-info">
+        <div class="toc-cover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice">
+                <rect width="200" height="296" fill="#EBF8EF"/>
+                <text x="100" y="80" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="#0C3A1E" letter-spacing="3">ATOMIC</text>
+                <text x="100" y="105" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="#0C3A1E" letter-spacing="3">HABITS</text>
+                <circle cx="100" cy="180" r="50" fill="none" stroke="#C4882A" stroke-width="2.5"/>
+                <circle cx="100" cy="180" r="10" fill="#C4882A"/>
+                <ellipse cx="100" cy="180" rx="45" ry="18" fill="none" stroke="#C4882A" stroke-width="2"/>
+                <ellipse cx="100" cy="180" rx="18" ry="45" fill="none" stroke="#C4882A" stroke-width="2"/>
+            </svg>
+        </div>
+        <div>
+            <div class="toc-book-title">Атомні Звички</div>
+            <div class="toc-book-author">Джеймс Клір</div>
+        </div>
+    </div>
+
+    <div class="toc-header">Зміст</div>
+
+    <a class="toc-item active" href="#" onclick="goToChapter(0); return false;">
+        <span class="toc-num">Вст</span>
+        <span class="toc-text">Сила атомних звичок</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(1); return false;">
+        <span class="toc-num">1</span>
+        <span class="toc-text">Системи замість цілей</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(2); return false;">
+        <span class="toc-num">2</span>
+        <span class="toc-text">Складний відсоток звичок</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(3); return false;">
+        <span class="toc-num">3</span>
+        <span class="toc-text">Ідентичність як основа змін</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(4); return false;">
+        <span class="toc-num">4</span>
+        <span class="toc-text">Зробіть це очевидним</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(5); return false;">
+        <span class="toc-num">5</span>
+        <span class="toc-text">Зробіть це привабливим</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(6); return false;">
+        <span class="toc-num">6</span>
+        <span class="toc-text">Зробіть це легким</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(7); return false;">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Зробіть це приємним</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(8); return false;">
+        <span class="toc-num">8</span>
+        <span class="toc-text">Як застосувати ідеї на практиці</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(9); return false;">
+        <span class="toc-num">Фін</span>
+        <span class="toc-text">Стань людиною системи</span>
+    </a>
+</aside>
+
+<!-- MAIN -->
+<div class="reader-wrap">
+    <div class="reader-main">
+        <div class="reader-content" id="readerContent">
+            <!-- Content injected by JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+// ── CHAPTERS DATA ──
+const chapters = [
+    {
+        label: 'Вступ',
+        title: 'Сила атомних звичок',
+        time: '3 хв читання',
+        content: `
+            <p>У 2003 році британська збірна з велоспорту найняла нового тренера — Дейва Брейлсфорда. Команда не вигравала Tour de France вже 110 років. Брейлсфорд запропонував просту стратегію: знайти і покращити на 1% кожен елемент виступу. Харчування, вагу шин, підбір гелю для рук — все, що лише можна. Ніхто не вірив.</p>
+
+            <div class="pull-quote"><p>«Якщо ви можете покращувати кожен аспект того, що робите, на 1% — ефект виявиться разючим.»</p></div>
+
+            <p>Через п'ять років збірна Британії виграла Tour de France. Потім ще раз. А на Олімпіаді 2012 року завоювала 70% золотих медалей у велоспорті. Жодного чарівного рецепту — лише послідовні маленькі вдосконалення, накопичені з часом.</p>
+
+            <h3>Що таке атомна звичка?</h3>
+
+            <p>«Атомна» звичка — це не просто маленька звичка. Слово «атом» несе два значення: неймовірно мале і фундаментальне. Атомні звички — крихітні, але вони є будівельними блоками великих результатів. Так само як атоми є будівельними блоками всього матеріального світу.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Звички — це складний відсоток самовдосконалення. Так само як гроші примножуються у банку, маленькі дії примножуються у часі.</p>
+            </div>
+
+            <p>Джеймс Клір написав цю книгу не як теоретик. У старшій школі він отримав важку черепно-мозкову травму і мав почати все з нуля — заново навчитись ходити, концентруватись, жити. Маленькі щоденні дії стали для нього буквально рятувальним кругом. Ця книга — дистиляція того, що він відкрив на власному досвіді та підтвердив науковими дослідженнями.</p>
+
+            <p>Попереду — чотири закони зміни поведінки. Вони прості. Але їхній ефект — трансформаційний.</p>
+        `
+    },
+    {
+        label: 'Розділ 1',
+        title: 'Системи замість цілей',
+        time: '3 хв читання',
+        content: `
+            <p>Уявіть двох бігунів. Обидва хочуть пробігти марафон. Перший повторює: «Я хочу фінішувати марафон». Другий будує систему: щоранку 30 хвилин бігу, незалежно від погоди і настрою. Через рік перший все ще «хоче». Другий вже фінішував.</p>
+
+            <div class="pull-quote"><p>«Ви не піднімаєтесь до рівня своїх цілей. Ви опускаєтесь до рівня своїх систем.»</p></div>
+
+            <p>Переможці і невдахи часто ставлять однакові цілі. Кожен спортсмен хоче виграти олімпійське золото. Кожен підприємець хоче побудувати успішну компанію. Якщо однакові цілі не відокремлюють переможців, то в чому ж різниця? У системах.</p>
+
+            <h3>Чотири проблеми з цілями</h3>
+
+            <p><strong>1. Виживці ухиляються.</strong> Коли ми бачимо успішних людей і їхні цілі, ми не бачимо всіх, хто мав ті самі цілі, але зазнав невдачі. Ціль у них теж була.</p>
+
+            <p><strong>2. Ціль — тимчасова зміна.</strong> Ви прибрали в кімнаті. Але якщо ви не вирішили проблему безладу в поведінці, кімната незабаром знову стане брудною. Вирішення проблем на рівні результатів — тимчасове.</p>
+
+            <p><strong>3. Цілі обмежують щастя.</strong> «Я буду щасливий, коли...» — пастка. Системний підхід виправляє це: ви отримуєте задоволення від процесу щодня, а не тільки у момент досягнення.</p>
+
+            <p><strong>4. Цілі не узгоджуються з довгостроковим прогресом.</strong> Після марафону більшість людей перестають бігати. Після схуднення — повертають вагу. Ціль без системи не дає стійкого результату.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Ціль — це напрямок. Система — це транспорт. Без системи навіть найамбітніша ціль залишається мрією.</p>
+            </div>
+
+            <h3>Як побудувати систему?</h3>
+
+            <p>Запитайте себе не «Чого я хочу досягти?», а «Якою людиною я хочу стати?». Потім запитайте: що така людина робить щодня? Ці щоденні дії і є вашою системою. Якщо ви хочете бути письменником — людина, яка пише, пише щодня. Якщо ви хочете бути здоровим — людина зі здоровим способом життя рухається щодня. Навіть якщо лише 10 хвилин.</p>
+        `
+    },
+    {
+        label: 'Розділ 2',
+        title: 'Складний відсоток звичок',
+        time: '2 хв читання',
+        content: `
+            <p>Математика невблаганна: 1,01 в 365-му степені = 37,78. Стати на 1% кращим щодня за рік — значить бути в <strong>37 разів кращим</strong>. 0,99 в 365-му степені = 0,03. Якщо щодня ставати на 1% гіршим — за рік залишиться лише 3% від початкового рівня.</p>
+
+            <div class="pull-quote"><p>«Успіх — це результат щоденних звичок, а не разових трансформацій раз на все життя.»</p></div>
+
+            <p>Маленькі зміни часто здаються незначними, бо їхній ефект не відчувається миттєво. Але це не означає, що він відсутній. Він накопичується. Незримо. Щодня. І в якийсь момент — вибухає.</p>
+
+            <h3>Плато потенціалу і крижана точка</h3>
+
+            <p>Клір описує це через метафору льоду: уявіть кімнату при -10°C. Ви піднімаєте температуру на 1 градус кожну годину. -9°C, -8°C, -7°C... При -5°C нічого не відбувається. При -3°C — теж нічого. При -1°C — і досі нічого. Але при 0°C лід раптово тане.</p>
+
+            <p>Ця крижана точка виглядає як магія. Але насправді вона можлива лише завдяки всім попереднім градусам. Більшість людей кидають справу саме між -5°C і -1°C — до прориву.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Плато розчарування — це не провал. Це накопичення потенціалу. Хто витримує плоску криву, той отримує прорив.</p>
+            </div>
+
+            <h3>Де ви знаходитесь зараз</h3>
+
+            <p>Ваш рівень фізичної форми — лаг-індикатор ваших звичок тренування. Ваші знання — лаг-індикатор ваших звичок навчання. Ваш банківський рахунок — лаг-індикатор ваших фінансових звичок. Час і результат завжди розведені в часі. Ви завжди отримуєте те, що повторюєте — просто не одразу.</p>
+        `
+    },
+    {
+        label: 'Розділ 3',
+        title: 'Ідентичність як основа змін',
+        time: '3 хв читання',
+        content: `
+            <p>Більшість людей намагаються змінити звички неправильно. Вони зосереджуються на тому, що хочуть отримати. «Я хочу схуднути». «Я хочу написати книгу». «Я хочу кинути палити». Це зміна на рівні результату. Але є глибший рівень.</p>
+
+            <div class="pull-quote"><p>«Кожна дія — це голос за ту людину, якою ви хочете стати.»</p></div>
+
+            <h3>Три рівні змін</h3>
+
+            <p><strong>Рівень 1: Результат</strong> — що ви отримуєте. Схуднути на 10 кг, написати книгу, кинути палити. Більшість людей починають тут.</p>
+            <p><strong>Рівень 2: Процес</strong> — що ви робите. Дієта, тренування, програми. Більшість підходів до звичок зосереджені тут.</p>
+            <p><strong>Рівень 3: Ідентичність</strong> — у що ви вірите. Ваш світогляд, образ себе, переконання. Це найглибший рівень.</p>
+
+            <p>Найстійкіші зміни починаються з рівня ідентичності. Не «Я намагаюся кинути палити», а «Я не курю». Не «Я хочу читати більше», а «Я — читач». Зміна ідентичності змінює поведінку органічно, зсередини.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Мета — не прочитати книгу, а стати читачем. Не пробігти марафон, а стати бігуном. Ідентичність первинна.</p>
+            </div>
+
+            <h3>Як будується ідентичність?</h3>
+
+            <p>Слово «ідентичність» походить від латинського «identitas» — буттям. Ваша ідентичність виникає з ваших звичок. Кожен похід у спортзал — голос за людину, яка стежить за здоров'ям. Кожна написана сторінка — голос за письменника. Кожне рано вставання — голос за дисципліновану людину.</p>
+
+            <p>Один похід у спортзал ще не робить вас атлетом. Але якщо ви голосуєте за цю ідентичність знову і знову, вона стає незаперечною. Спочатку ви змінюєте дії, щоб стати кимось. Потім ви дієте так, бо ви вже є цією людиною.</p>
+
+            <p>Найкращий спосіб змінити звичку — запитати: «Що зробила б людина, якою я хочу стати?» — і зробити це прямо зараз.</p>
+        `
+    },
+    {
+        label: 'Розділ 4',
+        title: 'Перший закон: Зробіть це очевидним',
+        time: '3 хв читання',
+        content: `
+            <p>Будь-яка звичка складається з чотирьох компонентів: <strong>сигнал → жага → реакція → нагорода</strong>. Це петля звички. Сигнал запускає жагу. Жага мотивує реакцію. Реакція дає нагороду. Нагорода задовольняє жагу і стає наступним сигналом.</p>
+
+            <div class="pull-quote"><p>«Середовище — невидимий архітектор вашого щоденного вибору.»</p></div>
+
+            <p>Перший закон: зробіть сигнал очевидним. Мозок постійно сканує середовище на тригери. Дослідження у британських лікарнях показало: якщо просто перемістити воду на більш видне місце в кафетерії, споживання зростає на 25%. Нікого не переконували. Просто змінили сигнал.</p>
+
+            <h3>Намір реалізації</h3>
+
+            <p>Дослідження Пітера Голлвітцера показали: люди, які точно вказали коли і де будуть виконувати нову звичку, виконували її у 2-3 рази частіше. Формула: <em>«Я буду [ДІЯ] о [ЧАС] у [МІСЦЕ]»</em>. Не «Я буду більше тренуватись». А «Я піду в спортзал у вівторок і четвер о 7:00 ранку перед роботою».</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Конкретний час і місце перетворюють розмитий намір на чіткий план. Невизначеність — головний ворог звичок.</p>
+            </div>
+
+            <h3>Нанизування звичок</h3>
+
+            <p>Ще потужніша техніка — прив'язати нову звичку до вже існуючої. Формула: <em>«Після того як я [ПОТОЧНА ЗВИЧКА], я [НОВА ЗВИЧКА]»</em>. «Після того як я наливаю ранкову каву, я пишу одну сторінку щоденника». «Після того як я чищу зуби, я роблю 10 присідань». Нейронні зв'язки існуючої звички підсилюють нову.</p>
+
+            <h3>Дизайн середовища</h3>
+
+            <p>Хочете читати більше — покладіть книгу на подушку. Хочете їсти здоровіше — поставте фрукти на стіл. Хочете менше дивитись телевізор — приберіть пульт у шухляду. Один зайвий крок між вами і поганою звичкою значно знижує ймовірність її виконання. Змінюйте середовище — і поведінка зміниться сама.</p>
+        `
+    },
+    {
+        label: 'Розділ 5',
+        title: 'Другий закон: Зробіть це привабливим',
+        time: '2 хв читання',
+        content: `
+            <p>Дофамін — нейромедіатор, пов'язаний з бажанням і передчуттям. Виявляється, він виробляється не лише коли ми отримуємо нагороду, а й коли ми лише <em>чекаємо</em> на неї. Це означає: звичка стає привабливою не тоді, коли вона корисна, а тоді, коли вона викликає передчуття нагороди.</p>
+
+            <div class="pull-quote"><p>«Ми не відчуваємо тягу до поведінки. Ми відчуваємо тягу до нагороди, яку вона обіцяє.»</p></div>
+
+            <h3>Групування спокус</h3>
+
+            <p>Техніка Ромена Дюбуа, студента інженерії з Бельгії: він хотів дивитись Netflix, але знав, що треба тренуватись. Він написав програму, яка відтворює Netflix тільки тоді, коли він крутить педалі велотренажера. Зупинився — серіал стає на паузу. Це групування спокус: поєднайте те, що <em>хочете</em> робити, з тим, що <em>повинні</em>.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Групування спокус: «Я можу [ТЕ, ЩО ХОЧУ] тільки поки роблю [ТЕ, ЩО ПОВИНЕН]». Поєднайте задоволення з обов'язком.</p>
+            </div>
+
+            <h3>Соціальне середовище</h3>
+
+            <p>Ми наслідуємо три групи: близьких (сім'я, друзі), більшість (суспільство, культура) і авторитетних (ті, хто має статус і владу). Якщо ви хочете закріпити корисну звичку — знайдіть спільноту, де бажана поведінка є нормою. Якщо всі ваші знайомі займаються спортом, не займатись спортом стає соціально незручним. Це найлегший спосіб зробити звичку привабливою.</p>
+
+            <h3>Мотиваційний ритуал</h3>
+
+            <p>Пов'яжіть звичку з чимось, що вам подобається. Якщо перед тренуванням ви завжди вмикаєте один і той самий плейлист, мозок починає асоціювати цю музику з енергією і рухом. З часом сама музика стає сигналом-тригером. Ритуал стає частиною ідентичності.</p>
+        `
+    },
+    {
+        label: 'Розділ 6',
+        title: 'Третій закон: Зробіть це легким',
+        time: '2 хв читання',
+        content: `
+            <p>Фотограф Джеррі Утсман розділив студентів на дві групи. Першу оцінюватимуть за кількістю фотографій: хто зробить більше — той отримає вищу оцінку. Другу — за якістю: треба здати лише одне ідеальне фото. Наприкінці семестру кращі роботи були у першої групи. Вони просто знімали більше — і вчились на ходу.</p>
+
+            <div class="pull-quote"><p>«Найкраща дія — та, яку легше виконати, ніж не виконати.»</p></div>
+
+            <p>Кількість повторень важливіша за час і теорію. Нейронний шлях стає сильнішим від кожного повторення. Тому ключове завдання — зменшити тертя між вами і звичкою до мінімуму.</p>
+
+            <h3>Правило двох хвилин</h3>
+
+            <p>Будь-яку нову звичку скоротіть до версії, яка займає менше двох хвилин. «Читати перед сном» → «прочитати одну сторінку». «Займатися йогою 30 хвилин» → «одягнути спортивний одяг». «Писати щодня» → «написати одне речення». Ідея не в тому, що дві хвилини вирішать все. Ідея — стандартизувати звичку до того, як оптимізувати її.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Правило двох хвилин: спочатку з'явіться. Потім покращуйте. Найважчий момент — почати. Зробіть старт нездоланно легким.</p>
+            </div>
+
+            <h3>Менше тертя — більше звичок</h3>
+
+            <p>Для корисних звичок: зменшіть тертя. Підготуйте спортивну форму з вечора. Поставте книгу на нічний столик. Промийте і наріжте овочі заздалегідь. Кожен підготовчий крок знижує поріг входу.</p>
+
+            <p>Для поганих звичок: збільшіть тертя. Видаліть соцмережі з головного екрану. Не тримайте солодке вдома. Вийміть батарейки з пульта від телевізора. Один зайвий крок між вами і поганою звичкою значно знижує ймовірність її виконання. Зробіть правильне легким, а неправильне — важким.</p>
+        `
+    },
+    {
+        label: 'Розділ 7',
+        title: 'Четвертий закон: Зробіть це приємним',
+        time: '2 хв читання',
+        content: `
+            <p>Кардинальна несправедливість: корисні звички мають відстрочену нагороду, а шкідливі — негайну. Цигарка зараз приємна — шкода легеням через роки. Торт зараз смачний — зайва вага через місяці. Медитація зараз нудна — спокій і концентрація з'являться пізніше. Мозок запрограмований цінувати теперішнє більше, ніж майбутнє.</p>
+
+            <div class="pull-quote"><p>«Перші три закони збільшують шанси виконати звичку зараз. Четвертий — збільшує шанси повторити її знову.»</p></div>
+
+            <p>Рішення: додайте негайне задоволення до корисної звички. Після кожного тренування — невелика нагорода. Після здорового обіду — переведіть 50 гривень на рахунок «Відпустка». Після медитації — улюблена кава. Миттєве задоволення закріплює поведінку в мозку.</p>
+
+            <h3>Трекер звичок</h3>
+
+            <p>Найпростіший і найпотужніший інструмент — трекер звичок. Візьміть календар і ставте хрестик кожного дня, коли виконали звичку. З'явиться ланцюжок. І ви не захочете його переривати. Психологи називають це ефектом «не переривай ланцюжок». Сам факт видимого прогресу стає нагородою.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Ніколи не пропускайте двічі підряд. Один пропуск — випадковість. Два — початок нової (поганої) звички. Це залізне правило.</p>
+            </div>
+
+            <h3>Партнер підзвітності</h3>
+
+            <p>Знайдіть людину, якій ви будете звітувати. Соціальна відповідальність — потужний мотиватор. Коли хтось знає про вашу звичку, вартість її порушення зростає. Клір рекомендує «контракт звичок» — письмову угоду з конкретними наслідками за невиконання. Звучить жорстко, але працює.</p>
+        `
+    },
+    {
+        label: 'Розділ 8',
+        title: 'Як застосувати ідеї на практиці',
+        time: '3 хв читання',
+        content: `
+            <h3>Крок 1. Проведіть аудит звичок</h3>
+
+            <p>Протягом одного дня запишіть все, що ви робите: від моменту пробудження до відходу до сну. Біля кожної звички поставте «+» (корисна), «-» (шкідлива) або «=» (нейтральна). Це Habit Scorecard — відправна точка для змін. Більшість поганих звичок ми навіть не помічаємо, бо вони стали автоматичними.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Аудит звичок: запишіть все, що ви робите за день. Позначте «+», «-» або «=». Те, що ви усвідомили — вже на шляху до змін.</p>
+            </div>
+
+            <h3>Крок 2. Оберіть одну звичку і пропишіть намір</h3>
+
+            <p>Не намагайтесь змінити все одночасно. Оберіть одну звичку, яка матиме найбільший вплив. Напишіть: <em>«Я буду [ДІЯ] о [ЧАС] у [МІСЦЕ]»</em>. Наприклад: «Я читатиму одну сторінку книги щоночі о 22:00 у ліжку». Конкретність — ключ.</p>
+
+            <h3>Крок 3. Нанизайте звичку на існуючу</h3>
+
+            <p>Знайдіть звичку, яку ви вже виконуєте щодня (чищення зубів, ранкова кава, обід). Після неї — нова звичка: <em>«Після того як я [ПОТОЧНА ЗВИЧКА], я [НОВА ЗВИЧКА]»</em>. Так нейронні зв'язки старої звички підсилюють нову.</p>
+
+            <h3>Крок 4. Зменшіть до двох хвилин</h3>
+
+            <p>Скоротіть нову звичку до найменшої можливої версії. Якщо ваша мета — медитувати 20 хвилин, починайте з однієї хвилини. Якщо хочете бігати 5 км — починайте з 5-хвилинної прогулянки. Найважливіше — з'являтись щодня, а не робити багато одразу.</p>
+
+            <h3>Крок 5. Відстежуйте і винагороджуйте</h3>
+
+            <p>Заведіть трекер звичок — простий аркуш паперу або застосунок. Ставте хрестик кожного дня. Після кожного виконання — невелика нагорода. І пам'ятайте правило: ніколи не пропускайте двічі підряд. Один пропуск — випадковість. Два — небезпека.</p>
+
+            <h3>Крок 6. Проектуйте середовище</h3>
+
+            <p>Для корисних звичок: зменшіть тертя. Підготуйте всі речі заздалегідь. Зробіть хорошу поведінку очевидною і легкою. Для поганих: збільшіть тертя. Видаліть тригери. Зробіть погану поведінку невидимою і складною. Середовище сильніше за силу волі.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Зміна не вимагає сили волі. Вона вимагає правильно спроектованого середовища і послідовності. Один крок за раз.</p>
+            </div>
+        `
+    },
+    {
+        label: 'Висновок',
+        title: 'Стань людиною системи',
+        time: '2 хв читання',
+        content: `
+            <p>Джеймс Клір завершує книгу простою, але потужною думкою: ми часто переоцінюємо важливість одного визначального моменту і недооцінюємо цінність щоденних маленьких покращень. Немає жодного «секрету успіху». Є лише послідовна практика правильних звичок.</p>
+
+            <div class="pull-quote"><p>«Ви не маєте бути жертвою своїх звичок. Ви можете їх проектувати.»</p></div>
+
+            <p>Чотири закони зміни поведінки — це не просто теорія. Це архітектурний план для будь-якої зміни, яку ви хочете зробити в житті. Зробіть корисну звичку очевидною, привабливою, легкою і приємною. Зробіть шкідливу — непомітною, непривабливою, важкою і болісною. Це все.</p>
+
+            <h3>Три речі, які варто пам'ятати</h3>
+
+            <p><strong>1. Малі дії накопичуються.</strong> Не шукайте великого прориву. Шукайте 1% покращення. Щодня. Вони накопичуються швидше, ніж ви думаєте.</p>
+
+            <p><strong>2. Ідентичність — первинна.</strong> Запитуйте не «Що я хочу досягти?», а «Якою людиною я хочу стати?». Дійте як ця людина вже зараз — і вона стане вами.</p>
+
+            <p><strong>3. Терпіть плато.</strong> Результати не приходять лінійно. Перед кожним проривом є плато розчарування. Хто витримує плато — той отримує результат, який інші вважають overnight success.</p>
+
+            <div class="key-point">
+                <div class="key-point-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <p class="key-point-text">Атомні звички — це не про те, щоб бути кращим за один день. Це про те, щоб бути трохи кращим щодня. Рік за роком. Це і є справжня трансформація.</p>
+            </div>
+
+            <p>Починайте з малого. Будуйте ідентичність. Проектуйте середовище. Відстежуйте прогрес. І не здавайтесь на плато. Кожен день — це ще один голос за людину, якою ви хочете стати.</p>
+        `
+    }
+];
+
+let currentChapter = 0;
+let fontSize = 17;
+let currentFont = 'serif';
+let currentTheme = 'light';
+let readChapters = new Set([0]);
+
+function renderChapter(idx) {
+    const ch = chapters[idx];
+    const isLast = idx === chapters.length - 1;
+    const isFirst = idx === 0;
+    const prevCh = !isFirst ? chapters[idx - 1] : null;
+    const nextCh = !isLast ? chapters[idx + 1] : null;
+
+    document.getElementById('readerContent').innerHTML = `
+        <div class="chapter-label">${ch.label}</div>
+        <div class="chapter-title">${ch.title}</div>
+        <div class="chapter-meta">
+            <span class="chapter-time">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                ${ch.time}
+            </span>
+        </div>
+        <div class="reader-body">${ch.content}</div>
+        <div class="chapter-nav">
+            ${prevCh ? `<button class="nav-prev" onclick="goToChapter(${idx-1})">
+                <span class="nav-direction"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Попередня</span>
+                <span class="nav-chapter-title">${prevCh.title}</span>
+            </button>` : '<div></div>'}
+            <span class="nav-center">${idx + 1} / ${chapters.length}</span>
+            ${nextCh ? `<button class="nav-next" onclick="goToChapter(${idx+1})">
+                <span class="nav-direction">Наступна <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">${nextCh.title}</span>
+            </button>` : `<button class="nav-next" onclick="window.location='book_page_atomic_habits.html'">
+                <span class="nav-direction">Готово <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">Повернутися до книги</span>
+            </button>`}
+        </div>
+    `;
+
+    // Update topbar title
+    document.querySelector('.topbar-title').textContent = `Атомні Звички · ${ch.label}`;
+
+    // Update TOC active
+    document.querySelectorAll('.toc-item').forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+    });
+
+    // Update progress
+    readChapters.add(idx);
+    const pct = Math.round((readChapters.size / chapters.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    currentChapter = idx;
+    closeTocMobile();
+}
+
+function goToChapter(idx) {
+    renderChapter(idx);
+}
+
+// Settings
+function toggleSettings() {
+    const panel = document.getElementById('settingsPanel');
+    panel.classList.toggle('open');
+}
+
+function toggleToc() {
+    const sidebar = document.getElementById('tocSidebar');
+    const overlay = document.getElementById('tocOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+function closeTocMobile() {
+    if (window.innerWidth <= 768) {
+        document.getElementById('tocSidebar').classList.remove('open');
+        document.getElementById('tocOverlay').classList.remove('open');
+    }
+}
+
+// Close settings on outside click
+document.addEventListener('click', (e) => {
+    const panel = document.getElementById('settingsPanel');
+    const btn = document.getElementById('settingsToggle');
+    if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(22, fontSize + delta));
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+    document.getElementById('fontSizeVal').textContent = fontSize + 'px';
+}
+
+function setFont(type) {
+    currentFont = type;
+    document.body.style.fontFamily = type === 'sans'
+        ? "-apple-system, BlinkMacSystemFont, 'Inter', sans-serif"
+        : "Georgia, 'Times New Roman', serif";
+    document.getElementById('fontSerif').classList.toggle('active', type === 'serif');
+    document.getElementById('fontSans').classList.toggle('active', type === 'sans');
+}
+
+function setTheme(theme) {
+    document.body.classList.remove('dark', 'sepia');
+    if (theme !== 'light') document.body.classList.add(theme);
+    ['light','sepia','dark'].forEach(t => {
+        document.getElementById('theme' + t.charAt(0).toUpperCase() + t.slice(1))
+            .classList.toggle('active', t === theme);
+    });
+    currentTheme = theme;
+}
+
+// Init
+renderChapter(0);
+</script>
+</body>
+</html>

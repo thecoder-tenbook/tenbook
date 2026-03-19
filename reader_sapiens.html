@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сапієнс — Читання · TENBOOK</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --border: #e8edf2;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --accent: #0ea5e9;
+        --font-size: 17px;
+        --line-height: 1.85;
+    }
+
+    body.dark {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --border: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+    }
+
+    body.sepia {
+        --bg: #f5f0e8;
+        --surface: #ede8dc;
+        --border: #d4c9b0;
+        --text-primary: #2c1f0e;
+        --text-secondary: #5c4a2a;
+        --text-muted: #8c7a5a;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: 'Georgia', 'Times New Roman', serif;
+        transition: background 0.3s, color 0.3s;
+        min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: 52px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1.5rem;
+        z-index: 100;
+        transition: background 0.3s, border-color 0.3s;
+    }
+
+    .topbar-logo {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-weight: 900;
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+
+    .topbar-title {
+        flex: 1;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        flex-shrink: 0;
+    }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        transition: background 0.15s, color 0.15s;
+    }
+    .icon-btn:hover { background: var(--surface); color: var(--text-primary); }
+    .icon-btn.active { color: var(--accent); }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+        position: fixed;
+        top: 52px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--border);
+        z-index: 99;
+    }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+        transition: width 0.3s;
+        border-radius: 0 2px 2px 0;
+    }
+
+    /* ── SETTINGS PANEL ── */
+    .settings-panel {
+        position: fixed;
+        top: 55px;
+        right: 1rem;
+        width: 280px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        padding: 1.2rem;
+        z-index: 200;
+        display: none;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+    .settings-panel.open { display: block; }
+
+    .settings-section { margin-bottom: 1.1rem; }
+    .settings-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+    }
+
+    .font-size-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .font-size-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text-primary);
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.15s;
+    }
+    .font-size-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .font-size-val {
+        flex: 1;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .theme-row { display: flex; gap: 0.5rem; }
+    .theme-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transition: border-color 0.15s;
+        display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .theme-btn.light { background: #ffffff; color: #0f172a; }
+    .theme-btn.sepia { background: #f5f0e8; color: #2c1f0e; }
+    .theme-btn.dark  { background: #0f172a; color: #f1f5f9; }
+    .theme-btn.active { border-color: var(--accent); }
+
+    .font-row { display: flex; gap: 0.5rem; }
+    .font-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        background: var(--surface);
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        transition: all 0.15s;
+    }
+    .font-btn.serif { font-family: Georgia, serif; }
+    .font-btn.sans  { font-family: -apple-system, sans-serif; }
+    .font-btn.active { border-color: var(--accent); color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .reader-wrap {
+        min-height: 100vh;
+        padding-top: 55px;
+    }
+
+    /* ── SIDEBAR / TOC ── */
+    .toc-sidebar {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        bottom: 0;
+        width: 260px;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+        transition: transform 0.3s, background 0.3s, border-color 0.3s;
+        z-index: 80;
+        padding: 1.5rem 0;
+    }
+
+    .toc-header {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 0 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .toc-book-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0 1.2rem 1.2rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1rem;
+    }
+
+    .toc-cover {
+        width: 38px;
+        height: 57px;
+        border-radius: 5px;
+        overflow: hidden;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .toc-cover svg { width: 100%; height: 100%; display: block; }
+
+    .toc-book-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+    .toc-book-author {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .toc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.7rem;
+        padding: 0.6rem 1.2rem;
+        cursor: pointer;
+        transition: background 0.15s;
+        border-left: 3px solid transparent;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        text-decoration: none;
+    }
+    .toc-item:hover { background: var(--bg); }
+    .toc-item.active {
+        background: var(--bg);
+        border-left-color: var(--accent);
+    }
+
+    .toc-num {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        min-width: 18px;
+        padding-top: 2px;
+    }
+    .toc-item.active .toc-num { color: var(--accent); }
+
+    .toc-text {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.35;
+    }
+    .toc-item.active .toc-text { color: var(--text-primary); font-weight: 600; }
+
+    .toc-done {
+        margin-left: auto;
+        color: #10b981;
+        flex-shrink: 0;
+        padding-top: 2px;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .reader-main {
+        margin-left: 260px;
+        min-height: 100vh;
+    }
+
+    .reader-content {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 3rem 2rem 6rem;
+    }
+
+    .chapter-label {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.8rem;
+    }
+
+    .chapter-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1.2;
+        letter-spacing: -0.4px;
+        margin-bottom: 0.6rem;
+    }
+
+    .chapter-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .chapter-time {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .reader-body {
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        color: var(--text-secondary);
+    }
+
+    .reader-body p {
+        margin-bottom: 1.5em;
+    }
+
+    .reader-body h3 {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 2em 0 0.8em;
+    }
+
+    .pull-quote {
+        margin: 2rem 0;
+        padding: 1.5rem 1.8rem;
+        background: var(--surface);
+        border-left: 4px solid var(--accent);
+        border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+        font-size: 1.1em;
+        font-style: italic;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.65;
+    }
+
+    .key-point {
+        display: flex;
+        gap: 1rem;
+        margin: 1.8rem 0;
+        padding: 1.2rem 1.4rem;
+        background: rgba(245,158,11,0.06);
+        border: 1px solid rgba(245,158,11,0.22);
+        border-radius: 12px;
+        align-items: flex-start;
+    }
+    .key-point-icon {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    .key-point-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* ── CHAPTER NAVIGATION ── */
+    .chapter-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+        gap: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+
+    .nav-prev, .nav-next {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        background: none;
+        text-decoration: none;
+        transition: all 0.2s;
+        max-width: 48%;
+    }
+    .nav-prev:hover, .nav-next:hover {
+        border-color: var(--accent);
+        background: var(--surface);
+    }
+    .nav-next { text-align: right; margin-left: auto; }
+
+    .nav-direction {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .nav-next .nav-direction { justify-content: flex-end; }
+    .nav-chapter-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+
+    .nav-center {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+        .toc-sidebar {
+            transform: translateX(-100%);
+        }
+        .toc-sidebar.open {
+            transform: translateX(0);
+            box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+        }
+        .toc-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 79;
+        }
+        .toc-overlay.open { display: block; }
+
+        .reader-main { margin-left: 0; }
+
+        .reader-content {
+            padding: 2rem 1.2rem 5rem;
+        }
+
+        .chapter-title { font-size: 1.45rem; }
+
+        .chapter-nav { flex-wrap: wrap; }
+        .nav-prev, .nav-next { max-width: 100%; flex: 1; }
+        .nav-center { width: 100%; text-align: center; order: -1; }
+
+        .settings-panel { right: 0.5rem; left: 0.5rem; width: auto; }
+    }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+    <a href="book_page_sapiens.html" class="topbar-logo">TENBOOK</a>
+    <div class="topbar-title">Сапієнс · Що всередині</div>
+    <div class="topbar-actions">
+        <button class="icon-btn" id="tocToggle" title="Зміст" onclick="toggleToc()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="15" y2="12"/>
+                <line x1="3" y1="18" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <button class="icon-btn" id="settingsToggle" title="Налаштування" onclick="toggleSettings()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+        </button>
+        <a href="book_page_sapiens.html" class="icon-btn" title="Закрити">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-section">
+        <div class="settings-label">Розмір тексту</div>
+        <div class="font-size-row">
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A−</button>
+            <div class="font-size-val" id="fontSizeVal">17px</div>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-label">Шрифт</div>
+        <div class="font-row">
+            <button class="font-btn serif active" id="fontSerif" onclick="setFont('serif')">Serif</button>
+            <button class="font-btn sans" id="fontSans" onclick="setFont('sans')">Sans</button>
+        </div>
+    </div>
+    <div class="settings-section" style="margin-bottom:0">
+        <div class="settings-label">Тема</div>
+        <div class="theme-row">
+            <button class="theme-btn light active" id="themeLight" onclick="setTheme('light')">Світла</button>
+            <button class="theme-btn sepia" id="themeSepia" onclick="setTheme('sepia')">Сепія</button>
+            <button class="theme-btn dark" id="themeDark" onclick="setTheme('dark')">Темна</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOC OVERLAY (mobile) -->
+<div class="toc-overlay" id="tocOverlay" onclick="toggleToc()"></div>
+
+<!-- TOC SIDEBAR -->
+<aside class="toc-sidebar" id="tocSidebar">
+    <div class="toc-book-info">
+        <div class="toc-cover" style="background:#F6F1E8;position:relative;overflow:hidden;">
+            <img src="covers_ua/Sapiens.svg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div>
+            <div class="toc-book-title">Сапієнс</div>
+            <div class="toc-book-author">Юваль Ной Харарі</div>
+        </div>
+    </div>
+
+    <div class="toc-header">Зміст</div>
+
+    <a class="toc-item active" href="#" onclick="goToChapter(0); return false;">
+        <span class="toc-num">Вст</span>
+        <span class="toc-text">Як одна тварина підкорила планету</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(1); return false;">
+        <span class="toc-num">1</span>
+        <span class="toc-text">Когнітивна революція</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(2); return false;">
+        <span class="toc-num">2</span>
+        <span class="toc-text">Сільськогосподарська революція</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(3); return false;">
+        <span class="toc-num">3</span>
+        <span class="toc-text">Уявні порядки</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(4); return false;">
+        <span class="toc-num">4</span>
+        <span class="toc-text">Гроші — найуспішніша вигадка</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(5); return false;">
+        <span class="toc-num">5</span>
+        <span class="toc-text">Релігії та імперії</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(6); return false;">
+        <span class="toc-num">6</span>
+        <span class="toc-text">Наукова революція</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(7); return false;">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Капіталізм і кредит</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(8); return false;">
+        <span class="toc-num">8</span>
+        <span class="toc-text">Чи стали ми щасливішими?</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(9); return false;">
+        <span class="toc-num">9</span>
+        <span class="toc-text">Як застосувати ідеї на практиці</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(10); return false;">
+        <span class="toc-num">Фін</span>
+        <span class="toc-text">Homo Deus — що далі?</span>
+    </a>
+</aside>
+
+<!-- MAIN -->
+<div class="reader-wrap">
+    <div class="reader-main">
+        <div class="reader-content" id="readerContent">
+            <!-- Content injected by JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+const KP = function(text) {
+    return '<div class="key-point"><div class="key-point-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg></div><p class="key-point-text">' + text + '</p></div>';
+};
+
+const PQ = function(text) {
+    return '<div class="pull-quote"><p>' + text + '</p></div>';
+};
+
+const chapters = [
+    {
+        label: 'Вступ',
+        title: 'Як одна тварина підкорила планету',
+        time: '4 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Близько 13,5 мільярдів років тому стався Великий Вибух. Матерія, енергія, час і простір виникли одночасно. Протягом наступних мільярдів років сформувались зірки, планети, і близько 4,5 мільярда років тому — наша Земля. Перше живе організми з\'явились на ній близько 3,8 мільярда років тому.</p>';
+            s += '<p>Наші предки — крихітні ссавці, що сховались в норах від динозаврів, — пережили масове вимирання 66 мільйонів років тому і почали розвиватись у нових напрямках. Близько 6 мільйонів років тому один із видів африканських мавп розділився на два лінії. Одна дала початок шимпанзе. Інша — нам.</p>';
+            s += PQ('Це дивна риса нашого виду: ми здатні вірити у речі, яких не бачили, не торкались і не нюхали.');
+            s += '<p>Але ця книга не просто про людей. Вона про питання, яке мучить будь-якого допитливого розуму: чому саме ми? Чому не шимпанзе, не слони, не дельфіни — а саме Homo sapiens побудував цивілізацію, написав симфонії, запустив ракети на Місяць і створив атомну бомбу?</p>';
+            s += '<h3>Чотири революції</h3>';
+            s += '<p>Харарі структурує всю людську історію навколо чотирьох великих революцій. Перша — Когнітивна, 70 000 років тому: щось відбулось у мозку Homo sapiens, що дозволило нам думати і спілкуватись принципово інакше. Друга — Сільськогосподарська, 12 000 років тому: ми перейшли від полювання і збирання до вирощування зернових і утримання худоби. Третя — об\'єднання людства через гроші, релігії та імперії в єдину глобальну мережу. Четверта — Наукова революція, 500 років тому: ми почали систематично розширювати знання і застосовувати їх для перетворення світу.</p>';
+            s += KP('Чотири революції Харарі: Когнітивна (70 000 р. тому), Сільськогосподарська (12 000 р. тому), Об\'єднання людства, Наукова (500 р. тому). Кожна змінила не лише що ми робимо, але й хто ми є.');
+            s += '<p>Книга не претендує бути вичерпною академічною монографією. Харарі свідомо робить провокативні узагальнення, ставить незручні питання і пропонує несподівані інтерпретації. Саме в цій безстрашності перед великими питаннями — унікальна цінність «Сапієнса».</p>';
+            s += '<p>Найважливіший урок вступу: те, що здається нам "природним" і "само собою зрозумілим" — ієрархії, гроші, держави, релігії — насправді є дивовижними людськими винаходами. Зрозуміти це — значить побачити і себе, і світ зовсім іншими очима.</p>';
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 1',
+        title: 'Когнітивна революція',
+        time: '8 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Уявіть Африку 70 000 років тому. На континенті живуть принаймні шість різних видів роду Homo: сапієнси в Африці, неандертальці в Європі та Близькому Сході, денисовці в Азії, ще кілька ендемічних видів на островах. Усі вони розумні, всі використовують знаряддя, деякі вже мають ритуали поховання. І раптом — протягом відносно короткого геологічного часу — сапієнси починають поширюватись по всьому світу, а всі інші види зникають.</p>';
+            s += '<p>Це не збіг. Сапієнси активно витіснили або знищили конкурентів. Але як? Неандертальці були фізично сильнішими, мали більший мозок. Де була перевага сапієнсів?</p>';
+            s += PQ('Сапієнси можуть говорити про речі, яких ніколи не бачили. Дерево — про конкретне дерево. Але також — про духів, що живуть у деревах, і про колективні ритуали навколо них.');
+            s += '<h3>Теорія спільних вигадок</h3>';
+            s += '<p>Харарі пропонує революційну відповідь: унікальна здатність сапієнсів вірити у спільні вигадки. Шимпанзе можуть повідомити "є лев" або "я хочу їсти". Але вони не можуть сказати: "Наше плем\'я захищає великий дух предків, і якщо ми разом пожертвуємо йому оленя, він дасть нам удачу на полюванні". А сапієнси можуть.</p>';
+            s += '<p>Ця здатність фундаментально змінила масштаб можливої кооперації. Британський антрополог Робін Данбар показав, що максимальна природня соціальна група для приматів — близько 150 особин. Це "число Данбара". Ви можете знати особисто 150 людей. Ви знаєте їхні характери, їхню надійність, їхні стосунки між собою. Ця особиста мережа достатня для полювання та захисту від хижаків.</p>';
+            s += '<p>Але як кооперуватись у групах по тисячі, мільйон, мільярд людей? Через спільні вигадки. Якщо два незнайомці вірять в одного бога, одну націю, одну валюту — вони можуть діяти разом, не знаючи один одного особисто. Армія з мільйона солдатів неможлива без спільної ідеології. Корпорація з сотні тисяч співробітників неможлива без спільних правил і культури.</p>';
+            s += KP('Число Данбара: природна межа соціальної групи для приматів — 150 особин. Спільні вигадки дозволили людям кооперуватись у групах мільйонів — і саме це зробило нас господарями планети.');
+            s += '<h3>Гнучкість проти твердості</h3>';
+            s += '<p>Ще одна критична перевага Когнітивної революції — гнучкість поведінки. Мурашки будують складні колонії мільйонів особин. Але вони роблять це автоматично, запрограмовано генетично. Щоб змінити поведінку мурашок — потрібна генетична мутація, що займає тисячоліття.</p>';
+            s += '<p>Людина може змінити свою колективну поведінку протягом кількох десятиліть або навіть років. Просто змінивши спільну вигадку. Французька революція 1789 року змінила соціальний порядок Франції за кілька місяців. Ісламська революція в Ірані 1979 року — за рік. Розпад СРСР — за кілька років. Жодна інша тварина на це не здатна.</p>';
+            s += '<p>Харарі показує: гнучкість — не слабкість. Це надзвичайна адаптивна перевага. Поведінка, закодована в ДНК, ефективна у стабільному середовищі. Поведінка, закодована в культурі, ефективна у мінливому середовищі. А навколишнє середовище людства стало мінятись надзвичайно швидко — значною мірою завдяки нашим власним діям.</p>';
+            s += PQ('Завдяки Когнітивній революції сапієнси отримали здатність передавати більшу кількість інформації про навколишній світ — і про соціальні відносини.');
+            s += '<h3>Що сталось з неандертальцями?</h3>';
+            s += '<p>Коли сапієнси вийшли з Африки і зустрілись з неандертальцями — це не була мирна зустріч рівних. Сапієнси мали зброю складнішу, стратегії полювання ефективніші, і, що найважливіше, здатність до масової кооперації. 300 сапієнсів, що вірять в одного бога і підпорядковуються одному вождю, переможуть 300 неандертальців, кожен із яких діє за власним інстинктом.</p>';
+            s += '<p>Генетичні дослідження показують: певне змішання між видами відбулось. Ми, сучасні люди, маємо від 1 до 4 відсотків неандертальської ДНК. Але як вид неандертальці зникли близько 40 000 років тому — приблизно тоді, коли сапієнси масово поширились у Євразії.</p>';
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 2',
+        title: 'Сільськогосподарська революція',
+        time: '7 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Близько 12 000 років тому у долині річки Йордан один із наших предків нагнувся, підняв зернину дикої пшениці і замість того, щоб з\'їсти її, кинув у розпушений грунт. Це, можливо, найважливіший жест в людській історії — і початок того, що Харарі називає "найбільшою аферою в історії".</p>';
+            s += '<p>Сільськогосподарська революція відбулась незалежно в різних куточках світу: на Близькому Сході — пшениця і ячмінь, у Китаї — рис і просо, у Центральній Америці — кукурудза. Протягом кількох тисяч років більшість людства перейшла від полювання і збирання до землеробства і скотарства.</p>';
+            s += PQ('Пшениця стала найуспішнішою рослиною в історії Землі. 10 000 років тому вона росла лише в невеликому ареалі. Сьогодні займає 225 мільйонів гектарів.');
+            s += '<h3>Парадокс прогресу</h3>';
+            s += '<p>Стандартна розповідь звучить так: землеробство дозволило людям сидіти на місці, будувати міста, ділити праці і розвивати цивілізацію. Це прогрес. Але Харарі пропонує подивитись на цифри.</p>';
+            s += '<p>Мисливці-збирачі, що жили 15 000 років тому, в середньому працювали 35-45 годин на тиждень на виживання. Решту часу вони могли відпочивати, грати, спілкуватись. Їхній раціон був різноманітним: десятки видів рослин, м\'ясо, риба, горіхи, ягоди. Вони рідко страждали від голоду, бо не залежали від однієї культури.</p>';
+            s += '<p>Ранні фермери, натомість, щодня від світанку до заходу вирощували пшеницю. Фізична праця була виснажливою: копати, сіяти, поливати, жати, молотити. Скелети людей цього часу показують артрит хребта від постійного нагинання, карієс від крохмальної дієти, хвороби від дефіциту білків. Фермери жили виснажливіше, харчувались одноманітніше і хворіли частіше, ніж їхні предки-мисливці.</p>';
+            s += KP('Сільськогосподарська революція зробила не людей ситнішими — вона зробила людей більше. Пшеничне поле дає у 10 разів більше калорій з гектара, ніж природна луг. Але ці калорії одноманітні і вимагають виснажливої праці.');
+            s += '<h3>Пастка пшениці</h3>';
+            s += '<p>Харарі пропонує радикальну переінтерпретацію: можливо, не люди одомашнили пшеницю — а пшениця одомашнила людей. З еволюційної точки зору, пшениця досягла феноменального успіху: вона поширилась з маленького ареалу на Близькому Сході по всій планеті. Для цього вона "переконала" людей вирубати для неї ліси, зрошувати пустелі, захищати від шкідників і переносити насіння по всьому світу.</p>';
+            s += '<p>Як саме це відбулось? Поступово. Жодне покоління не приймало свідомого рішення "давайте стати фермерами". Просто щороку трохи більше людей вирощували трохи більше зерна. Зерно давало більше їжі. Більше їжі дозволяло мати більше дітей. Більше дітей вимагало ще більше зерна. Пастка зачинилась непомітно, через кілька поколінь.</p>';
+            s += '<p>Проблема в тому, що повернутись назад стало неможливим. Для того, щоб прогодувати 1000 людей, потрібно значно більше землі під полюванням, ніж під посівами. Коли населення зросло до 500 чоловік, повернення до полювання означало смерть половини з них від голоду. Пастка була абсолютною.</p>';
+            s += PQ('Фермери жили виснажливіше за мисливців-збирачів, але їх було більше. Тому, коли фермери зустрічались з мисливцями, перші перемагали — числом.');
+            s += '<h3>Виникнення соціальної нерівності</h3>';
+            s += '<p>Сільськогосподарська революція принесла ще один важливий побічний ефект: надлишок. Коли є надлишок зерна — його треба зберігати. Коли є сховища зерна — треба охороняти. Коли є охорона — потрібна організація. Виникають жерці, воїни, чиновники — люди, що не виробляють їжу самостійно, але контролюють її розподіл. З\'являється ієрархія, яка ніколи не існувала у суспільствах мисливців-збирачів.</p>';
+            s += '<p>Перші записи в людській історії — шумерські клинописні таблички близько 3000 р. до н.е. — це не поезія і не молитви. Це бухгалтерські записи: скільки зерна надійшло, скільки відправлено, скільки видано робітникам. Перша писемність — це інструмент адміністрування надлишку. Соціальна нерівність народилась разом зі складами.</p>';
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 3',
+        title: 'Уявні порядки',
+        time: '6 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>У 1776 р. до н.е. вавилонський цар Хаммурапі видав свій знаменитий кодекс законів — один із перших у світі правових документів. Кодекс стверджує: боги встановили ієрархію, де вільний чоловік важливіший за раба, а чоловік важливіший за жінку. Це "природний порядок".</p>';
+            s += '<p>У 1776 р. н.е. американські засновники підписали Декларацію незалежності, яка стверджує: всі люди створені рівними і наділені невід\'ємними правами. Це теж "природний порядок".</p>';
+            s += '<p>Обидва документи кажуть, що їхні принципи природні і очевидні. Але вони суперечать один одному. Значить, принаймні один із них — або обидва — вигадані.</p>';
+            s += PQ('Уявний порядок не є обманом. Він існує як інтерсуб\'єктивна реальність — спільна вигадка, у яку вірять мільярди людей. І ця спільна віра надає йому реальної сили.');
+            s += '<h3>Три рівні реальності</h3>';
+            s += '<p>Харарі пропонує три категорії реальності. Об\'єктивна реальність існує незалежно від людської свідомості — атоми, гравітація, вулкани. Суб\'єктивна реальність існує у свідомості конкретної людини — мій біль, моя радість, моя думка. Інтерсуб\'єктивна реальність існує завдяки спільній вірі багатьох людей — гроші, держави, корпорації, права людини, боги.</p>';
+            s += '<p>Якщо я перестану вірити в долар — мій долар не матиме цінності для мене. Але долар матиме цінність для мільярдів інших людей. Якщо я сам повірю в привид — привид існує лише у моїй свідомості. Але якщо мільярди людей вірять в Христа або Аллаха — ці сутності мають величезну реальну силу. Хрестові походи, джихади, будівництво соборів — всі ці цілком реальні події стали можливими завдяки спільній вірі.</p>';
+            s += KP('Ключова відмінність: суб\'єктивна реальність (моє переконання) проти інтерсуб\'єктивної (наше спільне переконання). Гроші і нації — інтерсуб\'єктивна реальність, і вона не менш реальна у своїх наслідках, ніж каміння і вода.');
+            s += '<h3>Чому уявні порядки такі стабільні</h3>';
+            s += '<p>Якщо гроші, нації і права — вигадані, чому їх так важко змінити? Харарі виділяє три причини.</p>';
+            s += '<p>По-перше, вони вкорінені у фізичний світ. Гроші — паперові або цифрові, але вони реально рухаються між рахунками. Держава має реальну армію і реальні в\'язниці. В\'язниці не перестануть бути реальними, навіть якщо всі погодяться, що держава — вигадка.</p>';
+            s += '<p>По-друге, уявні порядки формують наші бажання. Дитина, що виросла в капіталістичному суспільстві, хоче грошей і статусу. Дитина середньовічного лицаря хотіла слави і честі. Дитина первісного мисливця хотіла гарного полювання і поваги племені. Ці бажання не обирались свідомо — вони просто стали частиною особистості. Тому навіть якщо ти розумом розумієш, що капіталізм — уявний порядок, ти все одно відчуваєш тривогу від браку грошей.</p>';
+            s += '<p>По-третє, уявні порядки підтримуються соціальним тиском і насиллям. Якщо ви відмовляєтесь визнавати долар — вас можуть заарештувати за несплату податків. Якщо ви заперечуєте легітимність держави — держава може застосувати силу.</p>';
+            s += PQ('Щоб змінити уявний порядок — треба переконати мільйони людей одночасно повірити в щось нове. Це рідко відбувається мирно. Більшість великих змін уявних порядків відбувались через революції, війни або катастрофи.');
+            s += '<h3>Ієрархії, яких не існує в природі</h3>';
+            s += '<p>Харарі аналізує декілька "природних" ієрархій, що насправді є уявними порядками. Расові ієрархії? Генетика показує: між людськими "расами" менше генетичних відмінностей, ніж між популяціями шимпанзе в одному лісі. Расові категорії були винайдені для виправдання рабства та колоніалізму. Гендерні ієрархії? В більшості суспільств чоловіки домінують, але конкретні форми цього домінування радикально різняться між культурами — що доводить їхню соціальну природу, а не біологічну неминучість.</p>';
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 4',
+        title: 'Гроші — найуспішніша вигадка',
+        time: '5 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Уявіть фермера у Стародавньому Єгипті близько 2000 р. до н.е. Він вирощує пшеницю. Йому потрібне взуття. Але шевець не хоче пшениці — йому потрібен мідний казан. А мідник не хоче взуття — йому потрібна деревина. І так далі. Система бартеру має фундаментальну проблему: "подвійне збіг бажань". Ти повинен знайти когось, хто має те, що тобі треба, і хоче те, що є у тебе. В маленькому суспільстві це ще можливо. У великому — ні.</p>';
+            s += '<p>Саме цю проблему вирішили гроші. Вони є загальним посередником, що перетворює будь-яку цінність на будь-яку іншу. Гроші — це не золото і не папір. Гроші — це довіра. Система взаємного визнання, що спирається на колективну вигадку.</p>';
+            s += PQ('Гроші — найуніверсальніша і найефективніша система взаємної довіри, що будь-коли існувала. Вони конвертують практично все у все інше — знання у владу, землю у відданість, справедливість у здоров\'я.');
+            s += '<h3>Мушлі, срібло, папір і біти</h3>';
+            s += '<p>Протягом своєї еволюції гроші набирали найрізноманітніших форм. Мушлі каурі — маленькі, красиві, важко підробити — слугували грошима в Китаї, Індії, Африці і навіть американських колоніях аж до XIX ст. Сіль давала назву слову "salarium" (звідси "salary" — зарплата): римські солдати отримували пайок солі. Шматки тканини в Африці. Великі кам\'яні диски на островах Яп у Тихому океані.</p>';
+            s += '<p>Ключове відкриття: форма не важлива. Важлива лише довіра. Чому люди вірили в мушлі або сіль? Бо всі навколо них вірили. Це замкнуте коло довіри, і воно надзвичайно стабільне — доки всі грають за одними правилами.</p>';
+            s += '<p>Монети з\'явились приблизно 640 р. до н.е. в Лідії (сучасна Туреччина). Їхня перевага: держава гарантувала вагу і чистоту металу, ставлячи своє клеймо. Це зменшувало транзакційні витрати — не треба було зважувати кожну монету. Але і монета цінна лише тому, що люди довіряють державі, яка її карбує.</p>';
+            s += KP('Чотири властивості грошей, що зробили їх успішними: конвертованість (все можна обміняти на все), портативність (велика цінність у малому об\'ємі), довговічність (не псуються), передбачуваність (однакова цінність скрізь).');
+            s += '<h3>Чому гроші об\'єднують краще за релігію</h3>';
+            s += '<p>Харарі робить провокативне спостереження: гроші об\'єднували народи ефективніше, ніж будь-яка релігія. Хрестоносці вбивали мусульман, але охоче торгували з ними в нейтральних портах. Іспанські конкістадори масово хрестили корінних американців, але ще активніше обмінювались з ними золотом і сріблом. Католик і єврей, що ненавиділи один одного в церкві і синагозі, разом укладали фінансові угоди.</p>';
+            s += '<p>Гроші не потребують спільних богів, спільних предків або спільної мови. Потрібна лише спільна довіра до системи. Саме тому вони стали першою по-справжньому глобальною ідеологією. Золотий стандарт XIX ст. і нинішній долар — перші в людській історії справді глобальні мови.</p>';
+            s += PQ('Якщо гроші — вигадка, то це найуспішніша вигадка в людській історії, бо в неї вірять абсолютно всі — від антиглобаліста, що протестує проти капіталізму, до буддійського ченця, що поповнює рахунок у PayPal.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 5',
+        title: 'Релігії та імперії',
+        time: '6 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Гроші вирішили проблему обміну між незнайомцями. Але самих грошей недостатньо, щоб тримати разом суспільство з мільйонів людей. Потрібні і моральні норми, і спільні ритуали, і відповіді на питання "навіщо жити?", "чому я маю підкорятись владі?", "що відбувається після смерті?".</p>';
+            s += '<p>Саме цю роль відігравали релігії та імперії. Харарі дивиться на них не як на протилежності, а як на два інструменти одного завдання: об\'єднати людей за спільними правилами.</p>';
+            s += PQ('Велика іронія монотеїзму: прагнучи зробити бога єдиним, монотеїстичні релігії створили нетерпимість і релігійні війни, яких практично не знав поліteїзм.');
+            s += '<h3>Від політеїзму до монотеїзму</h3>';
+            s += '<p>Більшість ранніх цивілізацій були політеїстичними. І у цьому була важлива гнучкість: якщо ти завоював інший народ — не треба знищувати їхніх богів. Можна просто включити їх у свій пантеон. Рим це робив майстерно: завойовуючи Єгипет, Рим ухвалив Ісіду і Осіріса. Завойовуючи Персію — інтегрував Мітру. Це зменшувало релігійний опір і полегшувало управління.</p>';
+            s += '<p>Монотеїзм виник з іудаїзму і принципово змінив правила гри. Якщо існує лише один істинний Бог — всі інші боги є або помилкою, або дияволом. Це породило релігійну нетерпимість, яку поліteїзм ніколи не знав. Хрестові походи, інквізиція, Тридцятилітня війна — специфічні продукти монотеїстичного мислення.</p>';
+            s += '<p>Але монотеїзм мав і величезну перевагу: він міг потенційно об\'єднати всіх людей планети під одним наративом. Не "ми і наші боги проти вас і ваших богів", а "є один Бог для всіх, і ми всі повинні підкорятись Йому".</p>';
+            s += KP('Велика парадоксальна сила монотеїзму: він одночасно об\'єднував мільярди під одним богом і виправдовував насилля проти "невірних". Жодна політеїстична релігія не здійснювала релігійних воєн такого масштабу.');
+            s += '<h3>Гуманістичні релігії</h3>';
+            s += '<p>Харарі розширює поняття "релігія" до будь-якої системи, що надає надлюдську легітимацію людським нормам. За цим визначенням, лібералізм — це гуманістична релігія. Центральне "божество" лібералізму — людська особистість, її права і свобода. "Священні тексти" — Декларація прав людини. "Гріх" — порушення прав іншої особи. "Рай" — суспільство вільних і щасливих людей.</p>';
+            s += '<p>Комунізм — теж гуманістична релігія, але інша: центральне "божество" — не індивід, а робітничий клас або людство в цілому. "Священні тексти" — "Капітал" Маркса. "Гріх" — класова експлуатація. "Рай" — безкласове суспільство.</p>';
+            s += '<p>Буддизм стоїть особняком: це психологічна система, що не потребує богів і не обіцяє рятівника. Буддійський аналіз Харарі особливо проникливий: страждання виникає не через погані обставини, а через бажання і очікування. Якщо перестати чіплятись за результати — страждання зникне. Це суто психологічне, а не теологічне твердження. І, як показує сучасна нейронаука, воно добре підтверджується дослідженнями медитації.</p>';
+            s += PQ('Найважливіший урок розділу: кожне суспільство живе за певним "уявним порядком", що надає сенс і легітимність нерівності і владі. Розуміти, який порядок управляє вашим суспільством — означає бачити те, чого більшість не помічає.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 6',
+        title: 'Наукова революція',
+        time: '7 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>У 1543 році польський канонік Микола Коперник опублікував трактат, який стверджував: Земля обертається навколо Сонця, а не навпаки. Він боявся публікувати цю роботу і відправив її у пресу лише за кілька тижнів до своєї смерті. Він мав підстави боятись — адже це суперечило і Аристотелю, і Біблії.</p>';
+            s += '<p>Але ця публікація стала початком однієї з найбільших революцій в людській історії. Не тому, що Коперник відкрив нову планету. А тому, що він задемонстрував: найавторитетніші джерела знань — стародавні філософи і священні тексти — можуть помилятись.</p>';
+            s += PQ('Ключова інновація Наукової революції не в жодному конкретному відкритті. Вона в методі: готовність визнати незнання і систематично перевіряти гіпотези через спостереження і експеримент.');
+            s += '<h3>Революція незнання</h3>';
+            s += '<p>Харарі ставить парадоксальне твердження: Наукова революція — це революція незнання. До неї всі великі цивілізаційні системи вважали, що мають відповіді на всі важливі питання. Китайська конфуціанська традиція: мудреці минулого вже сказали все важливе, завдання — правильно інтерпретувати і передавати їхні слова. Середньовічне христ\'янство: Бог відкрив правду через Біблію і Церкву. Ісламський іджма: все необхідне знання вже є в Корані і хадисах.</p>';
+            s += '<p>Наукова революція перевернула цю логіку: найважливіше — визнати, що ти не знаєш, і систематично досліджувати невідоме. "Ми не знаємо" — це не слабкість, а відправна точка. Це радикально нова позиція. Вона відкрила безліч нових питань, і кожна відповідь народжувала нові питання.</p>';
+            s += '<p>Результат через 500 років: середня тривалість людського життя зросла з 25-30 до 73 років. Дитяча смертність впала з 30-40% до менше 1% у розвинутих країнах. Голод, що тисячоліттями вбивав мільйони, сьогодні практично подоланий у більшості світу. Ці зміни неможливі без науки.</p>';
+            s += KP('Три кроки наукового методу за Харарі: спостереження і збір даних; формування теорії, що їх пояснює; перевірка теорії через нові спостереження або експерименти. Готовність відмовитись від теорії, якщо факти їй суперечать — ось що відрізняє науку від догми.');
+            s += '<h3>Союз науки і влади</h3>';
+            s += '<p>Але наука не розвивається у вакуумі. Їй потрібне фінансування, інституції, захист. Ці ресурси є у держав і корпорацій — і вони фінансують науку не з любові до знань, а заради влади і прибутку.</p>';
+            s += '<p>Харарі показує нерозривний зв\'язок між науковою революцією і колоніальною експансією. Іспанські завоювання Америки не були б можливими без більш досконалих суден і зброї. Британська Ост-Індська компанія тримала власних вчених, що картографували Індію, вивчали її природні ресурси і хвороби. Знання і завоювання йшли рука в руку.</p>';
+            s += '<p>Цей союз продовжується і сьогодні. Більшість великих наукових проривів фінансуються або урядами з оборонними цілями, або корпораціями з комерційними. Інтернет виник з ARPANET — військової мережі Міністерства оборони США. GPS — спочатку виключно військова система. Більшість ліків розробляються з розрахунку на прибуток, а не на максимальну користь людству.</p>';
+            s += PQ('Наука дає людству все більше влади над природою і самими собою. Але хто вирішує, як використовувати цю владу? Це питання не наукове — а політичне і моральне. І відповіді на нього наука сама по собі не дає.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 7',
+        title: 'Капіталізм і кредит',
+        time: '5 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Уявіть, що ви живете у Середньовічній Європі в 1400 році. У вас є мрія: відкрити пекарню. Для цього потрібна піч, борошно, посуд — загалом 100 золотих. У вас є лише 30. Ви йдете до лихваря і просите позику. Він говорить: "Проценти великі, і взагалі — хто гарантує, що ваша пекарня не збанкрутує?"</p>';
+            s += '<p>У середньовічному розумінні ця ситуація безвихідна. Гроші, яких немає, не можна позичити — бо їх немає. Майбутнє занадто ненадійне, щоб на нього розраховувати. Релігія теж не заохочує: більшість середньовічних теологів засуджували лихварство як гріх.</p>';
+            s += PQ('Капіталізм — не просто економічна система. Це спосіб мислення про майбутнє. Вперше в історії люди погодились: майбутнє зростання реальне, у нього можна вкладати, і позикові гроші під майбутній прибуток — це не гріх, а мудра інвестиція.');
+            s += '<h3>Революція кредиту</h3>';
+            s += '<p>Капіталістична революція полягала у зміні ставлення до майбутнього. Колумб відкрив Америку у 1492 році, і потоки золота, срібла і прибутків почали надходити до Іспанії, а потім у всю Європу. Нові торгові маршрути давали безпрецедентні доходи. Довіра до майбутнього раптово зросла.</p>';
+            s += '<p>Банки почали позичати гроші під очікувані майбутні доходи. Торгові компанії почали продавати акції, збираючи капітал від широкої публіки. Ключова юридична інновація: акціонер не несе відповідальності за борги компанії понад суму своїх акцій. Якщо компанія збанкрутує — ти втрачаєш лише свої 100 золотих, але не весь свій статок. Це "обмеження відповідальності" зробило інвестиції значно менш ризикованими.</p>';
+            s += KP('Голландська Ост-Індська компанія (VOC), заснована у 1602 р. — перша публічна акціонерна компанія. Вона продавала акції широкій публіці, будувала флоти і торгові мережі по всій Азії. Ця модель стала шаблоном для всього сучасного бізнесу.');
+            s += '<h3>Логіка нескінченного зростання</h3>';
+            s += '<p>Адам Сміт у "Багатстві народів" (1776) сформулював ключовий принцип капіталізму: якщо виробник отримує прибуток більший, ніж потрібно для особистого споживання, він реінвестує частину прибутку у виробництво, щоб отримати ще більший прибуток. Зростання породжує зростання. Прибуток — двигун прогресу.</p>';
+            s += '<p>Це фундаментально нова ідея. У всіх попередніх суспільствах накопичення багатства вважалось нульовою сумою: якщо в мене більше — значить у когось менше. Капіталізм стверджує: ні, "пиріг" може і повинен рости. Інвестиції створюють нову цінність, якої раніше не існувало.</p>';
+            s += '<p>Ця логіка має і темний бік: якщо зростання зупиниться — система почне рухатись. Держави і корпорації, що заборгували під майбутні доходи, не можуть дозволити собі нульового зростання. Екологічна криза, фінансові бульбашки, нерівність, що зростає — все це частково є наслідком цього "імперативу зростання".</p>';
+            s += PQ('Капіталізм і наука стали ідеальним союзом: наука давала нові технології, технології відкривали нові ринки, ринки фінансували нову науку. Цей цикл протягом 500 років змінив планету більше, ніж попередні 70 000 років людської історії.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 8',
+        title: 'Чи стали ми щасливішими?',
+        time: '6 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Харарі ставить питання, яке змушує зупинитись і замовкнути: після всього — всіх революцій, завоювань, технологічних проривів, зростання населення з 5 до 8 мільярдів — чи стало людство щасливішим?</p>';
+            s += '<p>Ніхто не знає. Це тривожно.</p>';
+            s += '<p>Ми вміємо вимірювати ВВП, тривалість життя, дитячу смертність, рівень освіти. Але ніхто систематично не вимірював щастя протягом тисячоліть. Ми знаємо, що середній єврей у 2026 р. живе довше, заможніше і безпечніше, ніж його предок у 1026 р. Але невідомо, чи він щасливіший.</p>';
+            s += PQ('Нам відомо, що доходи зростали, але чи зростало щастя разом із ними? Нейронаука підказує: не обов\'язково. Щастя — складніше, ніж рахунок у банку.');
+            s += '<h3>Гедонічний адаптаційний механізм</h3>';
+            s += '<p>Біологія пропонує несподіваний погляд. Щастя визначається переважно біохімічно — рівнями серотоніну, дофаміну, окситоцину в мозку. Ці рівні встановлені еволюцією на певній "точці рівноваги". Коли з вами стається щось хороше, рівень піднімається. Коли погане — падає. Але потім він повертається до базового рівня.</p>';
+            s += '<p>Це називається гедонічною адаптацією. Класичне дослідження 1978 року показало: через рік після виграшу в лотерею і через рік після того як людина стала паралізованою, суб\'єктивний рівень щастя обох груп повернувся до приблизно одного рівня. Ми адаптуємось до нових обставин швидше, ніж думаємо.</p>';
+            s += '<p>Сучасна людина має смартфон, кондиціонер, антибіотики. Середньовічний селянин не мав нічого з цього. Але якщо запитати кожного "ти щасливий?" — їхні відповіді можуть бути схожими. Бо щастя визначається не абсолютним комфортом, а відносними очікуваннями. Середньовічний селянин не знав, що можна жити краще. Сучасна людина знає — і постійно порівнює своє становище з ідеалом.</p>';
+            s += KP('Гедонічна адаптація: ми повертаємось до базового рівня щастя після більшості подій — і хороших, і поганих. Тому матеріальний прогрес не гарантує зростання щастя. Ключ — не в обставинах, а в очікуваннях і внутрішньому стані.');
+            s += '<h3>Буддійський погляд і нейронаука</h3>';
+            s += '<p>Буддійська традиція, на думку Харарі, пропонує найглибшу відповідь. Страждання виникає не через погані обставини — а через бажання і очікування. Людина страждає не тому, що їй холодно, а тому, що вона хоче бути теплою. Вона страждає не тому, що самотня, а тому, що хоче компанії. Якщо навчитись приймати теперішній момент таким, яким він є — без порівняння з тим, яким він "мав би бути" — страждання значно зменшиться.</p>';
+            s += '<p>Сучасна нейронаука підтверджує це через дослідження довгострокових практиків медитації: їхній базовий рівень щастя вищий, вони менш реактивно реагують на неприємні події, і після потрясінь повертаються до рівноваги швидше, ніж середня людина. Буддійські практики, розроблені 2500 років тому, справді змінюють мозок у вимірюваний спосіб.</p>';
+            s += '<p>Але Харарі не ідеалізує ні буддизм, ні будь-яку іншу відповідь. Питання про щастя залишається відкритим. Можливо, нейронаука XXI ст. нарешті дасть відповідь. Або можливо, питання "чи щасливі ми?" буде переформульоване, коли людство навчиться редагувати свою нейрохімію так само легко, як сьогодні редагує текст на смартфоні.</p>';
+            s += PQ('Якщо завтра ми отримаємо таблетку, що назавжди підніме базовий рівень серотоніну — це буде благо або катастрофа? Харарі залишає це питання відкритим. Але ставить його — і це важливо.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 9',
+        title: 'Як застосувати ідеї на практиці',
+        time: '4 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>«Сапієнс» — книга про великі ідеї і тривалі виміри часу. Але її висновки мають дуже конкретні наслідки для щоденного мислення і прийняття рішень. Ось шість практичних уроків, що безпосередньо випливають із книги.</p>';
+            s += '<h3>1. Ставте під сумнів "природне"</h3>';
+            s += '<p>Коли ви чуєте "так влаштовано природою" або "це завжди було так" — це сигнал для скептицизму. Харарі переконливо показує: більшість того, що ми вважаємо природним — ієрархії, гендерні ролі, ринкова економіка, патріотизм — є уявними порядками, що виникли в конкретний момент часу з конкретних причин. Вони можуть бути корисними або шкідливими, але вони не є природніми у сенсі "неминучими".</p>';
+            s += KP('Практика: коли ви відчуваєте "так має бути" або "так завжди було" — запитайте: "Коли саме це стало нормою? Хто від цього виграв? Чи це відображає реальну природу людини, чи просто звичку?"');
+            s += '<h3>2. Розрізняйте типи реальності</h3>';
+            s += '<p>Три рівні реальності Харарі — об\'єктивна, суб\'єктивна, інтерсуб\'єктивна — надзвичайно корисні у повсякденному аналізі. Коли ви оцінюєте цінність акцій, репутацію людини, силу бренду або авторитет установи — запитайте: це об\'єктивна реальність чи інтерсуб\'єктивна? Якщо остання — усвідомте ризик: колективна довіра може зникнути.</p>';
+            s += '<h3>3. Застосовуйте скептицизм наукового методу</h3>';
+            s += '<p>Наукова революція принесла найцінніший інтелектуальний інструмент: готовність сказати "я не знаю" і перевірити. Застосовуйте це до власних переконань. Які переконання ви маєте, щоніколи не перевіряли на факти? Чи є теорії у вашій галузі, які всі приймають як аксіому, але нікому не спало на думку перевірити?</p>';
+            s += '<h3>4. Пам\'ятайте про гедонічну адаптацію при великих рішеннях</h3>';
+            s += '<p>Купуючи дорогу машину, переїжджаючи у більший будинок або прагнучи до підвищення — нагадайте собі: через 6-12 місяців ви повернетесь до приблизно того ж рівня суб\'єктивного щастя, що і зараз. Ці матеріальні зміни не дадуть тривалого збільшення щастя. Натомість інвестиції у стосунки, сенс, майстерність і внутрішню практику (медитацію, рефлексію) дають більш тривалий ефект.</p>';
+            s += KP('Харарі і нейронаука сходяться: найбільш тривале щастя дають не речі, а стани: залученість, сенс, вдячність, близькість. Ці стани можна культивувати незалежно від зовнішніх обставин.');
+            s += '<h3>5. Вивчайте наративи своєї спільноти</h3>';
+            s += '<p>Кожна компанія, сім\'я, нація, релігія живе за певним наративом: "ми такі, тому що...", "це правильно, бо...", "ворог — це...". Харарі показує: розуміння цих наративів дає величезну перевагу. Ви можете свідомо обирати, який наратив приймати, а який ставити під сумнів. Лідери, що змінювали світ, завжди змінювали наративи.</p>';
+            s += '<h3>6. Думайте у великих часових масштабах</h3>';
+            s += '<p>«Сапієнс» вчить мислити тисячоліттями. Проблема, яка здається катастрофічною сьогодні — наприклад, технологічне безробіття через автоматизацію — в перспективі 500 років може виявитись черговою адаптацією, на кшталт сільськогосподарської революції. Це не привід ігнорувати короткострокові кризи, але привід не панікувати і не приймати безповоротних рішень у стані паніки.</p>';
+            s += PQ('Найкращий дарунок "Сапієнса" — відчуття перспективи. Коли знаєш, що 70 000 років тому твої предки були звичайними тваринами, а 500 років тому не знали про існування Австралії — поточні кризи стають менш апокаліптичними.');
+            return s;
+        })()
+    },
+    {
+        label: 'Висновок',
+        title: 'Homo Deus — що далі?',
+        time: '3 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Харарі завершує «Сапієнса» не на тріумфальній ноті. Навпаки — з тривогою і питанням, що висить у повітрі без відповіді.</p>';
+            s += '<p>Протягом тисячоліть три головних ворога людства — голод, епідемії і насилля — вбивали мільярди. Сьогодні, вперше в історії, ми реально близькі до їхнього подолання. Голод у розвинутих країнах практично зник. Чума, що знищила третину Європи у XIV ст., неможлива при сучасній медицині. Смерть від насилля в глобальному масштабі досягла найнижчої точки за всю задокументовану людську історію.</p>';
+            s += PQ('Ми стаємо богами — але залишаємось із психологією тварин. Homo sapiens стає Homo Deus: людиною, що прагне безсмертя, блаженства і творення. Але чи готові ми до такої відповідальності?');
+            s += '<h3>Три нових горизонти</h3>';
+            s += '<p>Харарі описує три напрямки, в яких людство вже рухається і які можуть фундаментально змінити саму природу Homo sapiens. Перший — біологічне безсмертя. Дослідники в Каліфорнії, Ізраїлі, Японії серйозно працюють над подоланням старіння як хвороби. Якщо ми зупинимо деградацію клітин — тривалість життя може радикально зрости.</p>';
+            s += '<p>Другий — дизайн свідомості. Вже сьогодні можна редагувати ДНК ембріонів. CRISPR дозволяє видаляти спадкові хвороби. Але ніщо принципово не заважає використовувати ту саму технологію для підвищення інтелекту або зміни емоційних реакцій. Якщо ми зможемо "проектувати" дітей — хто вирішуватиме, які характеристики є бажаними?</p>';
+            s += '<p>Третій — злиття людини з машиною. Нейроінтерфейси вже сьогодні дозволяють паралізованим людям управляти комп\'ютером силою думки. Через 20-30 років ці технології можуть стати доступними масово — і межа між людиною і комп\'ютером почне розмиватись.</p>';
+            s += KP('Проблема Гільгамеша: шумерський герой, що шукав безсмертя, є першою відомою нам людською легендою. Через 5000 років ми стоїмо перед тим самим питанням: якщо ми переможемо смерть — чим ми будемо займатись вічно? Яка мета виправдає безкінечне існування?');
+            s += '<h3>Питання без відповіді</h3>';
+            s += '<p>Харарі не дає відповіді на ці питання. І в цьому його мудрість. Він ставить питання, яке більшість уникає: ми набуваємо можливостей богів — але чи набуваємо ми мудрості богів? Ми можемо редагувати геном — але чи знаємо, що таке "краща людина"? Ми можемо продовжити життя до 200 або 500 років — але чи стане воно більш значущим?</p>';
+            s += '<p>«Сапієнс» — не книга про минуле. Це книга про майбутнє, написана через минуле. Харарі показує: протягом усієї своєї історії Homo sapiens виявляв нездатність передбачати наслідки власних революцій. Сільськогосподарська революція принесла не тільки цивілізацію, але й рабство. Наукова революція — не тільки медицину, але й атомну бомбу. Промислова революція — не тільки добробут, але й кліматичну кризу.</p>';
+            s += '<p>Тому найважливіший урок «Сапієнса» — не конкретний факт з антропології чи економіки. Це запрошення до смирення і рефлексії. Ми надзвичайно розумні і надзвичайно здатні — але наша мудрість і наша здатність прогнозувати наслідки своїх дій значно відстає від нашої технологічної могутності.</p>';
+            s += PQ('Ми стаємо богами, але не знаємо, чого хочемо. Можливо, перш ніж ставити питання "що ми можемо?", варто ставити питання "чого ми хочемо?" — і "чи добре те, чого ми хочемо, для нас і для всього живого на планеті?"');
+            return s;
+        })()
+    }
+];
+
+let currentChapter = 0;
+let fontSize = 17;
+let currentFont = 'serif';
+let currentTheme = 'light';
+let readChapters = new Set([0]);
+
+function renderChapter(idx) {
+    var ch = chapters[idx];
+    var isLast = idx === chapters.length - 1;
+    var isFirst = idx === 0;
+    var prevCh = !isFirst ? chapters[idx - 1] : null;
+    var nextCh = !isLast ? chapters[idx + 1] : null;
+
+    var prevBtn = '';
+    if (prevCh) {
+        prevBtn = '<button class="nav-prev" onclick="goToChapter(' + (idx-1) + ')">' +
+            '<span class="nav-direction"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Попередня</span>' +
+            '<span class="nav-chapter-title">' + prevCh.title + '</span>' +
+            '</button>';
+    } else {
+        prevBtn = '<div></div>';
+    }
+
+    var nextBtn = '';
+    if (nextCh) {
+        nextBtn = '<button class="nav-next" onclick="goToChapter(' + (idx+1) + ')">' +
+            '<span class="nav-direction">Наступна <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>' +
+            '<span class="nav-chapter-title">' + nextCh.title + '</span>' +
+            '</button>';
+    } else {
+        nextBtn = '<button class="nav-next" onclick="window.location=\'book_page_sapiens.html\'">' +
+            '<span class="nav-direction">Готово <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>' +
+            '<span class="nav-chapter-title">Повернутися до книги</span>' +
+            '</button>';
+    }
+
+    document.getElementById('readerContent').innerHTML =
+        '<div class="chapter-label">' + ch.label + '</div>' +
+        '<div class="chapter-title">' + ch.title + '</div>' +
+        '<div class="chapter-meta">' +
+            '<span class="chapter-time">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+                ch.time +
+            '</span>' +
+        '</div>' +
+        '<div class="reader-body">' + ch.content + '</div>' +
+        '<div class="chapter-nav">' +
+            prevBtn +
+            '<span class="nav-center">' + (idx + 1) + ' / ' + chapters.length + '</span>' +
+            nextBtn +
+        '</div>';
+
+    document.querySelector('.topbar-title').textContent = 'Сапієнс \u00B7 ' + ch.label;
+
+    document.querySelectorAll('.toc-item').forEach(function(item, i) {
+        item.classList.toggle('active', i === idx);
+    });
+
+    readChapters.add(idx);
+    var pct = Math.round((readChapters.size / chapters.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    currentChapter = idx;
+    closeTocMobile();
+}
+
+function goToChapter(idx) {
+    renderChapter(idx);
+}
+
+function toggleSettings() {
+    var panel = document.getElementById('settingsPanel');
+    panel.classList.toggle('open');
+}
+
+function toggleToc() {
+    var sidebar = document.getElementById('tocSidebar');
+    var overlay = document.getElementById('tocOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+function closeTocMobile() {
+    if (window.innerWidth <= 768) {
+        document.getElementById('tocSidebar').classList.remove('open');
+        document.getElementById('tocOverlay').classList.remove('open');
+    }
+}
+
+document.addEventListener('click', function(e) {
+    var panel = document.getElementById('settingsPanel');
+    var btn = document.getElementById('settingsToggle');
+    if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(22, fontSize + delta));
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+    document.getElementById('fontSizeVal').textContent = fontSize + 'px';
+}
+
+function setFont(type) {
+    currentFont = type;
+    document.body.style.fontFamily = type === 'sans'
+        ? "-apple-system, BlinkMacSystemFont, 'Inter', sans-serif"
+        : "Georgia, 'Times New Roman', serif";
+    document.getElementById('fontSerif').classList.toggle('active', type === 'serif');
+    document.getElementById('fontSans').classList.toggle('active', type === 'sans');
+}
+
+function setTheme(theme) {
+    document.body.classList.remove('dark', 'sepia');
+    if (theme !== 'light') document.body.classList.add(theme);
+    ['light','sepia','dark'].forEach(function(t) {
+        document.getElementById('theme' + t.charAt(0).toUpperCase() + t.slice(1))
+            .classList.toggle('active', t === theme);
+    });
+    currentTheme = theme;
+}
+
+renderChapter(0);
+</script>
+</body>
+</html>

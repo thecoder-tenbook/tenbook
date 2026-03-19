@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7 Звичок — Читання · TENBOOK</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --border: #e8edf2;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --accent: #0ea5e9;
+        --font-size: 17px;
+        --line-height: 1.85;
+    }
+
+    body.dark {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --border: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+    }
+
+    body.sepia {
+        --bg: #f5f0e8;
+        --surface: #ede8dc;
+        --border: #d4c9b0;
+        --text-primary: #2c1f0e;
+        --text-secondary: #5c4a2a;
+        --text-muted: #8c7a5a;
+    }
+
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Georgia', 'Times New Roman', serif; transition: background 0.3s, color 0.3s; min-height: 100vh; }
+
+    .topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; padding: 0 1.5rem; z-index: 100; transition: background 0.3s, border-color 0.3s; }
+    .topbar-logo { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-weight: 900; font-size: 0.95rem; letter-spacing: 2px; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; flex-shrink: 0; }
+    .topbar-title { flex: 1; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .topbar-actions { display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
+    .icon-btn { background: none; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: background 0.15s, color 0.15s; }
+    .icon-btn:hover { background: var(--surface); color: var(--text-primary); }
+
+    .progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 3px; background: var(--border); z-index: 99; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #0ea5e9, #8b5cf6); transition: width 0.3s; border-radius: 0 2px 2px 0; }
+
+    .settings-panel { position: fixed; top: 55px; right: 1rem; width: 280px; background: var(--bg); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); padding: 1.2rem; z-index: 200; display: none; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+    .settings-panel.open { display: block; }
+    .settings-section { margin-bottom: 1.1rem; }
+    .settings-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .font-size-row { display: flex; align-items: center; gap: 0.6rem; }
+    .font-size-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; color: var(--text-primary); display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .font-size-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .font-size-val { flex: 1; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
+    .theme-row { display: flex; gap: 0.5rem; }
+    .theme-btn { flex: 1; height: 36px; border-radius: 8px; border: 2px solid var(--border); cursor: pointer; font-size: 0.75rem; font-weight: 600; transition: border-color 0.15s; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .theme-btn.light { background: #ffffff; color: #0f172a; }
+    .theme-btn.sepia { background: #f5f0e8; color: #2c1f0e; }
+    .theme-btn.dark  { background: #0f172a; color: #f1f5f9; }
+    .theme-btn.active { border-color: var(--accent); }
+    .font-row { display: flex; gap: 0.5rem; }
+    .font-btn { flex: 1; height: 36px; border-radius: 8px; border: 2px solid var(--border); background: var(--surface); cursor: pointer; font-size: 0.8rem; color: var(--text-secondary); transition: all 0.15s; }
+    .font-btn.serif { font-family: Georgia, serif; }
+    .font-btn.sans  { font-family: -apple-system, sans-serif; }
+    .font-btn.active { border-color: var(--accent); color: var(--accent); }
+
+    .reader-wrap { min-height: 100vh; padding-top: 55px; }
+
+    .toc-sidebar { position: fixed; top: 55px; left: 0; bottom: 0; width: 260px; background: var(--surface); border-right: 1px solid var(--border); overflow-y: auto; transition: transform 0.3s, background 0.3s, border-color 0.3s; z-index: 80; padding: 1.5rem 0; }
+    .toc-header { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 0 1.2rem; margin-bottom: 0.8rem; }
+    .toc-book-info { display: flex; align-items: center; gap: 0.75rem; padding: 0 1.2rem 1.2rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+    .toc-cover { width: 38px; height: 57px; border-radius: 5px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .toc-cover svg { width: 100%; height: 100%; display: block; }
+    .toc-book-title { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+    .toc-book-author { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+    .toc-item { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 1.2rem; cursor: pointer; transition: background 0.15s; border-left: 3px solid transparent; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; text-decoration: none; }
+    .toc-item:hover { background: var(--bg); }
+    .toc-item.active { background: var(--bg); border-left-color: var(--accent); }
+    .toc-num { font-size: 0.68rem; font-weight: 800; color: var(--text-muted); min-width: 18px; padding-top: 2px; }
+    .toc-item.active .toc-num { color: var(--accent); }
+    .toc-text { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.35; }
+    .toc-item.active .toc-text { color: var(--text-primary); font-weight: 600; }
+    .toc-done { margin-left: auto; color: #10b981; flex-shrink: 0; padding-top: 2px; }
+
+    .reader-main { margin-left: 260px; min-height: 100vh; }
+    .reader-content { max-width: 680px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+
+    .chapter-label { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+    .chapter-title { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--text-primary); line-height: 1.2; letter-spacing: -0.4px; margin-bottom: 0.6rem; }
+    .chapter-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .chapter-time { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; }
+
+    .reader-body { font-size: var(--font-size); line-height: var(--line-height); color: var(--text-secondary); }
+    .reader-body p { margin-bottom: 1.5em; }
+    .reader-body h3 { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 2em 0 0.8em; }
+
+    .pull-quote { margin: 2rem 0; padding: 1.5rem 1.8rem; background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; }
+    .pull-quote p { font-size: 1.1em; font-style: italic; color: var(--text-primary); margin: 0; line-height: 1.65; }
+
+    .key-point { display: flex; gap: 1rem; margin: 1.8rem 0; padding: 1.2rem 1.4rem; background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.22); border-radius: 12px; align-items: flex-start; }
+    .key-point-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin: 0; }
+
+    .chapter-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); gap: 1rem; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+    .nav-prev, .nav-next { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.9rem 1.2rem; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; background: none; text-decoration: none; transition: all 0.2s; max-width: 48%; }
+    .nav-prev:hover, .nav-next:hover { border-color: var(--accent); background: var(--surface); }
+    .nav-next { text-align: right; margin-left: auto; }
+    .nav-direction { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 0.3rem; }
+    .nav-next .nav-direction { justify-content: flex-end; }
+    .nav-chapter-title { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+    .nav-center { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+
+    @media (max-width: 768px) {
+        .toc-sidebar { transform: translateX(-100%); }
+        .toc-sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,0.15); }
+        .toc-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 79; }
+        .toc-overlay.open { display: block; }
+        .reader-main { margin-left: 0; }
+        .reader-content { padding: 2rem 1.2rem 5rem; }
+        .chapter-title { font-size: 1.45rem; }
+        .chapter-nav { flex-wrap: wrap; }
+        .nav-prev, .nav-next { max-width: 100%; flex: 1; }
+        .nav-center { width: 100%; text-align: center; order: -1; }
+        .settings-panel { right: 0.5rem; left: 0.5rem; width: auto; }
+    }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+    <a href="book_page_7habits.html" class="topbar-logo">TENBOOK</a>
+    <div class="topbar-title">7 Звичок · Вступ</div>
+    <div class="topbar-actions">
+        <button class="icon-btn" id="tocToggle" title="Зміст" onclick="toggleToc()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+        </button>
+        <button class="icon-btn" id="settingsToggle" title="Налаштування" onclick="toggleSettings()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <a href="book_page_7habits.html" class="icon-btn" title="Закрити">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </a>
+    </div>
+</header>
+
+<div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 11%"></div>
+</div>
+
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-section">
+        <div class="settings-label">Розмір тексту</div>
+        <div class="font-size-row">
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A−</button>
+            <div class="font-size-val" id="fontSizeVal">17px</div>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-label">Шрифт</div>
+        <div class="font-row">
+            <button class="font-btn serif active" id="fontSerif" onclick="setFont('serif')">Serif</button>
+            <button class="font-btn sans" id="fontSans" onclick="setFont('sans')">Sans</button>
+        </div>
+    </div>
+    <div class="settings-section" style="margin-bottom:0">
+        <div class="settings-label">Тема</div>
+        <div class="theme-row">
+            <button class="theme-btn light active" id="themeLight" onclick="setTheme('light')">☀️ Світла</button>
+            <button class="theme-btn sepia" id="themeSepia" onclick="setTheme('sepia')">📜 Сепія</button>
+            <button class="theme-btn dark" id="themeDark" onclick="setTheme('dark')">🌙 Темна</button>
+        </div>
+    </div>
+</div>
+
+<div class="toc-overlay" id="tocOverlay" onclick="toggleToc()"></div>
+
+<aside class="toc-sidebar" id="tocSidebar">
+    <div class="toc-book-info">
+        <div class="toc-cover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block;"><rect width="200" height="296" fill="#EEF4F8"/><rect x="30" y="26" width="140" height="14" rx="7" fill="#2A5080" opacity="0.12"/><rect x="30" y="46" width="140" height="14" rx="7" fill="#2A5080" opacity="0.20"/><rect x="30" y="66" width="140" height="14" rx="7" fill="#2A5080" opacity="0.28"/><rect x="30" y="86" width="140" height="14" rx="7" fill="#2A5080" opacity="0.36"/><rect x="30" y="106" width="140" height="14" rx="7" fill="#2A5080" opacity="0.46"/><rect x="30" y="126" width="140" height="14" rx="7" fill="#2A5080" opacity="0.56"/><rect x="30" y="146" width="140" height="14" rx="7" fill="#2A5080" opacity="0.70"/><text x="44" y="38" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.6">1</text><text x="44" y="58" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.65">2</text><text x="44" y="78" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.7">3</text><text x="44" y="98" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.75">4</text><text x="44" y="118" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.82">5</text><text x="44" y="138" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.88">6</text><text x="44" y="158" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white">7</text><line x1="28" y1="186" x2="172" y2="186" stroke="#A8C0D0" stroke-width="0.6"/><text x="100" y="211" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="17" font-weight="900" fill="#0A2040" letter-spacing="1">THE 7 HABITS</text><line x1="40" y1="221" x2="160" y2="221" stroke="#4A80B0" stroke-width="1.2"/><text x="100" y="237" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="#6A90A8" letter-spacing="1.3">OF HIGHLY EFFECTIVE PEOPLE</text><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" fill="#2A4A60" letter-spacing="0.3">Stephen Covey</text></svg>
+        </div>
+        <div>
+            <div class="toc-book-title">7 Звичок Високоефективних Людей</div>
+            <div class="toc-book-author">Stephen R. Covey</div>
+        </div>
+    </div>
+
+    <div class="toc-header">Зміст</div>
+    <a class="toc-item active" href="#" onclick="goToChapter(0); return false;"><span class="toc-num">Вст</span><span class="toc-text">Зсередини назовні</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(1); return false;"><span class="toc-num">1</span><span class="toc-text">Будьте проактивними</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(2); return false;"><span class="toc-num">2</span><span class="toc-text">Починайте з кінцем на увазі</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(3); return false;"><span class="toc-num">3</span><span class="toc-text">Робіть найважливіше спочатку</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(4); return false;"><span class="toc-num">4</span><span class="toc-text">Думайте виграш/виграш</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(5); return false;"><span class="toc-num">5</span><span class="toc-text">Спочатку зрозумій</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(6); return false;"><span class="toc-num">6</span><span class="toc-text">Досягайте синергії</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(7); return false;"><span class="toc-num">7</span><span class="toc-text">Точіть пилку</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(8); return false;"><span class="toc-num">Вис</span><span class="toc-text">Чому ця книга вічна</span></a>
+</aside>
+
+<div class="reader-wrap">
+    <div class="reader-main">
+        <div class="reader-content" id="readerContent"></div>
+    </div>
+</div>
+
+<script>
+const KP = (text) => `
+    <div class="key-point">
+        <div class="key-point-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg></div>
+        <p class="key-point-text">${text}</p>
+    </div>`;
+
+const PQ = (text) => `<div class="pull-quote"><p>${text}</p></div>`;
+
+const chapters = [
+    {
+        label: 'Вступ',
+        title: 'Зсередини назовні',
+        time: '3 хв читання',
+        content: `
+            <p>Щоб зрозуміти «7 Звичок» на глибокому рівні, потрібно спочатку побачити образ, навколо якого побудована вся книга. Стівен Кові називає його «зсередини назовні» — Inside Out. Це не просто красиве словосполучення, а принципово інший погляд на те, як відбуваються зміни в житті людини.</p>
+
+            ${PQ('«Справжня ефективність не починається з техніки управління часом. Вона починається з того, хто ви є у той момент, коли ніхто не дивиться.»')}
+
+            <h3>Дерево і коріння</h3>
+
+            <p>Уявіть дерево. Більшість книг з саморозвитку вчать, як підстригати гілки — тобто змінювати поведінку, виробляти нові звички, говорити правильні слова. Результат такого підходу завжди тимчасовий: підстрижені гілки відростають знову, стара поведінка повертається, щойно тиск знімається.</p>
+
+            <p>Кові пропонує зайнятися корінням — характером, системою цінностей, тим, ким ви насправді є, а не тільки здаєтеся. Справжня ефективність не починається з техніки управління часом чи навичок переговорів. Вона починається з того, хто ви є у той момент, коли ніхто не дивиться. Характер — це фундамент. Все інше — надбудова.</p>
+
+            ${KP('Кові розрізняє «Етику Характеру» і «Етику Особистості». Перші 200 років американської літератури з саморозвитку були про характер. Після WWI відбувся зсув до іміджу й харизми. Саме цей зсув, стверджує Кові, є причиною більшості особистісних і управлінських криз.')}
+
+            <h3>Модель зрілості</h3>
+
+            <p>Кові структурує книгу навколо руху від залежності через незалежність до усвідомленої взаємозалежності. Залежна людина думає: «Ти маєш подбати про мене». Незалежна: «Я можу подбати про себе сам». Взаємозалежна: «Разом ми можемо досягти того, чого жоден з нас не досягне поодинці».</p>
+
+            <p>Перші три звички формують внутрішню незалежність — так звану «Приватну перемогу». Наступні три будують продуктивні стосунки — «Публічну перемогу». Сьома звичка підтримує і поглиблює всі попередні. Саме цей рух і є сутністю книги.</p>
+
+            ${KP('Звичка — не те, що ви робите. Це те, ким ви є. Кові будує не систему навичок, а систему характеру.')}
+        `
+    },
+    {
+        label: 'Звичка 1 з 7',
+        title: 'Будьте проактивними',
+        time: '3 хв читання',
+        content: `
+            <p>Перша і найфундаментальніша звичка: між будь-яким зовнішнім стимулом і вашою реакцією існує простір. У тварин цей простір майже відсутній — вони діють рефлекторно. У людини є унікальна здатність зупинитися і обрати реакцію. Саме ця здатність і є проактивністю.</p>
+
+            ${PQ('«Між стимулом і реакцією є простір. У цьому просторі — наша свобода і наша здатність обирати. У нашому виборі — наш ріст і наше щастя.»')}
+
+            <h3>Реактивна vs проактивна людина</h3>
+
+            <p>Реактивна людина відчуває, що нею керують обставини: погода, настрій боса, ціни на бензин. Вона постійно у режимі реагування і часто говорить: «Я не можу нічого вдіяти», «Такий вже мій характер», «Вони мене змусили». Проактивна людина розуміє, що не може контролювати вітер, але може регулювати вітрила.</p>
+
+            <p>Проактивність — це не оптимізм і не байдужість до проблем. Це відповідальність. Само слово «відповідальність» (responsibility) — це здатність обирати відповідь (response-ability). Ми відповідальні за своє власне життя.</p>
+
+            <h3>Кола впливу і турботи</h3>
+
+            <p>Кові вводить поняття «кола впливу» і «кола турботи». Ми всі хвилюємося про безліч речей — здоров'я близьких, економіку, новини, поведінку інших людей. Але реально впливати можемо лише на частину з них. Проактивна людина концентрує енергію на колі впливу і поступово розширює його. Реактивна витрачає енергію на коло турботи і виснажується, нічого не змінюючи.</p>
+
+            ${KP('Прислухайтесь до своєї мови протягом одного дня. «Я мушу» чи «Я обираю»? «Він мене дратує» чи «Я дозволяю собі дратуватися»? Мова відображає мислення, а зміна мови — перший крок до зміни мислення.')}
+
+            <h3>Ініціатива і відповідальність</h3>
+
+            <p>Проактивні люди не чекають, поки хтось скаже їм що робити. Вони беруть ініціативу, шукають рішення, роблять те, що потрібно. Якщо є проблема — вони її вирішують. Якщо є можливість — вони нею користуються. Вони не виправдовуються і не звинувачують обставини.</p>
+
+            <p>Важлива деталь: проактивність не означає активність або напористість. Іноді найбільш проактивне рішення — це зачекати, поспостерігати, зберегти тишу. Ключове — що це свідомий вибір, а не автоматична реакція.</p>
+
+            ${KP('Проактивна людина не запитує «Чому це зі мною відбувається?» — вона запитує «Що я можу з цим зробити?»')}
+        `
+    },
+    {
+        label: 'Звичка 2 з 7',
+        title: 'Починайте, маючи кінець на увазі',
+        time: '3 хв читання',
+        content: `
+            <p>Кожна річ у світі створюється двічі. Спочатку в уяві — це перше творення. Потім у реальності — це друге творення. Будинок спочатку існує в голові архітектора як ескіз, потім на кресленні, і лише потім з'являється у вигляді цегли й бетону. Якщо перше творення відсутнє або розмите — друге неминуче буде хаотичним.</p>
+
+            ${PQ('«Почніть з кінця на увазі: уявіть свої похорони. Хто там? Що вони кажуть про вас? Різниця між тим, що ви чуєте зараз, і тим, що хочете почути — і є ваша робота.»')}
+
+            <h3>Хто здійснює ваше перше творення?</h3>
+
+            <p>Більшість людей живуть, дозволяючи комусь іншому здійснювати їхнє перше творення — батькам, медіа, корпоративній культурі, соціальним очікуванням. Вони прокидаються одного дня і виявляють, що сходили на вершину драбини успіху, але вона стояла не до тієї стіни.</p>
+
+            <p>Якщо ви не знаєте, куди йдете, ви, швидше за все, потрапите туди, куди вас ведуть інші. Друга звичка — про те, щоб свідомо визначити, яку людину ви хочете стати і яке життя хочете прожити.</p>
+
+            <h3>Особиста місія</h3>
+
+            <p>Кові пропонує написати особисту місію — не корпоративними кліше, а справжній документ, де ви відповідаєте на питання: яким я хочу бути? Що хочу зробити? На яких цінностях будувати своє життя? Яким я хочу бути у різних ролях — як батько, як колега, як друг, як громадянин?</p>
+
+            ${KP('Він рекомендує уявний експеримент: уявіть свої власні похорони. Що кажуть люди? Що ви хочете, щоб вони казали? Різниця між цими двома картинками — і є ваша робота.')}
+
+            <h3>Лідерство vs менеджмент</h3>
+
+            <p>Кові проводить важливе розрізнення: лідерство — це рішення про те, яка драбина до якої стіни стоїть. Менеджмент — це ефективне піднімання по ній. Більшість людей зосереджені на менеджменті власного життя і забувають про лідерство щодо нього.</p>
+
+            <p>Без ясного бачення кінцевої мети найефективніший менеджмент стає марним — ви просто стаєте кращим у тому, щоб рухатися не в той бік. Друга звичка — це компас, без якого перша звичка (проактивність) не має напрямку.</p>
+
+            ${KP('Особиста місія — це не мета. Це конституція, стандарт, за яким ви оцінюєте кожне рішення і кожну дію свого життя.')}
+        `
+    },
+    {
+        label: 'Звичка 3 з 7',
+        title: 'Робіть найважливіше спочатку',
+        time: '4 хв читання',
+        content: `
+            <p>Третя звичка — це виконання того, що визначено у другій. Якщо друга звичка про компас, третя — про здатність іти в потрібному напрямку, навіть коли навколо вирує хаос повсякденності. Це менеджмент себе, а не часу.</p>
+
+            ${PQ('«Ключ — не у пріоритизації розкладу, а у плануванні пріоритетів.»')}
+
+            <h3>Матриця управління часом</h3>
+
+            <p>Кові пропонує матрицю, яка стала класикою: вісь «терміново/нетерміново» і «важливо/неважливо» утворюють чотири квадранти:</p>
+
+            <p><strong>Квадрант 1</strong> — термінове і важливе: кризи, дедлайни, невідкладні проблеми. Тут треба бути, але не жити постійно.</p>
+
+            <p><strong>Квадрант 2</strong> — важливе, але нетермінове: планування, стосунки, розвиток, здоров'я, профілактика. Ось де будується справжня ефективність.</p>
+
+            <p><strong>Квадрант 3</strong> — термінове, але неважливе: більшість дзвінків, нарад, листів, чужих дедлайнів. Тут живуть люди, яких поважають, але хто насправді реалізує чужі пріоритети.</p>
+
+            <p><strong>Квадрант 4</strong> — ні те, ні інше: соцмережі заради соцмереж, тривіальні розваги. Втеча від реальності.</p>
+
+            ${KP('Більшість людей живуть у квадрантах 1 і 3, постійно реагуючи на чужі пріоритети. Але справжня ефективність будується в квадранті 2.')}
+
+            <h3>Чому квадрант 2 такий важливий?</h3>
+
+            <p>Жодна криза не з'являється нізвідки — вона починається як занедбана ситуація, яку можна було вирішити заздалегідь. Хвороба, яку можна було попередити здоровим способом життя. Конфлікт, якого можна було уникнути, якби своєчасно поговорили. Проект, який перетворився на аврал, бо не планували. Квадрант 2 — це профілактика проти квадранту 1.</p>
+
+            <p>Люди, які живуть переважно у квадранті 2, рідко мають кризи. У них є час на стосунки, на здоров'я, на розвиток. Вони проактивні, а не реактивні. Вони ведуть збалансоване життя.</p>
+
+            <h3>Навчіться говорити «ні»</h3>
+
+            <p>Практичний принцип: навчіться говорити «ні» квадрантам 3 і 4 — це єдиний спосіб звільнити час для квадранта 2. Кожне «так» чомусь неважливому — це автоматичне «ні» чомусь важливому.</p>
+
+            ${KP('Щотижневе планування — важливіше за щоденне. Виділяйте час на тиждень наперед, розставляйте ролі і пріоритети. Розклад — слуга місії, а не навпаки.')}
+
+            <p>Кові також підкреслює: ефективне управління собою неможливе без делегування. Якщо ви все намагаєтесь зробити самостійно, у вас ніколи не буде часу для квадранта 2. Навчіться довіряти іншим і давати їм ресурси для виконання роботи.</p>
+        `
+    },
+    {
+        label: 'Звичка 4 з 7',
+        title: 'Думайте в дусі «виграш/виграш»',
+        time: '3 хв читання',
+        content: `
+            <p>Четверта звичка переходить від особистої ефективності до міжособистісної. Кові виділяє шість парадигм людської взаємодії. Розуміння їх — ключ до того, чому одні переговори закінчуються партнерством, а інші — ворожнечею.</p>
+
+            ${PQ('«Виграш/виграш — це не техніка. Це філософія людської взаємодії, яка вимагає сміливості і чуйності одночасно.»')}
+
+            <h3>Шість парадигм взаємодії</h3>
+
+            <p><strong>Виграш/програш</strong> — найпоширеніша парадигма. Школа, спорт, корпоративна конкуренція постійно нагадують: ресурсів мало, якщо виграю я, програєш ти. Ця парадигма глибоко вкорінена і часто діє несвідомо.</p>
+
+            <p><strong>Програш/виграш</strong> — хронічне поступання. Це не щедрість, а низька самооцінка. Такі люди накопичують образи і рано чи пізно вибухають або ламаються. «Я завжди програю, так уже є» — це теж парадигма, і вона руйнівна.</p>
+
+            <p><strong>Програш/програш</strong> — коли люди настільки зосереджені на тому, щоб «ворог» програв, що не помічають, як самі програють. Помста. Принципова боротьба заради боротьби.</p>
+
+            <p><strong>Виграш</strong> — без уваги до інших. «Мені добре, а до вас мені нема діла». Функціонує, але не будує стосунків і не створює синергії.</p>
+
+            <p><strong>Виграш/виграш</strong> — пошук третього шляху, де інтереси обох сторін задоволені краще, ніж у будь-якому початковому варіанті.</p>
+
+            <p><strong>Виграш/виграш або нічого</strong> — для ситуацій, де неможливо знайти взаємовигідне рішення. Краще не домовитися, ніж погодитися на рішення, яке шкодить одній зі сторін.</p>
+
+            <h3>Емоційний банківський рахунок</h3>
+
+            <p>Кові вводить образ «емоційного банківського рахунку» у стосунках. Кожен прояв уваги, дотримання обіцянок, чесність, вибачення — це внесок. Кожне порушення, неповага, ігнорування, брехня — зняття. Переговори у дусі виграш/виграш можливі лише тоді, коли рахунок у плюсі.</p>
+
+            ${KP('На від\'ємному емоційному рахунку навіть найраціональніша пропозиція сприймається з підозрою. Спочатку інвестуйте в стосунки, потім обговорюйте умови.')}
+
+            <p>Для виграш/виграш потрібні два рідкісних поєднання: сміливість відстоювати власні інтереси і щирий інтерес до інтересів іншого. Більшість людей або поступаються, або наполягають. Четверта звичка — це про те, щоб робити обидві речі одночасно.</p>
+        `
+    },
+    {
+        label: 'Звичка 5 з 7',
+        title: 'Спочатку прагніть зрозуміти, потім — бути зрозумілим',
+        time: '3 хв читання',
+        content: `
+            <p>П'ята звичка — найважча практично, попри те, що здається найпростішою теоретично. Її суть: перш ніж давати пораду, пропонувати рішення або висловлювати власну думку — дійсно зрозумійте співрозмовника.</p>
+
+            ${PQ('«Більшість людей не слухають з наміром зрозуміти — вони слухають з наміром відповісти. Вони або говорять, або готуються говорити.»')}
+
+            <h3>Аналогія з окулістом</h3>
+
+            <p>Кові описує типову ситуацію: ви йдете до окуліста зі скаргою на зір. Він знімає свої окуляри, дає вам і каже: «Носіть мої — мені вони дуже допомогли». Це смішно звучить щодо окуліста, але саме так більшість із нас «слухають» інших людей.</p>
+
+            <p>Ми слухаємо автобіографічно — через призму власного досвіду, власних проблем, власних рішень. Коли хтось розповідає про проблему, ми вже думаємо, як її вирішити, бо в нас була схожа ситуація. Але «схожа» не означає «однакова».</p>
+
+            <h3>Чотири рівні слухання</h3>
+
+            <p><strong>Ігнорування</strong> — ви взагалі не слухаєте.</p>
+            <p><strong>Вдаване слухання</strong> — ви кажете «угу», «так», але думаєте про інше.</p>
+            <p><strong>Вибіркове слухання</strong> — ви чуєте те, що хочете почути.</p>
+            <p><strong>Емпатичне слухання</strong> — ви слухаєте з наміром дійсно зрозуміти людину: її слова, почуття, наміри, те, що стоїть за словами.</p>
+
+            ${KP('Лише четвертий рівень дає людині відчуття, що її справді почули. І лише після цього вона готова почути вас. Емпатичне слухання — не злагода. Це розуміння.')}
+
+            <h3>Парадокс слухання</h3>
+
+            <p>Чим більше часу ви витрачаєте на справжнє слухання, тим менше часу вам потрібно на переконування. Люди, які відчувають себе почутими, відкриті до чужих ідей. Люди, яких не чують, захищаються і закриваються.</p>
+
+            <p>Більшість конфліктів і непорозумінь — не конфлікт інтересів, а конфлікт неуважності. Сторони просто не чули одна одну. П'ята звичка вирішує це ще до того, як конфлікт розгоряється.</p>
+
+            ${KP('Не поспішайте говорити «я розумію». Справжнє розуміння приходить лише тоді, коли людина сама почувається зрозумілою — а не тоді, коли ви вирішили, що зрозуміли.')}
+
+            <p>І лише після того, як ви дійсно зрозуміли — час бути зрозумілим самому. Лише тоді ваша думка буде почута. Тільки тоді у вас є моральне право давати пораду.</p>
+        `
+    },
+    {
+        label: 'Звичка 6 з 7',
+        title: 'Досягайте синергії',
+        time: '3 хв читання',
+        content: `
+            <p>Синергія — це коли ціле більше, ніж сума частин. 1+1 = 3 або 10, або 100. Це не магія і не метафора — це конкретний результат, який виникає, коли люди по-справжньому цінують відмінності одне одного і шукають разом рішення кращі за те, що міг запропонувати кожен окремо.</p>
+
+            ${PQ('«Синергія — це не компроміс. Компроміс — 1+1=1,5. Синергія — 1+1=8, або 16, або 1600.»')}
+
+            <h3>Синергія vs компроміс</h3>
+
+            <p>Більшість нарад і переговорів виглядають так: кожна сторона відстоює свою позицію, поступово шукається компроміс — тобто рішення, яким незадоволені всі. Компроміс — це 1+1=1,5. Синергія — це інший процес. Сторони ставлять свої позиції «на паузу» і починають досліджувати: а чому ти так думаєш? Що для тебе важливо? Де наші інтереси насправді перетинаються?</p>
+
+            <p>Ключовий принцип: ціни відмінностей. Різні точки зору — це не перешкода, а ресурс. Чим більше відмінностей між людьми, тим вище потенціал для синергії — і тим вища ймовірність знайти рішення, яке жоден з них не міг уявити поодинці.</p>
+
+            ${KP('Приклад: два архітектори сперечаються. Один хоче великі вікна для світла, інший — глухі стіни для приватності. Компроміс: середні вікна — ніхто не задоволений. Синергія: внутрішній двір з атріумом — є і світло, і приватність. Це рішення не було у жодного до початку справжнього діалогу.')}
+
+            <h3>Синергія як результат усіх звичок</h3>
+
+            <p>Синергія неможлива без попередніх п'яти звичок. Потрібна проактивність, щоб не реагувати захисно. Потрібне спільне бачення мети (звичка 2). Потрібна готовність інвестувати час (звичка 3). Потрібна парадигма виграш/виграш (звичка 4). Потрібне емпатичне слухання (звичка 5). Шоста звичка — це не окрема навичка, а результат всіх попередніх.</p>
+
+            <p>Синергетична взаємодія можлива не лише між людьми, а й у самій людині — між розумом і серцем, між логікою і інтуїцією. Найкращі рішення часто приходять саме тоді, коли обидва аспекти задіяні.</p>
+
+            ${KP('Синергія починається з вашої відкритості: «Можливо, вам видно щось, чого не бачу я. Допоможіть мені зрозуміти вашу точку зору.')}
+        `
+    },
+    {
+        label: 'Звичка 7 з 7',
+        title: 'Точіть пилку',
+        time: '3 хв читання',
+        content: `
+            <p>Уявіть лісоруба, який з ранку до ночі пиляє дерева тупою пилкою. Ви запитуєте: чому б не зупинитися і не наточити? Він відповідає: «Немає часу, треба пиляти». Абсурдно? Але саме так більшість людей ставляться до власного відновлення.</p>
+
+            ${PQ('«Сьома звичка — це не розкіш для тих, у кого є час. Це передумова для того, щоб усі інші звички взагалі працювали.»')}
+
+            <h3>Чотири виміри відновлення</h3>
+
+            <p><strong>Фізичний вимір</strong>: харчування, рух, відпочинок, управління стресом. Не як самоціль, а як умова для всього іншого. Виснажене тіло не може думати ясно. Кові наполягає: це квадрант 2 — важливе, нетермінове, яке постійно відкладають, поки не стане кризою (квадрант 1).</p>
+
+            <p><strong>Інтелектуальний вимір</strong>: читання, навчання, письмо, роздуми. Кові наполягає: читайте щодня, хоча б трохи — це найдоступніший спосіб навчитися у найкращих людей усіх часів. Письмо — спосіб упорядкувати думки і збагатити власне мислення. Планування, осмислення, рефлексія — теж частина цього виміру.</p>
+
+            <p><strong>Духовний вимір</strong>: зв'язок з вашими цінностями і місією, медитація, молитва, час на природі, мистецтво, що торкається глибини. Цей вимір дає відчуття сенсу і напрямку. Людина без духовного виміру дрейфує за чужими пріоритетами.</p>
+
+            <p><strong>Соціально-емоційний вимір</strong>: якість стосунків, емпатія, служіння іншим, здатність отримувати задоволення від зв'язку з людьми. Людина без глибоких стосунків поступово втрачає сенс, навіть якщо досягає великих зовнішніх успіхів.</p>
+
+            ${KP('Ці чотири виміри взаємопов\'язані. Людина, яка нехтує тілом, врешті втрачає ясність думки. Людина без духовних коренів дрейфує за чужими пріоритетами. Людина без глибоких стосунків втрачає сенс. Одночасний розвиток усіх чотирьох — ось що таке «точити пилку».')}
+
+            <h3>Висхідна спіраль</h3>
+
+            <p>Сьома звичка не просто підтримує попередні шість — вона підіймає їх на новий рівень. Кожен цикл відновлення дає вам більше сил, мудрості і здатності жити відповідно до принципів. Це не горизонтальний рух по колу, а висхідна спіраль.</p>
+
+            <p>Щодня приділяти час кожному з чотирьох вимірів — це і є «точити пилку». Не потрібно великих блоків часу. Потрібна послідовність і усвідомленість.</p>
+        `
+    },
+    {
+        label: 'Висновок',
+        title: 'Чому ця книга вічна',
+        time: '3 хв читання',
+        content: `
+            <p>«7 Звичок» вийшла 1989 року — до інтернету, до смартфонів, до TED-talks і подкастів. Відтоді з'явилися тисячі книг про продуктивність, звички і лідерство. Більшість з них забуті. Ця — ні. Чому?</p>
+
+            ${PQ('«Ця книга не про те, як зробити більше за менший час. Вона про те, чому взагалі варто щось робити — і ким треба стати, щоб робити це добре.»')}
+
+            <h3>Характер, а не техніка</h3>
+
+            <p>Найсильніша думка, яку виносиш з цієї книги — розрізнення між «виглядати ефективним» і «бути ефективним». Ми живемо в культурі особистого бренду, де вміння презентувати себе цінується більше, ніж те, ким ти насправді є. Кові не засуджує навички презентації — він просто нагадує, що без реального фундаменту це будівля на піску.</p>
+
+            <h3>Сила емпатії</h3>
+
+            <p>Друга думка, яка залишається: більшість конфліктів і проблем у стосунках — результат дефіциту емпатичного слухання. Ми відповідаємо на слова людей, а не на те, що за ними стоїть. Якби п'ята звичка стала стандартом у школах і компаніях, половина терапевтів лишилася б без роботи.</p>
+
+            ${KP('35 років — і книга залишається актуальною, бо вона побудована не на трендах, а на принципах. Принципи не застарівають.')}
+
+            <h3>Де книга слабша</h3>
+
+            <p>Деякі розділи перевантажені прикладами з корпоративного світу 1980-х, які сьогодні здаються застарілими. Третя звичка (управління часом) краще розкрита у сучасних книгах — від «Getting Things Done» до «Deep Work». Книга також дещо затягнута: Кові іноді повторює одну думку декілька разів різними словами.</p>
+
+            <p>Але ці слабкості не змінюють головного: «7 Звичок» — одна з небагатьох книг з саморозвитку, яка ставить правильні питання. Не «як зробити більше за менший час», а «чому взагалі варто щось робити і ким я хочу бути, роблячи це».</p>
+
+            <h3>Кому читати?</h3>
+
+            <p><strong>Обов'язково</strong>: менеджерам і лідерам, батькам, людям на перехідних етапах життя, всім, хто відчуває, що «правильно робить все», але щось все одно іде не так.</p>
+
+            <p><strong>Можна пропустити</strong>: якщо ви шукаєте конкретні техніки і покрокові інструкції — ця книга вас розчарує. Вона змінює мислення, а не розклад дня.</p>
+
+            ${KP('Оцінка: ⭐⭐⭐⭐⭐ — Класика, яка залишається актуальною через 35 років. Одна з небагатьох книг, яку варто перечитати двічі: перший раз — щоб дізнатися ідеї, другий — щоб зрозуміти, наскільки вони вже стали (або не стали) частиною вашого характеру.')}
+        `
+    }
+];
+
+let currentChapter = 0;
+let fontSize = 17;
+let readChapters = new Set([0]);
+
+function renderChapter(idx) {
+    const ch = chapters[idx];
+    const isLast = idx === chapters.length - 1;
+    const isFirst = idx === 0;
+    const prevCh = !isFirst ? chapters[idx - 1] : null;
+    const nextCh = !isLast ? chapters[idx + 1] : null;
+
+    document.getElementById('readerContent').innerHTML = `
+        <div class="chapter-label">${ch.label}</div>
+        <div class="chapter-title">${ch.title}</div>
+        <div class="chapter-meta">
+            <span class="chapter-time">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                ${ch.time}
+            </span>
+        </div>
+        <div class="reader-body">${ch.content}</div>
+        <div class="chapter-nav">
+            ${prevCh ? `<button class="nav-prev" onclick="goToChapter(${idx-1})">
+                <span class="nav-direction"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Попередній</span>
+                <span class="nav-chapter-title">${prevCh.title}</span>
+            </button>` : '<div></div>'}
+            <span class="nav-center">${idx + 1} / ${chapters.length}</span>
+            ${nextCh ? `<button class="nav-next" onclick="goToChapter(${idx+1})">
+                <span class="nav-direction">Наступний <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">${nextCh.title}</span>
+            </button>` : `<button class="nav-next" onclick="window.location='book_page_7habits.html'">
+                <span class="nav-direction">Готово <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">Повернутися до книги</span>
+            </button>`}
+        </div>
+    `;
+
+    document.querySelector('.topbar-title').textContent = `7 Звичок · ${ch.label}`;
+
+    document.querySelectorAll('.toc-item').forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+    });
+
+    readChapters.add(idx);
+    const pct = Math.round((readChapters.size / chapters.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    currentChapter = idx;
+    closeTocMobile();
+}
+
+function goToChapter(idx) { renderChapter(idx); }
+
+function toggleSettings() {
+    document.getElementById('settingsPanel').classList.toggle('open');
+}
+
+function toggleToc() {
+    document.getElementById('tocSidebar').classList.toggle('open');
+    document.getElementById('tocOverlay').classList.toggle('open');
+}
+
+function closeTocMobile() {
+    if (window.innerWidth <= 768) {
+        document.getElementById('tocSidebar').classList.remove('open');
+        document.getElementById('tocOverlay').classList.remove('open');
+    }
+}
+
+document.addEventListener('click', (e) => {
+    const panel = document.getElementById('settingsPanel');
+    const btn = document.getElementById('settingsToggle');
+    if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(22, fontSize + delta));
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+    document.getElementById('fontSizeVal').textContent = fontSize + 'px';
+}
+
+function setFont(type) {
+    document.body.style.fontFamily = type === 'sans'
+        ? "-apple-system, BlinkMacSystemFont, 'Inter', sans-serif"
+        : "Georgia, 'Times New Roman', serif";
+    document.getElementById('fontSerif').classList.toggle('active', type === 'serif');
+    document.getElementById('fontSans').classList.toggle('active', type === 'sans');
+}
+
+function setTheme(theme) {
+    document.body.classList.remove('dark', 'sepia');
+    if (theme !== 'light') document.body.classList.add(theme);
+    ['light','sepia','dark'].forEach(t => {
+        document.getElementById('theme' + t.charAt(0).toUpperCase() + t.slice(1))
+            .classList.toggle('active', t === theme);
+    });
+}
+
+renderChapter(0);
+</script>
+</body>
+</html>

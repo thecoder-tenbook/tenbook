@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 592">
+  <rect width="400" height="592" fill="#EEF6F2"/>
+  <!-- document / book pages suggestion -->
+  <rect x="76" y="76" width="248" height="284" rx="8" fill="none" stroke="#3A7A5A" stroke-width="2.5" opacity="0.3"/>
+  <rect x="76" y="76" width="248" height="284" rx="8" fill="#3A7A5A" opacity="0.04"/>
+  <!-- text lines inside -->
+  <rect x="100" y="110" width="200" height="5" rx="2.5" fill="#3A7A5A" opacity="0.28"/>
+  <rect x="100" y="132" width="160" height="5" rx="2.5" fill="#3A7A5A" opacity="0.24"/>
+  <rect x="100" y="154" width="180" height="5" rx="2.5" fill="#3A7A5A" opacity="0.22"/>
+  <rect x="100" y="176" width="140" height="5" rx="2.5" fill="#3A7A5A" opacity="0.2"/>
+  <rect x="100" y="210" width="200" height="5" rx="2.5" fill="#3A7A5A" opacity="0.28"/>
+  <rect x="100" y="232" width="170" height="5" rx="2.5" fill="#3A7A5A" opacity="0.24"/>
+  <rect x="100" y="254" width="184" height="5" rx="2.5" fill="#3A7A5A" opacity="0.22"/>
+  <rect x="100" y="276" width="144" height="5" rx="2.5" fill="#3A7A5A" opacity="0.2"/>
+  <rect x="100" y="298" width="192" height="5" rx="2.5" fill="#3A7A5A" opacity="0.18"/>
+  <!-- divider -->
+  <line x1="56" y1="392" x2="344" y2="392" stroke="#A0C8B0" stroke-width="1"/>
+  <!-- title -->
+  <text x="200" y="432" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#0A2A1A" letter-spacing="1">БІЗНЕС-</text>
+  <text x="200" y="464" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#0A2A1A" letter-spacing="1">ПРИГОДИ</text>
+  <line x1="120" y1="480" x2="280" y2="480" stroke="#A0C8B0" stroke-width="1"/>
+  <text x="200" y="520" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#3A6A4A" letter-spacing="1">Джон Брукс</text>
+</svg>

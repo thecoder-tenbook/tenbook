@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Принципи — Читання · TENBOOK</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --border: #e8edf2;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --accent: #0ea5e9;
+        --font-size: 17px;
+        --line-height: 1.85;
+    }
+
+    body.dark {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --border: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+    }
+
+    body.sepia {
+        --bg: #f5f0e8;
+        --surface: #ede8dc;
+        --border: #d4c9b0;
+        --text-primary: #2c1f0e;
+        --text-secondary: #5c4a2a;
+        --text-muted: #8c7a5a;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: 'Georgia', 'Times New Roman', serif;
+        transition: background 0.3s, color 0.3s;
+        min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: 52px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1.5rem;
+        z-index: 100;
+        transition: background 0.3s, border-color 0.3s;
+    }
+
+    .topbar-logo {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-weight: 900;
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+
+    .topbar-title {
+        flex: 1;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        flex-shrink: 0;
+    }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        transition: background 0.15s, color 0.15s;
+    }
+    .icon-btn:hover { background: var(--surface); color: var(--text-primary); }
+    .icon-btn.active { color: var(--accent); }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+        position: fixed;
+        top: 52px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--border);
+        z-index: 99;
+    }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+        transition: width 0.3s;
+        border-radius: 0 2px 2px 0;
+    }
+
+    /* ── SETTINGS PANEL ── */
+    .settings-panel {
+        position: fixed;
+        top: 55px;
+        right: 1rem;
+        width: 280px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        padding: 1.2rem;
+        z-index: 200;
+        display: none;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+    .settings-panel.open { display: block; }
+
+    .settings-section { margin-bottom: 1.1rem; }
+    .settings-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+    }
+
+    .font-size-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .font-size-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text-primary);
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.15s;
+    }
+    .font-size-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .font-size-val {
+        flex: 1;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .theme-row { display: flex; gap: 0.5rem; }
+    .theme-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transition: border-color 0.15s;
+        display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .theme-btn.light { background: #ffffff; color: #0f172a; }
+    .theme-btn.sepia { background: #f5f0e8; color: #2c1f0e; }
+    .theme-btn.dark  { background: #0f172a; color: #f1f5f9; }
+    .theme-btn.active { border-color: var(--accent); }
+
+    .font-row { display: flex; gap: 0.5rem; }
+    .font-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        background: var(--surface);
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        transition: all 0.15s;
+    }
+    .font-btn.serif { font-family: Georgia, serif; }
+    .font-btn.sans  { font-family: -apple-system, sans-serif; }
+    .font-btn.active { border-color: var(--accent); color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .reader-wrap {
+        min-height: 100vh;
+        padding-top: 55px;
+    }
+
+    /* ── SIDEBAR / TOC ── */
+    .toc-sidebar {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        bottom: 0;
+        width: 260px;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+        transition: transform 0.3s, background 0.3s, border-color 0.3s;
+        z-index: 80;
+        padding: 1.5rem 0;
+    }
+
+    .toc-header {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 0 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .toc-book-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0 1.2rem 1.2rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1rem;
+    }
+
+    .toc-cover {
+        width: 38px;
+        height: 57px;
+        border-radius: 5px;
+        overflow: hidden;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        position: relative;
+    }
+
+    .toc-book-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+    .toc-book-author {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .toc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.7rem;
+        padding: 0.6rem 1.2rem;
+        cursor: pointer;
+        transition: background 0.15s;
+        border-left: 3px solid transparent;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        text-decoration: none;
+    }
+    .toc-item:hover { background: var(--bg); }
+    .toc-item.active {
+        background: var(--bg);
+        border-left-color: var(--accent);
+    }
+
+    .toc-num {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        min-width: 18px;
+        padding-top: 2px;
+    }
+    .toc-item.active .toc-num { color: var(--accent); }
+
+    .toc-text {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.35;
+    }
+    .toc-item.active .toc-text { color: var(--text-primary); font-weight: 600; }
+
+    .toc-done {
+        margin-left: auto;
+        color: #10b981;
+        flex-shrink: 0;
+        padding-top: 2px;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .reader-main {
+        margin-left: 260px;
+        min-height: 100vh;
+    }
+
+    .reader-content {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 3rem 2rem 6rem;
+    }
+
+    .chapter-label {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.8rem;
+    }
+
+    .chapter-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1.2;
+        letter-spacing: -0.4px;
+        margin-bottom: 0.6rem;
+    }
+
+    .chapter-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .chapter-time {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .reader-body {
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        color: var(--text-secondary);
+    }
+
+    .reader-body p {
+        margin-bottom: 1.5em;
+    }
+
+    .reader-body h3 {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 2em 0 0.8em;
+    }
+
+    .pull-quote {
+        margin: 2rem 0;
+        padding: 1.5rem 1.8rem;
+        background: var(--surface);
+        border-left: 4px solid var(--accent);
+        border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+        font-size: 1.1em;
+        font-style: italic;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.65;
+    }
+
+    .key-point {
+        display: flex;
+        gap: 1rem;
+        margin: 1.8rem 0;
+        padding: 1.2rem 1.4rem;
+        background: rgba(245,158,11,0.06);
+        border: 1px solid rgba(245,158,11,0.22);
+        border-radius: 12px;
+        align-items: flex-start;
+    }
+    .key-point-icon {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    .key-point-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* ── CHAPTER NAVIGATION ── */
+    .chapter-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+        gap: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+
+    .nav-prev, .nav-next {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        background: none;
+        text-decoration: none;
+        transition: all 0.2s;
+        max-width: 48%;
+    }
+    .nav-prev:hover, .nav-next:hover {
+        border-color: var(--accent);
+        background: var(--surface);
+    }
+    .nav-next { text-align: right; margin-left: auto; }
+
+    .nav-direction {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .nav-next .nav-direction { justify-content: flex-end; }
+    .nav-chapter-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+
+    .nav-center {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+        .toc-sidebar {
+            transform: translateX(-100%);
+        }
+        .toc-sidebar.open {
+            transform: translateX(0);
+            box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+        }
+        .toc-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 79;
+        }
+        .toc-overlay.open { display: block; }
+
+        .reader-main { margin-left: 0; }
+
+        .reader-content {
+            padding: 2rem 1.2rem 5rem;
+        }
+
+        .chapter-title { font-size: 1.45rem; }
+
+        .chapter-nav { flex-wrap: wrap; }
+        .nav-prev, .nav-next { max-width: 100%; flex: 1; }
+        .nav-center { width: 100%; text-align: center; order: -1; }
+
+        .settings-panel { right: 0.5rem; left: 0.5rem; width: auto; }
+    }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+    <a href="book_page_principles.html" class="topbar-logo">TENBOOK</a>
+    <div class="topbar-title">Принципи · Що всередині</div>
+    <div class="topbar-actions">
+        <button class="icon-btn" id="tocToggle" title="Зміст" onclick="toggleToc()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="15" y2="12"/>
+                <line x1="3" y1="18" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <button class="icon-btn" id="settingsToggle" title="Налаштування" onclick="toggleSettings()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+        </button>
+        <a href="book_page_principles.html" class="icon-btn" title="Закрити">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-section">
+        <div class="settings-label">Розмір тексту</div>
+        <div class="font-size-row">
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A−</button>
+            <div class="font-size-val" id="fontSizeVal">17px</div>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-label">Шрифт</div>
+        <div class="font-row">
+            <button class="font-btn serif active" id="fontSerif" onclick="setFont('serif')">Serif</button>
+            <button class="font-btn sans" id="fontSans" onclick="setFont('sans')">Sans</button>
+        </div>
+    </div>
+    <div class="settings-section" style="margin-bottom:0">
+        <div class="settings-label">Тема</div>
+        <div class="theme-row">
+            <button class="theme-btn light active" id="themeLight" onclick="setTheme('light')">Світла</button>
+            <button class="theme-btn sepia" id="themeSepia" onclick="setTheme('sepia')">Сепія</button>
+            <button class="theme-btn dark" id="themeDark" onclick="setTheme('dark')">Темна</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOC OVERLAY (mobile) -->
+<div class="toc-overlay" id="tocOverlay" onclick="toggleToc()"></div>
+
+<!-- TOC SIDEBAR -->
+<aside class="toc-sidebar" id="tocSidebar">
+    <div class="toc-book-info">
+        <div class="toc-cover" style="background:#1B2E50;position:relative;overflow:hidden;">
+            <img src="covers_ua/Principles.svg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div>
+            <div class="toc-book-title">Принципи</div>
+            <div class="toc-book-author">Рей Даліо</div>
+        </div>
+    </div>
+
+    <div class="toc-header">Зміст</div>
+
+    <a class="toc-item active" href="#" onclick="goToChapter(0); return false;">
+        <span class="toc-num">Вст</span>
+        <span class="toc-text">Людина, яка систематизувала успіх</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(1); return false;">
+        <span class="toc-num">1</span>
+        <span class="toc-text">Радикальна відкритість і правдивість</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(2); return false;">
+        <span class="toc-num">2</span>
+        <span class="toc-text">Принципи як алгоритми рішень</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(3); return false;">
+        <span class="toc-num">3</span>
+        <span class="toc-text">Компанія як машина</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(4); return false;">
+        <span class="toc-num">4</span>
+        <span class="toc-text">П'ятирівневий процес</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(5); return false;">
+        <span class="toc-num">5</span>
+        <span class="toc-text">Радикальна прозорість</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(6); return false;">
+        <span class="toc-num">6</span>
+        <span class="toc-text">Зважені рішення за заслугами</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(7); return false;">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Біль як інструмент зростання</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(8); return false;">
+        <span class="toc-num">8</span>
+        <span class="toc-text">Як застосувати ідеї на практиці</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(9); return false;">
+        <span class="toc-num">Фін</span>
+        <span class="toc-text">Алгоритм власного життя</span>
+    </a>
+</aside>
+
+<!-- MAIN -->
+<div class="reader-wrap">
+    <div class="reader-main">
+        <div class="reader-content" id="readerContent">
+            <!-- Content injected by JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+var KP = function(text) {
+    return '<div class="key-point"><div class="key-point-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg></div><p class="key-point-text">' + text + '</p></div>';
+};
+
+var PQ = function(text) {
+    return '<div class="pull-quote"><p>' + text + '</p></div>';
+};
+
+var chapters = [
+    {
+        label: 'Вступ',
+        title: 'Людина, яка систематизувала успіх',
+        time: '3 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>У 1975 році 26-річний Рей Даліо переїхав зі своєї невеликої квартири на Манхеттені у дещо менший офіс у тому самому будинку. Так народився Bridgewater Associates. Телефон, мінімальний капітал і кілька клієнтів з аграрного сектора. Ніщо не вказувало на те, що через п\'ятдесят років цей чоловік керуватиме найбільшим хедж-фондом у світі з активами понад 160 мільярдів доларів.</p>';
+            s += '<p>Але задовго до того, як Bridgewater став легендою Уолл-стрит, Даліо пережив катастрофу, яка мало не знищила все. У 1982 році він публічно оголосив про неминучу глобальну рецесію, що буде спровокована мексиканським борговим дефолтом. Він був настільки впевнений, що ставив на це репутацію і гроші. Ринки пішли вгору. Bridgewater опинився на межі банкрутства. Даліо звільнив останніх співробітників і сам ледве виплачував особисті рахунки, позичаючи у батька.</p>';
+            s += PQ('Те, що я вважав своєю найбільшою помилкою, виявилось найкращою подією в моєму житті. Вона змусила мене шукати систему, а не покладатись на впевненість.');
+            s += '<p>Ця катастрофа стала поворотним моментом. Даліо зрозумів: впевненість у власній правоті не є синонімом компетентності. Навіть найдосвідченіші люди можуть катастрофічно помилятись. Питання не в тому, як уникати помилок — а в тому, як вчитись із них швидше і систематичніше, ніж будь-хто інший.</p>';
+            s += '<h3>Народження системи</h3>';
+            s += '<p>Після 1982 року Даліо почав робити щось незвичне: після кожного важливого рішення або помилки він записував правило. Не нотатку «я облажався», а конкретний принцип: «Якщо трапляється X, правильна дія — Y, тому що Z». Рік за роком ці принципи накопичувались. Через десятиліття їх було понад п\'ять сотень.</p>';
+            s += '<p>Але Даліо пішов далі. Він почав будувати організацію на цих принципах — культуру, де правда важливіша за комфорт, де кожна помилка обговорюється відкрито, де вага голосу залежить від трек-рекорду, а не від посади. Bridgewater став незвичним місцем — місцем, де нові співробітники часто описують перші місяці як найважчі у своєму житті.</p>';
+            s += KP('Центральна ідея книги: будь-яку проблему можна перетворити на принцип, і будь-який принцип можна застосувати до нової ситуації. Системна рефлексія важливіша за природний талант.');
+            s += '<p>«Принципи» — це спроба передати цю систему читачеві. Не як набір правил для сліпого копіювання, а як приклад того, що відбувається, коли одна людина протягом п\'яти десятиліть чесно аналізує кожну свою дію і кожну помилку.</p>';
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 1',
+        title: 'Радикальна відкритість і правдивість',
+        time: '7 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>В більшості організацій існує негласний договір: ми не говоримо начальнику те, що він не хоче почути, а він не говорить нам те, що нам не сподобається. Люди ходять навколо проблем, як навколо гарячої каструлі. Наради перетворюються на ритуальне підтвердження вже прийнятих рішень. Реальні проблеми обговорюються в кулуарах після зборів — тихо, між довіреними людьми.</p>';
+            s += '<p>Даліо назвав цю систему «м\'якою» — і пояснив, чому вона катастрофічна для будь-якої організації. Рішення, засновані на неповній або викривленій інформації, систематично гірші від рішень, заснованих на правді. Культура, що захищає людей від незручних фактів, — це культура повільного гниття.</p>';
+            s += PQ('Більшість людей плутають добросердність з турботою. Добросердна людина захищає ваші почуття. Людина, що справді дбає про вас, скаже правду, навіть якщо вона болить.');
+            s += '<h3>Два принципи Bridgewater</h3>';
+            s += '<p>Даліо побудував Bridgewater навколо двох взаємопов\'язаних принципів. Перший — «радикальна правдивість»: кожен зобов\'язаний говорити правду відкрито і прямо, незалежно від того, наскільки вона незручна. Мовчання, коли є що сказати, прирівнюється до нечесності. Другий — «радикальна прозорість»: майже вся інформація в компанії відкрита для всіх, від стажера до партнера.</p>';
+            s += '<p>В Bridgewater є «правило двох хвилин»: якщо ви думаєте щось негативне про чужу ідею, але мовчите понад дві хвилини, ви порушуєте культурний кодекс компанії. Це звучить жорстко. На практиці це означає, що люди навчились говорити неприємне з повагою і конкретністю, а не загальними фразами.</p>';
+            s += '<h3>Новий співробітник у Bridgewater</h3>';
+            s += '<p>Нові люди в Bridgewater часто переживають шок. Вони звикли до середовищ, де критика приходить опосередковано — через оцінку на ревью раз на рік або через натяки у приватній розмові. У Bridgewater критика може прийти просто на нараді, від колеги, що сидить поряд.</p>';
+            s += '<p>Даліо описує, як люди проходять через кілька фаз. Перша — відкидання: «Ці люди просто жорстокі, це не нормально». Друга — адаптація: «Ці люди говорять мені правду, яку інші не кажуть». Третя — цінування: «Я розвиваюся тут швидше, ніж будь-де».</p>';
+            s += KP('Ключова відмінність: добросердність захищає людину від болю сьогодні, але позбавляє її росту завтра. Радикальна правдивість — навпаки: боляче зараз, але людина знає правду про себе і може рости.');
+            s += '<h3>Критикуй ідею, а не людину</h3>';
+            s += '<p>Даліо підкреслює: радикальна правдивість не означає жорстокість. Є тонка різниця між «твоя ідея погана, і ось чому» і «ти погана людина, і ось чому». Першу розмову можна вести відкрито і продуктивно. Друга — не розмова, а атака.</p>';
+            s += '<p>Він також наголошує: радикальна правдивість потребує психологічної роботи над собою. Більшість людей рефлекторно захищаються при критиці. Навчитись чути критику як корисну інформацію, а не як особистий напад — один із найважливіших навиків, що Bridgewater розвиває у своїх людях.</p>';
+            s += PQ('Боляча правда, сказана з повагою, — це подарунок. Приємна брехня, сказана з посмішкою, — це зрада.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 2',
+        title: 'Принципи як алгоритми рішень',
+        time: '6 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Уявіть двох менеджерів. Перший приймає рішення інтуїтивно: він оцінює ситуацію, зважує варіанти і робить вибір на основі досвіду і відчуттів. В хороший день він приймає блискучі рішення. В поганий — посередні. Його підлеглі ніколи не знають напевне, чого від нього очікувати.</p>';
+            s += '<p>Другий менеджер після кожного важливого рішення або помилки записує правило: «Якщо трапляється X, правильна дія — Y, тому що Z». Через десять років у нього п\'ятсот таких правил. Коли виникає нова ситуація, він звертається до свого банку принципів і знаходить відповідний. Його рішення передбачувані, послідовні і легко зрозумілі для команди.</p>';
+            s += PQ('Принципи — це кристалізований досвід. Кожен раз, коли ви записуєте правило після помилки або перемоги, ви перетворюєте конкретний випадок у загальне знання.');
+            s += '<h3>Як народжуються принципи</h3>';
+            s += '<p>Даліо описує конкретний процес. Ви зустріли нову ситуацію. Ви прийняли рішення. Через деякий час ви бачите результат. Якщо результат хороший — що саме ви зробили правильно? Яке загальне правило з цього випливає? Якщо результат поганий — де була помилка? Яке правило допомогло б уникнути її?</p>';
+            s += '<p>Ключ — рефлексія після події. Більшість людей переходять від однієї ситуації до наступної, не зупиняючись, щоб витягнути урок. Даліо пропонує: після кожного важливого рішення, навіть якщо воно виявилось правильним, зупиніться і запитайте: «Що я тепер знаю про цей тип ситуацій?»</p>';
+            s += '<h3>Переваги алгоритмічного мислення</h3>';
+            s += '<p>Принципи усувають емоційну непостійність. Людина в стані стресу, тиску або ейфорії приймає гірші рішення, ніж у спокійному стані. Але якщо рішення вже кодифіковане у принцип — воно застосовується незалежно від поточного стану. Це дисциплінує і захищає від власних слабкостей.</p>';
+            s += KP('Три кроки кодифікації досвіду: 1) Зустріти ситуацію і прийняти рішення. 2) Проаналізувати результат і причини. 3) Сформулювати загальне правило і записати. Через роки ці записи стають найціннішим активом.');
+            s += '<h3>Принципи як культурний код</h3>';
+            s += '<p>В Bridgewater система принципів стала не просто особистим інструментом Даліо, а культурним кодом всієї організації. Нові співробітники отримують документ із принципами і починають роботу з його вивчення. Це дозволяє передавати спосіб мислення, а не просто набір правил.</p>';
+            s += '<p>Даліо мріє про наступний крок: автоматизацію принципів. Якщо рішення можна звести до алгоритму, алгоритм можна запрограмувати. Bridgewater розробляє системи штучного інтелекту, що застосовують принципи до ринкових даних в реальному часі. Людський досвід, перетворений у код, — ось ідеальна машина прийняття рішень за Даліо.</p>';
+            s += PQ('Якщо ви не можете пояснити своє рішення у вигляді правила — ви ще не зрозуміли, чому саме ви його прийняли.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 3',
+        title: 'Компанія як машина',
+        time: '5 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Уявіть, що ви CEO своєї компанії. Сьогодні зранку — складна нарада з кризовим клієнтом. Потім — конфлікт між двома менеджерами. Потім — термінове рішення про бюджет. Весь день ви в операційному режимі: вирішуєте, реагуєте, вирішуєте знову. Ввечері, виснажені, ви думаєте: «Сьогодні я був менеджером команди». Але Даліо запитав би: «А коли сьогодні ви були проектувальником машини?»</p>';
+            s += '<p>Ця різниця — між роллю гравця і роллю конструктора — одна з найважливіших ідей книги. Більшість лідерів майже весь час перебувають у режимі виконавця. Вони занурені в деталі поточних проблем. Проектувальник з\'являється рідко — зазвичай під час кризи або стратегічного планування раз на рік.</p>';
+            s += PQ('Більшість людей думають: "Я маю вирішити цю проблему". Даліо думає: "Чому моя машина генерує цю проблему? Що треба змінити в машині?"');
+            s += '<h3>Концепція двох Я</h3>';
+            s += '<p>Даліо вводить поняття «двох Я». Є Я-виконавець — та частина вас, що щодня вирішує завдання, веде переговори, управляє людьми. І є Я-проектувальник — та частина, що дивиться на ваше Я-виконавця зовні і запитує: «Чи правильно налаштована ця людина? Чи ефективно вона функціонує? Що треба змінити?»</p>';
+            s += '<p>Метафора машини змінює підхід до людей. Якщо людина не справляється — це не обов\'язково означає, що вона погана. Можливо, вона поставлена на неправильну позицію в машині. Завдання проектувальника — знайти конфігурацію, де кожна людина дає максимальну цінність. Це вимагає глибокого розуміння сильних і слабких сторін кожної людини в команді.</p>';
+            s += KP('Ключове питання проектувальника: "Чи ця людина на правильній позиції? Чи ця структура дає правильні стимули? Чи ці процеси виробляють потрібні результати?" — замість: "Хто сьогодні облажався і чому?"');
+            s += '<h3>Машина для особистого життя</h3>';
+            s += '<p>Даліо застосовує цю метафору і до особистого життя. Ваша кар\'єра, стосунки, здоров\'я, фінанси — це теж машина. Більшість людей ніколи не дивляться на своє життя як на систему, що можна спроектувати і оптимізувати. Вони реагують на те, що відбувається, замість того, щоб будувати систему, що дає бажані результати.</p>';
+            s += '<p>Перший крок — вийти з режиму виконавця і подивитись на своє Я-виконавця збоку. Це вимагає дистанції і чесності. Медитація, регулярна рефлексія, розмови з наставниками — це інструменти, що допомагають утримувати перспективу проектувальника.</p>';
+            s += PQ('Запитайте себе: якби ви були зовнішнім консультантом, що спостерігає за вашою компанією або своїм власним життям — що б ви порадили змінити насамперед?');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 4',
+        title: 'П\'ятирівневий процес',
+        time: '6 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Чому деякі люди роками намагаються досягти однієї і тієї ж мети, але так і не досягають? Чому одні організації вирішують одні й ті самі проблеми знову і знову, не просуваючись вперед? Даліо переконаний: відповідь майже завжди в тому, що люди застряють на одному рівні п\'ятиступеневого процесу, навіть не усвідомлюючи цього.</p>';
+            s += '<p>Перший рівень — цілі. Треба мати чіткі, конкретні цілі, а не розмиті бажання. Даліо наполягає: ціль — це не «хочу бути успішним» або «хочу побудувати хорошу компанію». Ціль — це конкретний, вимірюваний результат із терміном. Без цього конкретного фундаменту решта процесу не має сенсу.</p>';
+            s += PQ('Бажання і цілі — не одне і те саме. Бажання приємне, коли про нього думаєш. Ціль вимагає дій, жертв і дискомфорту. Якщо воно не вимагає жертв — це бажання, а не ціль.');
+            s += '<h3>Рівень 2 і 3: проблема і діагноз</h3>';
+            s += '<p>Другий рівень — проблеми. Після формулювання цілі неминуче з\'являються перешкоди. Даліо наголошує: треба бачити проблеми реалістично — не перебільшуючи (паніка) і не применшуючи (сліпа оптимізм). Проблема — це не привід відмовитись від цілі, а корисний сигнал.</p>';
+            s += '<p>Третій рівень — діагностика — найбільш недооцінений крок. Більшість людей бачать проблему і одразу кидаються її вирішувати. Але часто вони вирішують симптом, а не причину. Даліо описує типову помилку: «У нас проблема з продажами. Наймемо більше продавців». Але якщо проблема в продукті або в процесі — більше продавців не допоможе. Потрібна точна діагностика.</p>';
+            s += KP('П\'ять рівнів процесу: 1) Ціль — чіткий результат. 2) Проблема — реалістичне бачення перешкод. 3) Діагноз — коренева причина (не симптом). 4) Дизайн — системне рішення. 5) Завдання — конкретні дії і терміни. Ніколи не пропускайте рівні 3 і 4.');
+            s += '<h3>Рівні 4 і 5: дизайн і завдання</h3>';
+            s += '<p>Четвертий рівень — дизайн — це розробка системного рішення. Не «найняти ще одну людину», а «змінити процес так, щоб ця проблема не виникала знову». Дизайн потребує креативності і готовності змінювати структуру, а не просто латати дірки.</p>';
+            s += '<p>П\'ятий рівень — завдання — конкретні дії, терміни і відповідальні. Тільки тут з\'являються списки справ і дедлайни. Більшість людей починають саме тут — і дивуються, чому їхні TO-DO списки не ведуть до прогресу. Бо вони виконують правильні дії в неправильній системі.</p>';
+            s += '<p>Даліо описує характерні помилки кожного рівня. Є люди, що чудово ставлять цілі, але не бачать проблем. Є люди, що ідентифікують проблеми, але завжди знаходять зовнішні причини — ніколи внутрішні. Є люди, що добре діагностують, але не здатні спроектувати системне рішення. Усвідомлення, на якому рівні ви застрягаєте, — перший крок до прориву.</p>';
+            s += PQ('Якщо ви вирішуєте одну й ту саму проблему вже третій рік — ви застрягли на рівні діагностики. Ви лікуєте симптом, а не хворобу.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 5',
+        title: 'Радикальна прозорість',
+        time: '5 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>У 2011 році Bridgewater провів нараду про помилку одного з керівників. Нарада записувалась, як усі наради в компанії. Пізніше запис був доступний усім співробітникам — від старших партнерів до стажерів. Включно зі стенограмою того, що саме керівник зробив неправильно і чому.</p>';
+            s += '<p>Для більшості корпорацій це неймовірно. Кадрові питання, конфлікти між менеджерами, обговорення слабких сторін конкретних людей — все це зазвичай відбувається за зачиненими дверима. Навіть зацікавлені сторони часто не знають, що саме обговорюється і яке рішення прийнято.</p>';
+            s += PQ('Секретність породжує припущення. Припущення — плітки. Плітки — недовіру. Недовіра — дисфункцію. Прозорість розриває цей ланцюг на першому кроці.');
+            s += '<h3>Записані наради</h3>';
+            s += '<p>В Bridgewater записуються практично всі наради — це основний інструмент прозорості. Мета не в тому, щоб стежити за людьми. Мета — в тому, щоб будь-хто в організації міг перевірити будь-яке рішення: на основі яких даних воно приймалось, які альтернативи розглядались, що каже записана дискусія.</p>';
+            s += '<p>Парадокс, що відзначають багато співробітників: коли знаєш, що тебе записують, — починаєш говорити більш продумано і чесно, а не менш. Виникає природня самодисципліна: важко сказати одне на нараді і інше у кулуарах, якщо обидві розмови доступні для перевірки.</p>';
+            s += '<h3>Бейсбольні картки</h3>';
+            s += '<p>Ще один інструмент прозорості — «бейсбольні картки» — публічні профілі кожного співробітника, що показують їхні сильні і слабкі сторони, оцінені колегами і керівниками через регулярні оцінювання. Ці профілі доступні всім в організації.</p>';
+            s += KP('Бейсбольні картки усувають «сюрпризи»: всі знають, хто в чому сильний, а в чому слабкий. Це дозволяє призначати людей на правильні позиції і заощаджує час, що зазвичай витрачається на корпоративну дипломатію.');
+            s += '<h3>Dot collector</h3>';
+            s += '<p>«Dot collector» — додаток для оцінювання ідей в реальному часі під час нарад. Кожен учасник може оцінювати висловлювання інших через смартфон. Ці оцінки агрегуються і показують, чиї аргументи переконали присутніх. Думка досвідченого менеджера може програти думці молодого аналітика — якщо аргументи слабші.</p>';
+            s += '<p>Даліо визнає: не всі здатні адаптуватись до цієї культури. Деякі люди переживають публічне обговорення своїх слабких сторін як нестерпне. Тих, хто не може адаптуватись, Bridgewater просить піти. Але ті, хто залишається і адаптується, стверджують: ніде більше вони не розвивались так швидко.</p>';
+            s += PQ('Прозорість — не про те, щоб знати все. Вона про те, щоб будь-яке рішення було доступне для перевірки. Це усуває корупцію, кумівство і подвійні стандарти ефективніше, ніж будь-яка інша система.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 6',
+        title: 'Зважені рішення за заслугами',
+        time: '5 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>У більшості компаній є дві моделі прийняття рішень. Перша — ієрархічна: вирішує той, хто вище по посаді. Начальник завжди правий, або принаймні завжди вирішує. Друга — демократична: голосують, і перемагає більшість. Обидві моделі мають одну спільну ваду: вони ігнорують питання компетентності.</p>';
+            s += '<p>Начальник може помилятись, навіть якщо він досвідчений. Більшість може проголосувати за хибне рішення — особливо якщо більшість не розбирається в питанні. Даліо назвав ці системи «неідеальними» і запропонував третій шлях: «меритократію ідей» з «зваженим прийняттям рішень».</p>';
+            s += PQ('У Bridgewater не питають: "Що ви думаєте?" Питають: "Яка ваша надійність у цьому питанні, і що ви думаєте?"');
+            s += '<h3>Матриця надійності</h3>';
+            s += '<p>Суть системи: думки зважуються відповідно до попереднього трек-рекорду людини в конкретній сфері. Bridgewater будує детальні «матриці надійності» для кожного співробітника — записи того, у яких сферах ця людина демонструвала правильні судження, а де помилялась. Ці записи оновлюються постійно.</p>';
+            s += '<p>Якщо аналітик із десятирічним досвідом прогнозування процентних ставок не погоджується з партнером у цьому питанні — голос аналітика важить більше. Якщо той самий партнер має кращий трек-рекорд у виборі стратегій виходу з ринку — у цьому питанні більша вага у партнера.</p>';
+            s += KP('Меритократія ідей дає відповідь на одне питання: хто в цій кімнаті найкраще підготовлений відповісти на це конкретне питання? Не хто найстарший, не хто найгучніший — хто найкомпетентніший?');
+            s += '<h3>Незгода і прийняття</h3>';
+            s += '<p>Система включає механізм «незгоди і прийняття». Якщо ви не погоджуєтесь з рішенням, ви зобов\'язані сказати про це відкрито і аргументовано — до прийняття рішення. Після того як рішення прийнято, всі зобов\'язані його виконувати, навіть ті, хто голосував проти. «Незгода і саботаж» — найсерйозніше порушення культурного кодексу.</p>';
+            s += '<p>Це вирішує одну з найбільших проблем організацій: люди, що не погоджуються з рішенням, часто саботують його виконання пасивно — без ентузіазму, без ініціативи, інколи і активно. Bridgewater відокремлює фазу дискусії від фази виконання: вся незгода — до рішення, після — повна підтримка.</p>';
+            s += '<p>Даліо визнає: ця система потребує від людей рідкісного вміння — відкладати власне его. Погоджуватись із тим, що молодший колега компетентніший за тебе в конкретному питанні, і діяти відповідно — це вимагає психологічної зрілості, яка в більшості корпоративних культур не заохочується.</p>';
+            s += PQ('Найважчий урок меритократії ідей: іноді найрозумніша людина у кімнаті — не ти. І твоє завдання — визнати це і дати їй вести.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 7',
+        title: 'Біль як інструмент зростання',
+        time: '4 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Коли Рей Даліо у 1982 році втратив майже все — він міг зробити одне з двох. Перше: знайти виправдання. Скласти версію, де він все ж таки правий, просто не в ту хвилину. Другий: переглянути своє уявлення про реальність від фундаменту. Він обрав друге. І саме цей вибір, за його словами, визначив все подальше.</p>';
+            s += '<p>Даліо формулює це як рівняння: Біль + Рефлексія = Прогрес. Більшість людей інстинктивно уникають болю — особливо психологічного, пов\'язаного з помилками, невдачами і критикою. Вони швидко перемикаються на щось інше, виправдовуються або знецінюють ситуацію. Результат: біль проходить, але урок не засвоюється.</p>';
+            s += PQ('Еволюція запрограмувала нас уникати болю. Але психологічний біль від помилки — це не сигнал небезпеки. Це сигнал росту. Різниця між цими двома болями — найважливіша розумова навичка.');
+            s += '<h3>Кнопка болю</h3>';
+            s += '<p>Даліо описує власну практику «кнопки болю»: кожного разу, коли він відчуває дискомфорт від критики, помилки або несподіваного результату, він свідомо зупиняється. Зупинка — ключова. Більшість людей в момент болю реагують рефлекторно: захищаються, нападають або відступають. Зупинка перериває цей рефлекс.</p>';
+            s += '<p>Після зупинки — запитання: «Що саме болить? Яку саме модель реальності спростовує цей біль? Що треба оновити в моєму розумінні?» Це перетворює болісний досвід на матеріал для принципу.</p>';
+            s += KP('Формула: Біль + Рефлексія = Прогрес. Без рефлексії біль — просто страждання. З рефлексією — це найцінніша і найдешевша форма освіти.');
+            s += '<h3>Медитація як інструмент рівноваги</h3>';
+            s += '<p>Даліо практикує Трансцендентальну Медитацію вже понад п\'ятдесят років — двічі на день по двадцять хвилин. Він стверджує, що медитація — основа його психологічної рівноваги. Не тому, що вона усуває біль — а тому, що вона розвиває здатність спостерігати за болем, не ідентифікуючись із ним повністю.</p>';
+            s += '<p>Даліо описує «вище» і «нижче» Я. Нижче Я — емоційне, рефлекторне, захисне. Його завдання — оберігати вас від загроз. Вище Я — раціональне, спостережливе. Медитація, на його переконання, зміцнює зв\'язок із вищим Я і послаблює автоматичні реакції нижчого. Результат — здатність зустрічати болісні ситуації з допитливістю, а не з захисною реакцією.</p>';
+            s += PQ('Найрозумніші і найуспішніші люди, яких я знаю, мають одну спільну рису: вони не бояться болю. Вони йдуть у нього з питаннями.');
+            return s;
+        })()
+    },
+    {
+        label: 'Розділ 8',
+        title: 'Як застосувати ідеї на практиці',
+        time: '4 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>«Принципи» — це книга великих ідей. Але як перенести їх у щоденне життя, кар\'єру і управлінську практику? Ось шість конкретних уроків, що безпосередньо випливають із досвіду Даліо і Bridgewater.</p>';
+            s += '<h3>1. Почніть свій список принципів</h3>';
+            s += '<p>Найважливіший практичний урок книги — найпростіший у реалізації: заведіть документ і починайте записувати принципи. Не завтра, не після прочитання наступної книги — сьогодні. Після наступного важливого рішення або помилки запишіть одне речення: «Якщо X, то Y, тому що Z». За рік у вас буде особистий алгоритм, заснований на вашому конкретному досвіді.</p>';
+            s += KP('Практичний старт: заведіть нотатник або документ під назвою "Мої принципи". Після кожного важливого рішення або помилки записуйте одне правило. Через три місяці переглядайте і уточнюйте. Через рік — у вас є системна мудрість.');
+            s += '<h3>2. Відрізняйте симптом від причини</h3>';
+            s += '<p>Перед тим як вирішувати проблему — переконайтесь, що ви вирішуєте правильну проблему. Запитайте «чому» п\'ять разів поспіль. Якщо перша відповідь — «у нас погані продажі», запитайте чому. Якщо відповідь — «нас не знають клієнти», запитайте чому. Продовжуйте, доки не знайдете корінь.</p>';
+            s += '<h3>3. Практикуйте «добросердну чесність»</h3>';
+            s += '<p>В наступній розмові, де вам треба сказати щось важке — скажіть це прямо, але з повагою. Не «твоя ідея трохи не зовсім, може, варто подумати...», а «я бачу цю ідею інакше, і ось чому». Ця навичка розвивається тільки практикою, і перші рази будуть незручними. Але результат — глибока довіра в стосунках.</p>';
+            s += '<h3>4. Регулярно виходьте в режим проектувальника</h3>';
+            s += '<p>Раз на тиждень або раз на місяць відведіть годину, щоб дивитись на своє підрозділ або особисте життя як зовнішній консультант. Питання для цього режиму: «Яку проблему я вирішую знову і знову без реального прогресу? Де моя система дає правильний результат, а де збоїть? Що треба змінити в системі, а не в людях?»</p>';
+            s += '<h3>5. Виходьте на больову точку з допитливістю</h3>';
+            s += '<p>Наступного разу, коли щось боляче вдарить — критика, провал, несподіваний результат — спробуйте зупинитись перед рефлекторною реакцією. Зробіть один повільний вдих і запитайте: «Що тут болить? Що це говорить про мою модель реальності?» Запишіть відповідь. Це і є формула Даліо в дії.</p>';
+            s += '<h3>6. Зважуйте компетентність, а не ієрархію</h3>';
+            s += '<p>При наступному груповому рішенні свідомо запитайте: хто в цій кімнаті має найкращий трек-рекорд у цій конкретній сфері? Чия думка повинна мати найбільшу вагу — незалежно від посади? Дозвольте відповіді на це питання вести рішення, а не автоматичній ієрархії.</p>';
+            s += PQ('Принципи Даліо — не рецепт для копіювання. Вони — приклад того, що відбувається, коли людина серйозно ставиться до питання: "Чому я приймаю такі рішення?" Відповідь на це питання — і є ваша система принципів.');
+            return s;
+        })()
+    },
+    {
+        label: 'Висновок',
+        title: 'Алгоритм власного життя',
+        time: '3 хв читання',
+        content: (function() {
+            var s = '';
+            s += '<p>Наприкінці «Принципів» Рей Даліо робить щось несподіване для книги про успіх: він говорить про смерть. Він пише, що усвідомлення власної смертності — один із найпотужніших мотиваторів для серйозного ставлення до власних принципів. Якщо ваше час обмежений, кожне рішення важить більше. Кожна помилка, з якої ви не навчились — це втрачений час.</p>';
+            s += '<p>Даліо завершує книгу запрошенням, а не інструкцією. Не «застосовуйте мої принципи», а «сформулюйте свої». Його 500 принципів — результат його конкретного досвіду в конкретних обставинах. Ваш досвід інший. Ваша система принципів буде іншою. Але процес — той самий: зустрітись із реальністю, записати урок, оновити алгоритм.</p>';
+            s += PQ('Найважливіше питання не "що правильно?", а "як я дізнаюсь, що правильно, в цій конкретній ситуації?" Відповідь на це питання — і є система принципів.');
+            s += '<h3>Bridgewater як соціальний експеримент</h3>';
+            s += '<p>Даліо дивиться на Bridgewater як на більше, ніж просто фонд. Це доказ концепції: організація, побудована на меритократії ідей, радикальній прозорості і культурі болю-як-росту, може бути ефективнішою за будь-яку традиційну ієрархію. Протягом п\'яти десятиліть цей соціальний експеримент давав результати, що говорять самі за себе.</p>';
+            s += '<p>Але Даліо бачить ширший вимір. Якби більше організацій і лідерів застосовували ці принципи — якби суди, уряди, медіа, освіта будувались на меритократії ідей і радикальній прозорості — суспільство в цілому приймало б кращі рішення. Це амбіційне, навіть утопічне бачення. Але Bridgewater — доказ, що в межах однієї організації воно можливе.</p>';
+            s += KP('Ключовий виклик книги: почніть свій список принципів. Не завтра. Після наступної важливої події у вашому житті — запишіть принцип. Це перший крок до системи, що буде ставати потужнішою з кожним роком.');
+            s += '<h3>Запрошення до іншого способу мислення</h3>';
+            s += '<p>«Принципи» — провокативна книга. Вона ставить під сумнів речі, що більшість вважає природними: ввічливість важливіша за правду, ієрархія — правильний спосіб організації, невдачі треба приховувати, а не аналізувати відкрито.</p>';
+            s += '<p>Даліо не претендує, що його система ідеальна або підходить усім. Він визнає: Bridgewater — незручне місце для людей, що не готові до радикальної правдивості. Але для тих, хто готовий — це середовище прискореного розвитку, де навчання відбувається в рази швидше, ніж у традиційних організаціях.</p>';
+            s += '<p>Книга закінчується простою думкою: найцінніше, що може зробити людина — це зрозуміти свою унікальну природу і побудувати систему, що дозволяє їй проявлятись максимально. Не копіювати чужий шлях. Не слідувати загальноприйнятим правилам. Розробити власні принципи — і жити за ними.</p>';
+            s += PQ('Найбільша помилка — намагатись бути кимось іншим. Найбільший успіх — зрозуміти, хто ти є насправді, і побудувати систему, що дозволяє цьому проявлятись повністю.');
+            return s;
+        })()
+    }
+];
+
+var currentChapter = 0;
+var fontSize = 17;
+var currentFont = 'serif';
+var currentTheme = 'light';
+var readChapters = new Set([0]);
+
+function renderChapter(idx) {
+    var ch = chapters[idx];
+    var isLast = idx === chapters.length - 1;
+    var isFirst = idx === 0;
+    var prevCh = !isFirst ? chapters[idx - 1] : null;
+    var nextCh = !isLast ? chapters[idx + 1] : null;
+
+    var prevBtn = '';
+    if (prevCh) {
+        prevBtn = '<button class="nav-prev" onclick="goToChapter(' + (idx-1) + ')">' +
+            '<span class="nav-direction"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Попередня</span>' +
+            '<span class="nav-chapter-title">' + prevCh.title + '</span>' +
+            '</button>';
+    } else {
+        prevBtn = '<div></div>';
+    }
+
+    var nextBtn = '';
+    if (nextCh) {
+        nextBtn = '<button class="nav-next" onclick="goToChapter(' + (idx+1) + ')">' +
+            '<span class="nav-direction">Наступна <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>' +
+            '<span class="nav-chapter-title">' + nextCh.title + '</span>' +
+            '</button>';
+    } else {
+        nextBtn = '<button class="nav-next" onclick="window.location=\'book_page_principles.html\'">' +
+            '<span class="nav-direction">Готово <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>' +
+            '<span class="nav-chapter-title">Повернутися до книги</span>' +
+            '</button>';
+    }
+
+    document.getElementById('readerContent').innerHTML =
+        '<div class="chapter-label">' + ch.label + '</div>' +
+        '<div class="chapter-title">' + ch.title + '</div>' +
+        '<div class="chapter-meta">' +
+            '<span class="chapter-time">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+                ch.time +
+            '</span>' +
+        '</div>' +
+        '<div class="reader-body">' + ch.content + '</div>' +
+        '<div class="chapter-nav">' +
+            prevBtn +
+            '<span class="nav-center">' + (idx + 1) + ' / ' + chapters.length + '</span>' +
+            nextBtn +
+        '</div>';
+
+    document.querySelector('.topbar-title').textContent = 'Принципи \u00B7 ' + ch.label;
+
+    document.querySelectorAll('.toc-item').forEach(function(item, i) {
+        item.classList.toggle('active', i === idx);
+    });
+
+    readChapters.add(idx);
+    var pct = Math.round((readChapters.size / chapters.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    currentChapter = idx;
+    closeTocMobile();
+}
+
+function goToChapter(idx) {
+    renderChapter(idx);
+}
+
+function toggleSettings() {
+    var panel = document.getElementById('settingsPanel');
+    panel.classList.toggle('open');
+}
+
+function toggleToc() {
+    var sidebar = document.getElementById('tocSidebar');
+    var overlay = document.getElementById('tocOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+function closeTocMobile() {
+    if (window.innerWidth <= 768) {
+        document.getElementById('tocSidebar').classList.remove('open');
+        document.getElementById('tocOverlay').classList.remove('open');
+    }
+}
+
+document.addEventListener('click', function(e) {
+    var panel = document.getElementById('settingsPanel');
+    var btn = document.getElementById('settingsToggle');
+    if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(22, fontSize + delta));
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+    document.getElementById('fontSizeVal').textContent = fontSize + 'px';
+}
+
+function setFont(type) {
+    currentFont = type;
+    document.body.style.fontFamily = type === 'sans'
+        ? "-apple-system, BlinkMacSystemFont, 'Inter', sans-serif"
+        : "Georgia, 'Times New Roman', serif";
+    document.getElementById('fontSerif').classList.toggle('active', type === 'serif');
+    document.getElementById('fontSans').classList.toggle('active', type === 'sans');
+}
+
+function setTheme(theme) {
+    document.body.classList.remove('dark', 'sepia');
+    if (theme !== 'light') document.body.classList.add(theme);
+    ['light','sepia','dark'].forEach(function(t) {
+        document.getElementById('theme' + t.charAt(0).toUpperCase() + t.slice(1))
+            .classList.toggle('active', t === theme);
+    });
+    currentTheme = theme;
+}
+
+renderChapter(0);
+</script>
+</body>
+</html>

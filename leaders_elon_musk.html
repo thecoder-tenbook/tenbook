@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книги Ілона Маска — що читає CEO Tesla і SpaceX | TENBOOK</title>
+    <meta name="description" content="Ілон Маск виховав себе на книгах. Ось 24 книги, які сформували мислення засновника Tesla, SpaceX та X.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1a1a1a; }
+        header { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f0f0f0; }
+        nav { max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.75rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+        .nav-menu { display: flex; gap: 2rem; align-items: center; }
+        .nav-link { text-decoration: none; color: #4a5568; font-weight: 500; transition: color 0.2s; font-size: 0.95rem; }
+        .nav-link:hover { color: #0ea5e9; }
+        .btn-primary { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; padding: 0.6rem 1.4rem; border-radius: 20px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.9rem; }
+        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #94a3b8; }
+        .breadcrumb a { color: #94a3b8; text-decoration: none; }
+        .breadcrumb a:hover { color: #0ea5e9; }
+
+        .hero { padding: 7rem 2rem 0; max-width: 1400px; margin: 0 auto; }
+        .hero-inner { background: white; border-radius: 28px; border: 1px solid #f1f5f9; padding: 3rem; display: grid; grid-template-columns: auto 1fr auto; gap: 2.5rem; align-items: center; position: relative; overflow: hidden; }
+        .hero-inner::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #0ea5e9, #06b6d4); }
+        .hero-photo { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; border: 4px solid #e0f2fe; flex-shrink: 0; }
+        .hero-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+        .hero-info { min-width: 0; }
+        .hero-breadcrumb { margin-bottom: 0.8rem; }
+        .hero-name { font-size: 2.2rem; font-weight: 900; color: #0f172a; line-height: 1.1; margin-bottom: 0.4rem; }
+        .hero-role { font-size: 1rem; color: #94a3b8; font-weight: 500; margin-bottom: 1.2rem; }
+        .hero-quote { font-size: 1.05rem; color: #475569; font-style: italic; line-height: 1.65; border-left: 4px solid #0ea5e9; padding-left: 1rem; max-width: 560px; }
+        .hero-stats { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 2rem; background: #f0f9ff; border-radius: 16px; border: 1px solid #bae6fd; min-width: 160px; text-align: center; }
+        .stat-num { font-size: 2.2rem; font-weight: 900; color: #0ea5e9; }
+        .stat-label { font-size: 0.78rem; color: #0369a1; font-weight: 500; margin-top: 0.3rem; }
+
+        .content-wrap { max-width: 1400px; margin: 0 auto; padding: 2.5rem 2rem 5rem; display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
+        .main-col { min-width: 0; }
+        .section-block { background: white; border-radius: 20px; border: 1px solid #f1f5f9; padding: 2rem; margin-bottom: 1.5rem; }
+        .section-block h2 { font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+        .bio-text { font-size: 0.95rem; color: #475569; line-height: 1.8; }
+        .bio-text p + p { margin-top: 0.9rem; }
+
+        .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1.2rem; }
+        .book-card { border-radius: 14px; border: 1px solid #f1f5f9; overflow: hidden; text-decoration: none; color: inherit; transition: all 0.2s; background: white; display: flex; flex-direction: column; }
+        .book-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.09); border-color: transparent; }
+        .book-cover-wrap { position: relative; padding-top: 148%; background: #f8fafc; }
+        .book-cover-wrap svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .book-info { padding: 0.9rem; }
+        .book-title { font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.2rem; line-height: 1.3; }
+        .book-author { font-size: 0.75rem; color: #94a3b8; }
+        .book-time { font-size: 0.72rem; color: #0ea5e9; font-weight: 600; margin-top: 0.4rem; }
+
+        .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar-card { background: white; border-radius: 20px; border: 1px solid #f1f5f9; padding: 1.5rem; }
+        .sidebar-card h3 { font-size: 0.9rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; }
+        .quote-card { background: #f0f9ff; border: 1px solid #bae6fd; }
+        .big-quote { font-size: 2.5rem; color: #0ea5e9; line-height: 1; margin-bottom: 0.5rem; }
+        .quote-text { font-size: 0.9rem; color: #0c4a6e; font-style: italic; line-height: 1.65; }
+        .quote-source { font-size: 0.75rem; color: #0369a1; margin-top: 0.8rem; font-weight: 600; }
+        .fact-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .fact-item { display: flex; gap: 0.8rem; align-items: flex-start; }
+        .fact-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(139,92,246,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .fact-text { font-size: 0.83rem; color: #475569; line-height: 1.5; }
+        .fact-text strong { color: #0f172a; }
+        .other-leaders { display: flex; flex-direction: column; gap: 0.8rem; }
+        .other-leader { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; padding: 0.6rem; border-radius: 10px; transition: background 0.15s; }
+        .other-leader:hover { background: #f8fafc; }
+        .other-photo { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+        .other-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+        .other-name { font-size: 0.85rem; font-weight: 700; color: #0f172a; }
+        .other-role { font-size: 0.73rem; color: #94a3b8; }
+        .other-arrow { margin-left: auto; color: #cbd5e1; font-size: 1rem; }
+
+        @media (max-width: 900px) { .hero-inner { grid-template-columns: auto 1fr; } .hero-stats { display: none; } .content-wrap { grid-template-columns: 1fr; } .sidebar { display: none; } }
+        @media (max-width: 600px) { .nav-menu { display: none; } .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 2rem; } .hero-photo { margin: 0 auto; } .hero-quote { border-left: none; border-top: 4px solid #0ea5e9; padding-left: 0; padding-top: 0.8rem; } .books-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="book_summary_landing.html" class="logo">TENBOOK</a>
+        <div class="nav-menu">
+            <a href="catalog_page.html" class="nav-link">Каталог</a>
+            <a href="leaders_page.html" class="nav-link">Лідери</a>
+            <a href="book_summary_landing.html#features" class="nav-link">Можливості</a>
+            <a href="book_summary_landing.html#pricing" class="nav-link">Ціни</a>
+            <a href="#" class="btn-primary">Спробувати</a>
+        </div>
+    </nav>
+</header>
+
+<div class="hero">
+    <div class="hero-inner">
+        <div class="hero-photo">
+            <img src="фото лідерів думок/Elon_Musk.jpg" alt="Ілон Маск">
+        </div>
+        <div class="hero-info">
+            <div class="hero-breadcrumb">
+                <div class="breadcrumb">
+                    <a href="leaders_page.html">Лідери</a>
+                    <span>›</span>
+                    <span>Ілон Маск</span>
+                </div>
+            </div>
+            <div class="hero-name">Книги які рекомендує Ілон Маск</div>
+            <div class="hero-role">CEO Tesla, SpaceX, X · Засновник Neuralink & The Boring Company</div>
+            <div class="hero-quote">"Читайте багато книг. Це найкращий спосіб навчання. Я виріс на книгах — від фантастики до фізики."</div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-num">5</div>
+            <div class="stat-label">книг у підбірці</div>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrap">
+    <div class="main-col">
+        <div class="section-block">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Про Ілона Маска</h2>
+            <div class="bio-text">
+                <p>Ілон Маск — найвпливовіший підприємець сучасності. Він одночасно керує Tesla, SpaceX, X та іншими компаніями, ставлячи амбітні цілі: колонізацію Марса, перехід на відновлювану енергію, революцію в транспорті.</p>
+                <p>У дитинстві Маск читав по дві книги на день. У підлітковому віці він «запрограмував» себе через книги — від Айзека Азімова до Дугласа Адамса, від фізики до бізнесу. «Мене виховали книги», — казав він в інтерв'ю.</p>
+                <p>Своїм дітям він рекомендує читати наукову фантастику — щоб навчитися мислити масштабно і не боятися великих ідей.</p>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Книги, які рекомендує Ілон Маск</h2>
+            <div class="books-grid">
+
+                <a href="catalog_page.html" class="book-card">
+                    <div class="book-cover-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#E4EBF5"/><circle cx="72" cy="92" r="42" fill="none" stroke="#1A1F3A" stroke-width="12"/><line x1="136" y1="54" x2="136" y2="134" stroke="#1A1F3A" stroke-width="12" stroke-linecap="round"/><line x1="122" y1="68" x2="136" y2="54" stroke="#1A1F3A" stroke-width="9" stroke-linecap="round"/><line x1="124" y1="134" x2="150" y2="134" stroke="#1A1F3A" stroke-width="5.5" stroke-linecap="round"/><line x1="28" y1="172" x2="172" y2="172" stroke="#B8C4D8" stroke-width="0.6"/><text x="100" y="203" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="17" font-weight="900" fill="#1A1F3A" letter-spacing="2">ВІД НУЛЯ</text><text x="100" y="223" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="17" font-weight="900" fill="#1A1F3A" letter-spacing="2">ДО ОДИНИЦІ</text><line x1="38" y1="232" x2="162" y2="232" stroke="#C55A2A" stroke-width="1.3"/><text x="100" y="249" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="#6A7890" letter-spacing="1.3">НОТАТКИ ПРО СТАРТАПИ</text><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="9.5" fill="#1A1F3A" letter-spacing="0.4">Пітер Тіль</text></svg></div>
+                    <div class="book-info"><div class="book-title">Від Нуля до Одиниці</div><div class="book-author">Peter Thiel</div><div class="book-time">15 хв читання</div></div>
+                </a>
+
+                <a href="catalog_page.html" class="book-card">
+                    <div class="book-cover-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#EEF7F2"/><ellipse cx="100" cy="64" rx="16" ry="10" fill="#2A7A48" opacity="0.8"/><rect x="84" y="62" width="32" height="72" rx="6" fill="#2A7A48" opacity="0.75"/><path d="M84,108 L65,138 L84,126 Z" fill="#1E5A36" opacity="0.55"/><path d="M116,108 L135,138 L116,126 Z" fill="#1E5A36" opacity="0.55"/><circle cx="100" cy="86" r="9" fill="#EEF7F2" opacity="0.65"/><path d="M88,134 Q100,160 112,134 Q106,152 100,156 Q94,152 88,134Z" fill="#F0A020" opacity="0.78"/><line x1="28" y1="182" x2="172" y2="182" stroke="#A0C8B0" stroke-width="0.6"/><text x="100" y="210" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#0A3A1A" letter-spacing="0.5">БЕРЕЖЛИВИЙ</text><text x="100" y="230" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#0A3A1A" letter-spacing="0.5">СТАРТАП</text><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" fill="#3A6A4A" letter-spacing="0.3">Ерік Різ</text></svg></div>
+                    <div class="book-info"><div class="book-title">Бережливий Стартап</div><div class="book-author">Eric Ries</div><div class="book-time">14 хв читання</div></div>
+                </a>
+
+                <a href="catalog_page.html" class="book-card">
+                    <div class="book-cover-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="sj_em" cx="50%" cy="42%" r="36%"><stop offset="0%" stop-color="#C0C0C0" stop-opacity="0.14"/><stop offset="100%" stop-color="#0D0D0D" stop-opacity="0"/></radialGradient></defs><rect width="200" height="296" fill="#0D0D0D"/><circle cx="100" cy="108" r="72" fill="url(#sj_em)"/><rect x="60" y="60" width="80" height="100" rx="40" fill="none" stroke="white" stroke-width="1.5" opacity="0.42"/><line x1="100" y1="60" x2="112" y2="44" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.42"/><path d="M112,44 C122,36 132,40 130,52" fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/><line x1="28" y1="194" x2="172" y2="194" stroke="#2A2A2A" stroke-width="0.5"/><text x="100" y="221" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="white" letter-spacing="1" opacity="0.88">СТІВ ДЖОБС</text><line x1="40" y1="231" x2="160" y2="231" stroke="#484848" stroke-width="1"/><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" fill="#6A6A6A" letter-spacing="0.3">Волтер Айзексон</text></svg></div>
+                    <div class="book-info"><div class="book-title">Стів Джобс</div><div class="book-author">Walter Isaacson</div><div class="book-time">22 хв читання</div></div>
+                </a>
+
+                <a href="book_page.html" class="book-card">
+                    <div class="book-cover-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#EBF8EF"/><text x="100" y="44" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#0C3A1E" letter-spacing="3">АТОМНІ</text><text x="100" y="67" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#1E8A48" letter-spacing="3">ЗВИЧКИ</text><line x1="32" y1="78" x2="168" y2="78" stroke="#1E8A48" stroke-width="0.5" opacity="0.4"/><defs><radialGradient id="ah_em" cx="50%" cy="59%" r="42%"><stop offset="0%" stop-color="#D06820" stop-opacity="0.15"/><stop offset="100%" stop-color="#D06820" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="175" r="48" fill="url(#ah_em)"/><circle cx="100" cy="175" r="57" fill="none" stroke="#B85A10" stroke-width="1.6" opacity="0.65"/><ellipse cx="100" cy="175" rx="28" ry="11" fill="none" stroke="#C86E28" stroke-width="1.1" opacity="0.7"/><ellipse cx="100" cy="175" rx="28" ry="11" fill="none" stroke="#C86E28" stroke-width="1.1" opacity="0.7" transform="rotate(60,100,175)"/><ellipse cx="100" cy="175" rx="28" ry="11" fill="none" stroke="#C86E28" stroke-width="1.1" opacity="0.7" transform="rotate(-60,100,175)"/><circle cx="100" cy="175" r="5" fill="#B84E0C"/><line x1="68" y1="262" x2="132" y2="262" stroke="#1E8A48" stroke-width="0.5" opacity="0.35"/><text x="100" y="276" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#3A7050" letter-spacing="0.5">Джеймс Клір</text></svg></div>
+                    <div class="book-info"><div class="book-title">Атомні Звички</div><div class="book-author">James Clear</div><div class="book-time">12 хв читання</div></div>
+                </a>
+
+                <a href="catalog_page.html" class="book-card">
+                    <div class="book-cover-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#E8EEF2"/><polygon points="70,80 102,48 142,68 158,112 140,148 100,158 58,140 50,98" fill="#B0B8C0" opacity="0.52"/><path d="M94,53 L106,78 L96,108 L112,132 L100,158" fill="none" stroke="#8A9AA8" stroke-width="2" opacity="0.68" stroke-linecap="round" stroke-linejoin="round"/><path d="M36,102 C36,50 80,28 122,28 C162,28 176,62 176,102" fill="none" stroke="#3A5A70" stroke-width="2.5" opacity="0.62" stroke-linecap="round"/><polygon points="168,94 176,102 172,86" fill="#3A5A70" opacity="0.68"/><line x1="28" y1="194" x2="172" y2="194" stroke="#A8B8C8" stroke-width="0.6"/><text x="100" y="214" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9.5" font-weight="900" fill="#0A1A28" letter-spacing="0.3">ПЕРЕШКОДА</text><text x="100" y="232" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9.5" font-weight="900" fill="#0A1A28" letter-spacing="0.3">ЯК ШЛЯХ</text><line x1="38" y1="241" x2="162" y2="241" stroke="#3A5A70" stroke-width="1.2"/><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" fill="#3A5060" letter-spacing="0.3">Раян Голідей</text></svg></div>
+                    <div class="book-info"><div class="book-title">Перешкода як Шлях</div><div class="book-author">Ryan Holiday</div><div class="book-time">11 хв читання</div></div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-card quote-card">
+            <div class="big-quote">"</div>
+            <div class="quote-text">Читайте багато книг. Це найкращий спосіб навчання. Я виріс на книгах.</div>
+            <div class="quote-source">— Ілон Маск, інтерв'ю Rolling Stone</div>
+        </div>
+        <div class="sidebar-card">
+            <h3>Цікаві факти</h3>
+            <div class="fact-list">
+                <div class="fact-item">
+                    <div class="fact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+                    <div class="fact-text">У дитинстві читав <strong>по 2 книги на день</strong></div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                    <div class="fact-text">Вивчив <strong>ракетну інженерію</strong> самостійно через книги</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                    <div class="fact-text">Улюблений жанр — <strong>наукова фантастика</strong> та фізика</div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-card">
+            <h3>Інші лідери</h3>
+            <div class="other-leaders">
+                <a href="leaders_bill_gates.html" class="other-leader">
+                    <div class="other-photo"><img src="фото лідерів думок/BillGates.jpg" alt="Білл Гейтс"></div>
+                    <div><div class="other-name">Білл Гейтс</div><div class="other-role">Microsoft</div></div>
+                    <div class="other-arrow">›</div>
+                </a>
+                <a href="leaders_warren_buffett.html" class="other-leader">
+                    <div class="other-photo"><img src="фото лідерів думок/uoren bafet.jpg" alt="Уоррен Баффет"></div>
+                    <div><div class="other-name">Уоррен Баффет</div><div class="other-role">Berkshire Hathaway</div></div>
+                    <div class="other-arrow">›</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

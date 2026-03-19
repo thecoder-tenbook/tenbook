@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Від Нуля до Одиниці — Читання · TENBOOK</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --border: #e8edf2;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --accent: #0ea5e9;
+        --font-size: 17px;
+        --line-height: 1.85;
+    }
+
+    body.dark {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --border: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+    }
+
+    body.sepia {
+        --bg: #f5f0e8;
+        --surface: #ede8dc;
+        --border: #d4c9b0;
+        --text-primary: #2c1f0e;
+        --text-secondary: #5c4a2a;
+        --text-muted: #8c7a5a;
+    }
+
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Georgia', 'Times New Roman', serif; transition: background 0.3s, color 0.3s; min-height: 100vh; }
+
+    .topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; padding: 0 1.5rem; z-index: 100; transition: background 0.3s, border-color 0.3s; }
+    .topbar-logo { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-weight: 900; font-size: 0.95rem; letter-spacing: 2px; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; flex-shrink: 0; }
+    .topbar-title { flex: 1; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .topbar-actions { display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
+    .icon-btn { background: none; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: background 0.15s, color 0.15s; }
+    .icon-btn:hover { background: var(--surface); color: var(--text-primary); }
+
+    .progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 3px; background: var(--border); z-index: 99; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #0ea5e9, #8b5cf6); transition: width 0.3s; border-radius: 0 2px 2px 0; }
+
+    .settings-panel { position: fixed; top: 55px; right: 1rem; width: 280px; background: var(--bg); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); padding: 1.2rem; z-index: 200; display: none; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+    .settings-panel.open { display: block; }
+    .settings-section { margin-bottom: 1.1rem; }
+    .settings-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .font-size-row { display: flex; align-items: center; gap: 0.6rem; }
+    .font-size-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; color: var(--text-primary); display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .font-size-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .font-size-val { flex: 1; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
+    .theme-row { display: flex; gap: 0.5rem; }
+    .theme-btn { flex: 1; height: 36px; border-radius: 8px; border: 2px solid var(--border); cursor: pointer; font-size: 0.75rem; font-weight: 600; transition: border-color 0.15s; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .theme-btn.light { background: #ffffff; color: #0f172a; }
+    .theme-btn.sepia { background: #f5f0e8; color: #2c1f0e; }
+    .theme-btn.dark  { background: #0f172a; color: #f1f5f9; }
+    .theme-btn.active { border-color: var(--accent); }
+    .font-row { display: flex; gap: 0.5rem; }
+    .font-btn { flex: 1; height: 36px; border-radius: 8px; border: 2px solid var(--border); background: var(--surface); cursor: pointer; font-size: 0.8rem; color: var(--text-secondary); transition: all 0.15s; }
+    .font-btn.serif { font-family: Georgia, serif; }
+    .font-btn.sans  { font-family: -apple-system, sans-serif; }
+    .font-btn.active { border-color: var(--accent); color: var(--accent); }
+
+    .reader-wrap { min-height: 100vh; padding-top: 55px; }
+
+    .toc-sidebar { position: fixed; top: 55px; left: 0; bottom: 0; width: 260px; background: var(--surface); border-right: 1px solid var(--border); overflow-y: auto; transition: transform 0.3s, background 0.3s, border-color 0.3s; z-index: 80; padding: 1.5rem 0; }
+    .toc-header { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 0 1.2rem; margin-bottom: 0.8rem; }
+    .toc-book-info { display: flex; align-items: center; gap: 0.75rem; padding: 0 1.2rem 1.2rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+    .toc-cover { width: 38px; height: 57px; border-radius: 5px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .toc-cover img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .toc-book-title { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+    .toc-book-author { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+    .toc-item { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 1.2rem; cursor: pointer; transition: background 0.15s; border-left: 3px solid transparent; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; text-decoration: none; }
+    .toc-item:hover { background: var(--bg); }
+    .toc-item.active { background: var(--bg); border-left-color: var(--accent); }
+    .toc-num { font-size: 0.68rem; font-weight: 800; color: var(--text-muted); min-width: 18px; padding-top: 2px; }
+    .toc-item.active .toc-num { color: var(--accent); }
+    .toc-text { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.35; }
+    .toc-item.active .toc-text { color: var(--text-primary); font-weight: 600; }
+    .toc-done { margin-left: auto; color: #10b981; flex-shrink: 0; padding-top: 2px; }
+
+    .reader-main { margin-left: 260px; min-height: 100vh; }
+    .reader-content { max-width: 680px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+
+    .chapter-label { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+    .chapter-title { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--text-primary); line-height: 1.2; letter-spacing: -0.4px; margin-bottom: 0.6rem; }
+    .chapter-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .chapter-time { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; }
+
+    .reader-body { font-size: var(--font-size); line-height: var(--line-height); color: var(--text-secondary); }
+    .reader-body p { margin-bottom: 1.5em; }
+    .reader-body h3 { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 2em 0 0.8em; }
+
+    .pull-quote { margin: 2rem 0; padding: 1.5rem 1.8rem; background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; }
+    .pull-quote p { font-size: 1.1em; font-style: italic; color: var(--text-primary); margin: 0; line-height: 1.65; }
+
+    .key-point { display: flex; gap: 1rem; margin: 1.8rem 0; padding: 1.2rem 1.4rem; background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.22); border-radius: 12px; align-items: flex-start; }
+    .key-point-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin: 0; }
+
+    .chapter-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); gap: 1rem; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+    .nav-prev, .nav-next { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.9rem 1.2rem; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; background: none; text-decoration: none; transition: all 0.2s; max-width: 48%; }
+    .nav-prev:hover, .nav-next:hover { border-color: var(--accent); background: var(--surface); }
+    .nav-next { text-align: right; margin-left: auto; }
+    .nav-direction { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 0.3rem; }
+    .nav-next .nav-direction { justify-content: flex-end; }
+    .nav-chapter-title { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+    .nav-center { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+
+    @media (max-width: 768px) {
+        .toc-sidebar { transform: translateX(-100%); }
+        .toc-sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,0.15); }
+        .toc-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 79; }
+        .toc-overlay.open { display: block; }
+        .reader-main { margin-left: 0; }
+        .reader-content { padding: 2rem 1.2rem 5rem; }
+        .chapter-title { font-size: 1.45rem; }
+        .chapter-nav { flex-wrap: wrap; }
+        .nav-prev, .nav-next { max-width: 100%; flex: 1; }
+        .nav-center { width: 100%; text-align: center; order: -1; }
+        .settings-panel { right: 0.5rem; left: 0.5rem; width: auto; }
+    }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+    <a href="book_page_zero_to_one.html" class="topbar-logo">TENBOOK</a>
+    <div class="topbar-title">Від Нуля до Одиниці · Вступ</div>
+    <div class="topbar-actions">
+        <button class="icon-btn" id="tocToggle" title="Зміст" onclick="toggleToc()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+        </button>
+        <button class="icon-btn" id="settingsToggle" title="Налаштування" onclick="toggleSettings()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <a href="book_page_zero_to_one.html" class="icon-btn" title="Закрити">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </a>
+    </div>
+</header>
+
+<div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 12%"></div>
+</div>
+
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-section">
+        <div class="settings-label">Розмір тексту</div>
+        <div class="font-size-row">
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A−</button>
+            <div class="font-size-val" id="fontSizeVal">17px</div>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-label">Шрифт</div>
+        <div class="font-row">
+            <button class="font-btn serif active" id="fontSerif" onclick="setFont('serif')">Serif</button>
+            <button class="font-btn sans" id="fontSans" onclick="setFont('sans')">Sans</button>
+        </div>
+    </div>
+    <div class="settings-section" style="margin-bottom:0">
+        <div class="settings-label">Тема</div>
+        <div class="theme-row">
+            <button class="theme-btn light active" id="themeLight" onclick="setTheme('light')">☀️ Світла</button>
+            <button class="theme-btn sepia" id="themeSepia" onclick="setTheme('sepia')">📜 Сепія</button>
+            <button class="theme-btn dark" id="themeDark" onclick="setTheme('dark')">🌙 Темна</button>
+        </div>
+    </div>
+</div>
+
+<div class="toc-overlay" id="tocOverlay" onclick="toggleToc()"></div>
+
+<aside class="toc-sidebar" id="tocSidebar">
+    <div class="toc-book-info">
+        <div class="toc-cover">
+            <img src="covers_ua/Zero to One.svg" alt="Від Нуля до Одиниці">
+        </div>
+        <div>
+            <div class="toc-book-title">Від Нуля до Одиниці</div>
+            <div class="toc-book-author">Пітер Тіль</div>
+        </div>
+    </div>
+
+    <div class="toc-header">Зміст</div>
+    <a class="toc-item active" href="#" onclick="goToChapter(0); return false;"><span class="toc-num">Вст</span><span class="toc-text">Вертикальний прогрес</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(1); return false;"><span class="toc-num">1</span><span class="toc-text">Конкуренція — для невдах</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(2); return false;"><span class="toc-num">2</span><span class="toc-text">Секрети, що змінюють світ</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(3); return false;"><span class="toc-num">3</span><span class="toc-text">Закон ступеневої функції</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(4); return false;"><span class="toc-num">4</span><span class="toc-text">Засновники і команди</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(5); return false;"><span class="toc-num">5</span><span class="toc-text">Продажі такі ж важливі</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(6); return false;"><span class="toc-num">6</span><span class="toc-text">Оптимізм із планом</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(7); return false;"><span class="toc-num">7</span><span class="toc-text">Як застосувати ідеї</span></a>
+    <a class="toc-item" href="#" onclick="goToChapter(8); return false;"><span class="toc-num">Вис</span><span class="toc-text">Сміливість будувати</span></a>
+</aside>
+
+<div class="reader-wrap">
+    <div class="reader-main">
+        <div class="reader-content" id="readerContent"></div>
+    </div>
+</div>
+
+<script>
+const KP = (text) => `
+    <div class="key-point">
+        <div class="key-point-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg></div>
+        <p class="key-point-text">${text}</p>
+    </div>`;
+
+const PQ = (text) => `<div class="pull-quote"><p>${text}</p></div>`;
+
+const chapters = [
+    {
+        label: 'Вступ',
+        title: 'Вертикальний прогрес: від 0 до 1',
+        time: '3 хв читання',
+        content: `
+            <p>Книга починається з питання, яке Пітер Тіль ставить усім, кого співбесідує на роботу: «Що важливе й правдиве, із чим більшість людей не погоджується?» Це незручне питання. Більшість людей хочуть дати «правильну» відповідь — таку, яку приємно почути і яка нікого не образить. Але правда в тому, що нестандартна думка, яку ти можеш аргументувати, — це і є вхідний квиток до справжніх інновацій.</p>
+
+            ${PQ('«Якщо ви наслідуєте чиюсь модель, ви не вчитесь у неї. Ви вчитесь тільки тоді, коли думаєте самостійно.»')}
+
+            <h3>Два типи прогресу</h3>
+
+            <p>Тіль проводить фундаментальне розрізнення між двома типами прогресу. Горизонтальний прогрес — це рух «від 1 до n»: взяти те, що вже добре працює, і тиражувати у більших масштабах. Побудувати ще один завод. Відкрити ще один магазин. Вийти на новий ринок із тим самим продуктом. Це прогрес через копіювання — передбачуваний, відносно безпечний, зрозумілий.</p>
+
+            <p>Вертикальний прогрес — це рух «від 0 до 1»: створити щось принципово нове, чого до цього моменту не існувало у світі. Перший комп'ютер, перший смартфон, перша соціальна мережа — все це стрибки від нуля до одиниці. Вони непередбачувані, ризиковані, часто виглядають нерозумно в момент, коли хтось їх задумує. Але саме вони змінюють правила гри.</p>
+
+            <h3>Глобалізація vs технологія</h3>
+
+            <p>Глобалізація — це горизонтальний прогрес у глобальному масштабі: Китай копіює американські заводи, дороги, університети, щоб наздогнати розвинений світ. Це може підвищити рівень добробуту мільярдів людей, але не вирішує принципових проблем людства — бо проблеми не вирішуються масштабуванням старих рішень.</p>
+
+            <p>Технологічний прогрес — це вертикальний стрибок. Тіль переконаний: якщо ми хочемо, щоб майбутнє було кращим за теперішнє, нам потрібні нові технології, а не просто більше тих самих. Якщо в наступному столітті ми лише глобалізуємо те, що вже є — ми отримаємо катастрофу, бо планета не витримає такого масштабування ресурсів.</p>
+
+            ${KP('Стартап — це найкраще середовище для вертикального прогресу. Мала група людей, які переконані, що бачать майбутнє, яке інші ще не помітили, і здатні його побудувати.')}
+
+            <h3>Чому стартап?</h3>
+
+            <p>Тіль пояснює: великі корпорації не можуть рухатися від 0 до 1. Вони занадто великі, занадто бюрократичні, занадто залежні від поточних результатів, щоб ризикувати на справжні інновації. Поодинці людина теж не може — для вертикального прогресу потрібна команда з конкретним баченням, яка рухається досить швидко, щоб не загрузнути в інерції. Стартап — це ідеальний розмір і структура для створення нового світу.</p>
+
+            <p>Але більшість стартапів не роблять нічого нового. Вони беруть існуючу ідею і намагаються «зробити краще» або «для іншого ринку». Це не рух від 0 до 1. Це рух від 0,9 до 1 — копіювання з незначними модифікаціями. Тіль переконаний: тільки справжні інновації — речі, яких не існувало раніше — створюють довгострокову цінність для засновників, інвесторів і суспільства.</p>
+        `
+    },
+    {
+        label: 'Розділ 1',
+        title: 'Конкуренція — для невдах',
+        time: '3 хв читання',
+        content: `
+            <p>Якщо попросити випускника MBA назвати ідеальну ринкову ситуацію, він скаже: «досконала конкуренція». Якщо запитати того ж самого про ідеальний бізнес — він знову почне говорити про конкурентні ринки. Це одне з найглибших протиріч у бізнес-освіті, і Тіль використовує його як відправну точку для однієї зі своїх найпровокаційніших тез.</p>
+
+            ${PQ('«Конкуренція — це ідеологія, яка перекручує наше мислення. Ми прославляємо її, наче вона є чеснотою. Але насправді вона руйнує прибутки.»')}
+
+            <h3>Порівняння: авіація і Google</h3>
+
+            <p>Подивимось на факти. Американські авіакомпанії щорічно перевозять сотні мільйонів пасажирів і формують величезну цінність для економіки. При цьому їхня середня маржа прибутку на одного пасажира — близько 37 центів. Google у той самий рік заробив більше, ніж всі американські авіакомпанії разом узяті. Чому? Тому що Google є монополістом у пошуку: він займає близько 90% ринку і може встановлювати власні правила.</p>
+
+            <p>Авіакомпанії постійно воюють між собою, знижуючи ціни і скорочуючи сервіс. Пасажири виграють, але самі компанії ледь виживають. Google не має серйозних конкурентів у пошуку — тому він може інвестувати в DeepMind, в автомобілі без водія, у медицину, у розвиток власних співробітників.</p>
+
+            <h3>Монопольна брехня і конкурентна брехня</h3>
+
+            <p>Тіль зауважує ще одну важливу закономірність: компанії-монополісти публічно занижують свою частку ринку, а конкурентні компанії публічно її перебільшують. Монополіст хоче уникнути уваги антимонопольних регуляторів, тому каже: «Ми просто невелика пошукова компанія на величезному ринку реклами». Конкурентна компанія хоче залучити інвесторів, тому каже: «Ми займаємо 30% ринку» — хоча насправді бореться за виживання.</p>
+
+            ${KP('Щоб зрозуміти, наскільки хороший бізнес, запитайте: скільки прибутку він генерує відносно своїх доходів? Якщо відповідь «майже нічого» — скоріш за все, це конкурентний ринок, де всі борються за виживання.')}
+
+            <h3>Чому конкуренція нас засліплює</h3>
+
+            <p>Тіль розповідає про психологічний ефект конкуренції: коли є конкурент, ми починаємо думати про нього замість того, щоб думати про клієнтів. Ми відповідаємо на кожен їхній крок, намагаємось відвоювати частку ринку, зосереджуємось на боротьбі — і поступово втрачаємо з поля зору первинне питання: яку цінність ми взагалі створюємо для людей?</p>
+
+            <p>Правило Тіля просте і провокаційне: якщо ваш бізнес перебуває у жорсткій конкуренції — ви, швидше за все, робите щось неправильно. Або ви вийшли на ринок, де немає місця новому гравцю. Або ви будуєте щось, що вже будують інші. Монополія — це не зло і не виняток: це ознака того, що компанія зробила щось справді краще за всіх.</p>
+
+            <p>Найбільш важлива практична порада: якщо ви думаєте про новий бізнес, не запитуйте «Як я можу конкурувати?». Запитуйте «Як я можу стати єдиним?»</p>
+        `
+    },
+    {
+        label: 'Розділ 2',
+        title: 'Секрети, що змінюють світ',
+        time: '3 хв читання',
+        content: `
+            <p>У Тіля є улюблене питання: чи є ще у світі важливі секрети? Більшість освічених людей відповідають «ні» або «мало». Здається, що всі континенти вже відкриті, всі наукові теорії перевірені, всі бізнес-ніші заповнені. Школа вчить нас, що є відповіді, які «правильні», і відповіді, які «неправильні» — і що всі правильні відповіді вже відомі.</p>
+
+            ${PQ('«Якщо ви думаєте, що всі секрети вже відкриті — ви ніколи не будете шукати нових. А це означає, що ви ніколи не побудуєте нічого справді видатного.»')}
+
+            <h3>Три категорії знань</h3>
+
+            <p>Тіль розрізняє три типи знань. По-перше, речі, які легко дізнатися — факти, що доступні кожному, хто захоче поглянути. По-друге, таємниці — речі, які важко пізнати, але можливо: потрібні зусилля, нестандартне мислення, час. По-третє, містерії — речі, які принципово непізнавані, як питання про сенс Всесвіту.</p>
+
+            <p>Проблема нашого часу в тому, що більшість людей або займаються першою категорією (загальнодоступні знання), або, отримавши освіту, впевнені, що вже все знають. Другу категорію — справжні секрети — майже ніхто не шукає, бо це потребує сміливості думати нестандартно.</p>
+
+            <h3>Секрети бізнесу</h3>
+
+            <p>Але саме секрети є основою кожного видатного бізнесу. Airbnb побудований на секреті: мільйони людей готові здавати своє житло незнайомцям, і мільйони інших хочуть жити в реальних будинках, а не в готелях — але ніхто раніше не створив платформу, яка з'єднала б їх. Uber заснований на секреті: люди хочуть замовляти таксі зі смартфона, бачити машину на карті в реальному часі й платити без готівки — і вони готові платити за це.</p>
+
+            ${KP('Кожна монополія побудована на секреті — правді про людей або ринки, яку ніхто ще не помітив або яку більшість вважає невірною. Пошук секретів — це пошук потенційних монополій.')}
+
+            <h3>Чому люди перестали шукати секрети</h3>
+
+            <p>Тіль виділяє чотири причини, чому люди уникають пошуку секретів. Перша — інкрементальний підхід до освіти: ми вчимо людей робити маленькі кроки, а не великі стрибки. Друга — острах помилитися: у конкурентному суспільстві помилка коштує дорого, тому люди воліють грати безпечно. Третя — комфортність: не потрібно шукати секрети, якщо можна комфортно жити без них. Четверта — «плоский світ»: ілюзія, що глобалізація вже розкрила всі ніші і конкурувати з великими гравцями неможливо.</p>
+
+            <h3>Як шукати секрети</h3>
+
+            <p>Практичний рада Тіля: думайте про те, що прийнято вважати хибним, але насправді правдиве. Або думайте про людську поведінку — що люди роблять і чого хочуть насправді, а не те, що вони кажуть публічно. Або подивіться на природу: фізика, хімія, біологія — там ще повно секретів, які чекають на застосування.</p>
+
+            <p>Важлива деталь: знайшовши секрет, не потрібно кричати про нього на весь світ. Найкращий спосіб захистити секрет — це побудувати на ньому бізнес, поки інші ще не помітили. Саме так роблять найкращі підприємці.</p>
+        `
+    },
+    {
+        label: 'Розділ 3',
+        title: 'Закон ступеневої функції',
+        time: '3 хв читання',
+        content: `
+            <p>Один із найважливіших розділів книги — і один із найменш зрозумілих для людей без досвіду у венчурному капіталі. Тіль розповідає про закономірність, яка управляє венчурними інвестиціями, але насправді стосується набагато ширшого кола рішень — від кар'єри до вибору проектів.</p>
+
+            ${PQ('«Диверсифікація захищає від провалу. Але вона також захищає від видатного успіху. Закон ступеневої функції говорить: одне правильне рішення важить більше за всі інші разом.»')}
+
+            <h3>Що таке power law</h3>
+
+            <p>У нормальному розподілі (дзвонова крива) більшість значень знаходяться біля середнього. Більшість людей ростом близько 170 см, більшість зарплат у середньому діапазоні, більшість температур у межах сезонної норми. Але розподіл результатів у бізнесі і інвестиціях не є нормальним — він підпорядковується степеневому закону (power law).</p>
+
+            <p>У степеневому розподілі невелика кількість подій відповідає за непропорційно великий відсоток результатів. Якщо взяти всі американські технологічні стартапи, які отримали венчурне фінансування за останні 20 років, і порахувати їхню сукупну вартість — виявиться, що Google і Facebook разом коштують більше, ніж всі інші разом узяті.</p>
+
+            <h3>Наслідки для венчурних інвесторів</h3>
+
+            <p>Тіль пояснює: якщо ви венчурний інвестор і вкладаєте у 30 компаній, очікуючи, що деякі провалять, деякі дадуть помірний результат, а декілька — великий, ви мислите неправильно. Правильна стратегія: шукайте компанії, які мають потенціал стати наступним Google або Facebook. Одна така компанія поверне весь фонд. Двадцять «нормальних» компаній з хорошими результатами — ні.</p>
+
+            ${KP('Найпоширеніша помилка венчурного інвестора: вкладати у надто велику кількість компаній, переконуючи себе, що «диверсифікація зменшує ризик». Насправді вона зменшує шанси на видатний результат.')}
+
+            <h3>Наслідки для підприємців і кар'єри</h3>
+
+            <p>Але найцікавіше — і найбільш провокаційне — застосування цього закону стосується особистих рішень. Тіль пише: якщо ви замислюєтесь, чи варто кидати роботу і йти у стартап, пам'ятайте, що кількість потенційних стартапів теж підпорядковується степеневому закону. Один правильний стартап, до якого ви приєднались, може принести більше, ніж 20 років кар'єри в корпорації.</p>
+
+            <p>Але і навпаки: якщо ви думаєте «запущу кілька проектів паралельно — диверсифікую ризики», це теж хибна логіка. Щоб побудувати щось видатне, потрібна концентрація всіх ресурсів — часу, уваги, грошей — на одній ставці. Диверсифікація особистих проектів — це спосіб гарантовано не досягти нічого видатного.</p>
+
+            <h3>Як це змінює вибір компанії</h3>
+
+            <p>Ще одне практичне застосування: вибираючи, до якого стартапу приєднатися, не думайте про поточну зарплату чи статус. Запитайте: чи може ця компанія стати монополістом у своїй ніші? Чи є у неї технологія або мережевий ефект, який дасть їй стрімкий ріст? Якщо ні — навіть висока зарплата не виправдовує участь у проекті, який не має шансів на видатний результат.</p>
+        `
+    },
+    {
+        label: 'Розділ 4',
+        title: 'Засновники і команди',
+        time: '3 хв читання',
+        content: `
+            <p>Одна з найпоширеніших порад у менеджменті: побудуйте систему, яка працює без вас. Хороша компанія — та, де процеси налагоджені настільки добре, що особистість конкретного керівника не має значення. Тіль не погоджується з цим категорично.</p>
+
+            ${PQ('«Найбільш успішні компанії — це розширення особистості засновника. Не системи. Не процеси. Саме унікальне бачення конкретної людини, яка наважилась побудувати те, що більшість вважала неможливим.»')}
+
+            <h3>Чому засновники важливі</h3>
+
+            <p>Тіль аналізує характери великих засновників: Стів Джобс, Білл Гейтс, Ілон Маск, Марк Цукерберг. Усі вони — ексцентричні, часом невигідні у роботі, що йдуть проти системи. Жоден із них не вписується у стандартний профіль «хорошого менеджера». Але всі вони змогли зберегти компанії вірними початковому баченню навіть тоді, коли зовнішній тиск вимагав компромісів.</p>
+
+            <p>Засновник відіграє унікальну роль: він є живим зв'язком між поточним днем компанії і тим далеким майбутнім, заради якого вона була створена. Коли засновника замінюють «професійним менеджером», компанія починає оптимізувати поточні показники замість того, щоб рухатися до трансформаційної мети. Саме це сталось із Apple після того, як Джобса звільнили в 1985 році — і саме тому повернення Джобса в 1997-му врятувало компанію.</p>
+
+            <h3>Вибір co-founders — найважливіше рішення</h3>
+
+            <p>Якщо засновник такий важливий, то вибір co-founders — одне з найважливіших рішень, яке будь-коли приймає підприємець. Тіль порівнює це з шлюбом: ви будете разом у найкращі і найгірші моменти, ви будете бачити одне одного частіше, ніж свої сім'ї, ви будете приймати разом рішення, від яких залежить існування компанії.</p>
+
+            ${KP('Більшість стартапів гине не через погану технологію чи ринок, а через конфлікти між засновниками. Переконайтеся, що ви з партнерами розподілили ролі чітко, обговорили найгірші сценарії і домовились, що відбудеться, якщо хтось захоче вийти.')}
+
+            <h3>Структура власності і влади</h3>
+
+            <p>Тіль також детально розглядає питання структури стартапу. Він розрізняє три рівні: власність (хто чим юридично володіє), управління (хто приймає рішення офіційно, рада директорів) і контроль (хто керує компанією щодня). У стартапі ці три рівні часто перетинаються і конфліктують — і якщо не врегулювати їх заздалегідь, конфлікти інтересів стануть причиною серйозних криз.</p>
+
+            <h3>Культура як розширення засновника</h3>
+
+            <p>Нарешті, Тіль повертається до ширшої ідеї: культура компанії — це не набір правил або HR-ініціатив. Це розширення особистості засновника. PayPal за часів Тіля мав культуру нестандартного мислення, швидкості і готовності до ризику — бо саме таким був Тіль. Zappos мав культуру виняткового сервісу — бо Тоні Шей особисто був одержимий ідеєю ідеального клієнтського досвіду.</p>
+
+            <p>Це не означає, що культура автоматично хороша, якщо засновник хороший. Але це означає: якщо ви будуєте компанію, вам потрібно спершу зрозуміти, ким ви є і яку культуру ви здатні автентично транслювати. Культура, яку ви придумали «для вигляду», не витримає першого серйозного випробування.</p>
+        `
+    },
+    {
+        label: 'Розділ 5',
+        title: 'Продажі такі ж важливі, як продукт',
+        time: '3 хв читання',
+        content: `
+            <p>У Кремнієвій долині існує особливий снобізм інженерів щодо продажів. Технічні люди переконані: якщо продукт справді хороший — він «продасть себе сам», а серйозно займатись продажами потрібно лише поганим продуктам. Тіль вважає це одним із найнебезпечніших myth у tech-індустрії.</p>
+
+            ${PQ('«Найкращий продукт без дистрибуції — ніщо. Найкраща дистрибуція з посереднім продуктом — бізнес. Але ніщо не порівняється з компанією, яка вміє і те, і інше.»')}
+
+            <h3>Мистецтво прихованих продажів</h3>
+
+            <p>Цікаве спостереження Тіля: найефективніші продажі — це ті, які не схожі на продажі. Коли Tesla відкрила власні шоуруми замість дилерських мереж, вона вирішила конкретну проблему дистрибуції — клієнт від початку до кінця перебуває в середовищі, яке повністю контролює Tesla. Але зовні це виглядає як «ми просто хочемо, щоб ви побачили наш продукт».</p>
+
+            <p>Palantir — компанія Тіля з аналізу даних — відправляє своїх інженерів безпосередньо до клієнтів на кілька місяців. Офіційно це називається «forward deployed engineers» і подається як технічна підтримка. Але насправді це найдорожчий і найефективніший тип корпоративного продажу: клієнт бачить команду в дії, довіра формується органічно, і контракт підписується майже сам собою.</p>
+
+            <h3>Знайдіть правильний канал для свого продукту</h3>
+
+            <p>Тіль пропонує думати про дистрибуцію системно. Для кожного продукту і кожної аудиторії існує оптимальний канал продажів — і знайти його не менш важливо, ніж побудувати сам продукт.</p>
+
+            ${KP('Вірусний ріст можливий, якщо цінність продукту для кожного нового користувача залежить від кількості попередніх — як у Dropbox або WhatsApp. Але більшість B2B-продуктів не мають такої природи, і спроба зробити з них «вірусний» продукт — витрата часу.')}
+
+            <p>Для дорогих B2B-продуктів (Enterprise sales) потрібні живі продавці, довгі переговори, демонстрації. Для продуктів середнього цінового сегменту — маркетинг і контент. Для дешевих споживчих продуктів — вірусний ріст або масова реклама. Помилка — застосовувати модель одного сегменту до іншого.</p>
+
+            <h3>Будуйте відділ продажів свідомо</h3>
+
+            <p>Тіль також попереджає: навіть якщо ви інженер і ненавидите продажі — вам доведеться продавати. Продавати інвесторам, продавати першим клієнтам, продавати найкращим кандидатам. Якщо ви не вмієте цього робити — вам потрібен партнер, який вміє. Але ні в якому разі не можна просто ігнорувати питання дистрибуції і сподіватися, що «хороший продукт сам знайде свій шлях».</p>
+
+            <p>Один із найкорисніших фреймворків книги: перед запуском спитайте себе — яким є мій канал продажів і чому він буде ефективним? Якщо ви не можете відповісти на це питання, ваш стартап ще не готовий до ринку, навіть якщо продукт технічно бездоганний.</p>
+        `
+    },
+    {
+        label: 'Розділ 6',
+        title: 'Оптимізм із планом',
+        time: '3 хв читання',
+        content: `
+            <p>Тіль ставить діагноз сучасному суспільству через чотири типи бачення майбутнього. Ця класифікація — одна з найбільш інтелектуально стимулюючих частин книги, і вона пояснює, чому одні епохи породжують справжні інновації, а інші — лише імітацію прогресу.</p>
+
+            ${PQ('«Найнебезпечніше мислення — це невизначений оптимізм: переконаність, що майбутнє буде хорошим, без жодного плану того, як саме це станеться.»')}
+
+            <h3>Чотири типи мислення</h3>
+
+            <p><strong>Визначений оптимізм</strong> — я знаю, яким буде хороше майбутнє, і маю конкретний план, як його побудувати. США у 1950–60-ті роки: посадити людину на Місяць до кінця десятиліття. Побудувати Interstate Highway System. Перемогти поліомієліт. Це мислення породжує реальний прогрес.</p>
+
+            <p><strong>Невизначений оптимізм</strong> — майбутнє буде хорошим, але я не знаю, як саме. Сучасна американська еліта: диверсифікуй портфель, купляй S&P 500, слідуй загальноприйнятим «кращим практикам», і все буде добре. Ніхто не будує нічого конкретного і великого — всі просто «позиціонуються».</p>
+
+            ${KP('Невизначений оптимізм — це найпопулярніше мислення серед освіченої еліти. Воно дуже приємне: ти оптимістичний, але тебе не можна звинуватити в конкретних помилках, бо у тебе немає конкретного плану.')}
+
+            <p><strong>Визначений песимізм</strong> — майбутнє буде поганим, і я знаю, чому. Сучасний Китай: технократичний план економічного розвитку, але з усвідомленням, що конкурувати із Заходом на рівних ще довго не вийде. Тому — збирай все, що можна, зараз, поки є можливість.</p>
+
+            <p><strong>Невизначений песимізм</strong> — майбутнє буде поганим, і нічого не поробиш. Сучасна Європа: бюрократія, старіюче населення, борги. Нічого принципово не вирішується, всі просто намагаються виживати.</p>
+
+            <h3>Чому плани знову важливі</h3>
+
+            <p>Тіль не ностальгує за минулим — він аргументує, що в технологічному секторі визначений оптимізм ніколи не зникав повністю. Ілон Маск будує ракети, щоб колонізувати Марс. Це абсурд з точки зору невизначеного оптиміста — навіщо мати конкретний план щодо Марсу? Але саме ця конкретність надихає найкращих інженерів світу приєднатися до SpaceX і робити те, що ще кілька років тому вважалося неможливим.</p>
+
+            <p>Порада для підприємців: якщо ваш бізнес-план — «ми почнемо і подивимося, куди це приведе» — ви мислите у стилі невизначеного оптимізму. Краще мати конкретне бачення результату і рухатися до нього цілеспрямовано, навіть якщо шлях доведеться коригувати. Планування не гарантує успіху, але відсутність плану гарантує дрейф.</p>
+        `
+    },
+    {
+        label: 'Розділ 7',
+        title: 'Як застосувати ідеї на практиці',
+        time: '3 хв читання',
+        content: `
+            <p>Читати Тіля легко — і важко одночасно. Легко, бо він пише ясно і провокаційно. Важко, бо його ідеї вимагають не просто розуміння, а зміни способу мислення. Цей розділ — спроба перевести теорію в конкретні питання і дії.</p>
+
+            ${PQ('«Правильне питання, поставлене в правильний момент, коштує більше за десять правильних відповідей.»')}
+
+            <h3>Питання, яке змінює все</h3>
+
+            <p>Тіль рекомендує починати будь-який новий проект або бізнес з одного питання: «Що важливе й правдиве, із чим більшість людей не погоджується?» Якщо ви можете дати на нього чесну і конкретну відповідь — ви знайшли потенційний секрет. Якщо відповіді немає або вона звучить як загальне місце («люди хочуть якісніших продуктів», «ринок зростає») — ви іще не знайшли те, що шукаєте.</p>
+
+            <p>Спробуйте прямо зараз: візьміть свою поточну ідею або бізнес і дайте відповідь на це питання. Не поспішайте. Перша відповідь майже завжди банальна. Копайте глибше.</p>
+
+            ${KP('Ставте питання «Що я знаю, чого не знають інші?» не один раз, а регулярно — щораз, коли оцінюєте нову ідею або ринок.')}
+
+            <h3>Обирайте партнерів як шлюбних партнерів</h3>
+
+            <p>Перш ніж починати бізнес, переконайтесь: чи справді ваші co-founders розуміють одне одного, мають спільні цінності та готові пройти через найважчі моменти? Розрив між засновниками — одна з найпоширеніших причин загибелі стартапів. Не беріть людей за їхнє резюме — беріть за спільне бачення майбутнього і здатність чесно говорити про проблеми.</p>
+
+            <p>Тіль радить проговорити «незручні питання» ще до старту: хто що отримує в разі продажу? Що відбувається, якщо хтось захоче вийти? Хто приймає фінальне рішення, коли думки розходяться? Ці питання неприємні — але краще відповісти на них зараз, ніж через рік у суді.</p>
+
+            <h3>Не ігноруйте продажі</h3>
+
+            <p>Для кожного продукту є оптимальний канал дистрибуції — і знайти його так само важливо, як і побудувати сам продукт. Запитайте: хто мій перший клієнт? Як він приймає рішення про покупку? Яку суму він готовий заплатити? Залежно від відповідей стає зрозумілим канал: якщо чек великий і клієнт — корпорація, потрібен прямий продаж. Якщо продукт масовий і дешевий — вірусний ріст або контент.</p>
+
+            ${KP('Перед запуском дайте відповідь на просте питання: «Як перший клієнт дізнається про мій продукт і чому він його купить?» Якщо відповіді немає — продукт ще не готовий до ринку.')}
+
+            <h3>Захоплюйте нішу, потім масштабуйся</h3>
+
+            <p>Намалюйте три кола. Перше — найменше: ринок, де ви можете стати монополістом вже сьогодні. Скільки клієнтів? Скільки грошей? Чи реально захопити 80%+ цього ринку? Якщо так — це ваша точка входу. Друге коло — суміжний ринок, куди ви зможете вийти, маючи ресурси і репутацію з першого кола. Третє — довгострокова мета.</p>
+
+            <p>Amazon почав з книг — найзручнішого товару для онлайн-продажу. Коли книжковий ринок було завойовано, перейшов на музику, потім на електроніку, потім на все. Кожен крок фінансувався і підкріплювався репутацією попереднього.</p>
+
+            <h3>Мисліть категорією «в 10 разів краще»</h3>
+
+            <p>Коли ви оцінюєте свій продукт чи ідею, запитайте: у чому я кращий у 10 разів від найближчої альтернативи? Не «трохи краще», не «зручніше», не «дешевше» — а в десять разів. Якщо відповіді немає — або знайдіть цю перевагу, або шукайте іншу нішу. «Трохи краще» не дає клієнту причини змінити звичку і перейти до вас.</p>
+
+            ${KP('Одна велика концентрована ставка — краща стратегія, ніж десять паралельних проектів. Степеневий закон діє не лише у венчурних інвестиціях, а й у кар\'єрі і особистих проектах.')}
+
+            <h3>Використовуйте ці питання як фільтр</h3>
+
+            <p>Щоразу, коли ви оцінюєте нову ідею, пропускайте її через чотири питання Тіля: Чи є тут секрет, якого не бачать інші? Чи можна стати монополістом у конкретній ніші? Чи є технологічна або мережева перевага, яку важко скопіювати? Чи є чіткий канал продажів? Якщо відповідь «так» на всі чотири — це заслуговує на серйозну увагу. Якщо «ні» на більшість — варто шукати далі.</p>
+        `
+    },
+    {
+        label: 'Висновок',
+        title: 'Сміливість будувати нове',
+        time: '2 хв читання',
+        content: `
+            <p>«Від Нуля до Одиниці» — це не оптимістична книга у звичайному розумінні. Тіль не обіцяє, що будувати нове легко чи приємно. Він чесно визнає: більшість стартапів провалюється. Більшість великих ідей ніколи не реалізується. Більшість людей, які намагаються рухатись від 0 до 1, зазнають поразки.</p>
+
+            ${PQ('«Майбутнє — це не те, що відбувається само собою. Це те, що будують конкретні люди, які наважились побачити те, чого не бачать інші, і зробити те, що більшість вважає неможливим.»')}
+
+            <h3>Сингулярність або стагнація</h3>
+
+            <p>Тіль завершує книгу великою тезою: технологічний прогрес — це не гарантія. Сьогодні більшість людей у розвинених країнах живуть набагато краще, ніж 50 років тому. Але якщо нові технології зупиняться, якщо наступне покоління займатиметься лише масштабуванням старих рішень — ми дуже швидко зіткнемося зі стелею зростання. Ресурси планети кінцеві, а проблеми — ні.</p>
+
+            <p>Єдиний спосіб вийти за межі цієї стелі — це вертикальний прогрес. Нові джерела енергії. Нові способи виробництва їжі. Нові медичні технології. Нові форми освіти. Від 0 до 1.</p>
+
+            <h3>Виклик для кожного читача</h3>
+
+            <p>Але Тіль не закінчує на макрорівні. Він повертає виклик до кожного окремого читача. Питання не в тому, чи можна побудувати щось нове. Це доведено тисячами разів. Питання в тому, чи наважитесь ви це зробити.</p>
+
+            ${KP('Найважливіший урок книги: не намагайтесь скопіювати чужу модель успіху. Знайдіть свій секрет — правду про світ, яку ніхто ще не помітив — і побудуйте на ньому щось єдине у своєму роді.')}
+
+            <p>Для цього потрібна сміливість думати нестандартно в епоху, яка нагороджує конформізм. Потрібна готовність бути неправим — і навчитись у своїх помилках, а не приховувати їх. Потрібна здатність бачити у майбутньому конкретний план, а не туманну надію. І потрібна команда однодумців, яка розділяє ваше бачення і готова разом пройти найважчий шлях.</p>
+
+            <h3>Оцінка</h3>
+
+            <p>«Від Нуля до Одиниці» — обов'язкове читання для кожного, хто думає про власний бізнес, але не обмежується ним. Це книга про спосіб мислення — специфічний, провокаційний, ефективний. Тіль не дає формул і не обіцяє гарантій. Він пропонує набір питань, які, якщо ставити їх чесно і регулярно, допоможуть побачити можливості там, де інші бачать тільки перешкоди.</p>
+
+            <p>Якщо після прочитання ви дивитесь на світ трохи інакше — якщо стали більш уважними до секретів навколо вас, більш скептичними щодо конкурентних ринків, більш сміливими у своїх планах — книга виконала своє завдання.</p>
+        `
+    }
+];
+
+let currentChapter = 0;
+let fontSize = 17;
+let readChapters = new Set([0]);
+
+function renderChapter(idx) {
+    const ch = chapters[idx];
+    const isLast = idx === chapters.length - 1;
+    const isFirst = idx === 0;
+    const prevCh = !isFirst ? chapters[idx - 1] : null;
+    const nextCh = !isLast ? chapters[idx + 1] : null;
+
+    document.getElementById('readerContent').innerHTML = `
+        <div class="chapter-label">${ch.label}</div>
+        <div class="chapter-title">${ch.title}</div>
+        <div class="chapter-meta">
+            <span class="chapter-time">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                ${ch.time}
+            </span>
+        </div>
+        <div class="reader-body">${ch.content}</div>
+        <div class="chapter-nav">
+            ${prevCh ? `<button class="nav-prev" onclick="goToChapter(${idx-1})">
+                <span class="nav-direction"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Попередній</span>
+                <span class="nav-chapter-title">${prevCh.title}</span>
+            </button>` : '<div></div>'}
+            <span class="nav-center">${idx + 1} / ${chapters.length}</span>
+            ${nextCh ? `<button class="nav-next" onclick="goToChapter(${idx+1})">
+                <span class="nav-direction">Наступний <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">${nextCh.title}</span>
+            </button>` : `<button class="nav-next" onclick="window.location='book_page_zero_to_one.html'">
+                <span class="nav-direction">Готово <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">Повернутися до книги</span>
+            </button>`}
+        </div>
+    `;
+
+    document.querySelector('.topbar-title').textContent = `Від Нуля до Одиниці · ${ch.label}`;
+
+    document.querySelectorAll('.toc-item').forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+    });
+
+    readChapters.add(idx);
+    const pct = Math.round((readChapters.size / chapters.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    currentChapter = idx;
+    closeTocMobile();
+}
+
+function goToChapter(idx) { renderChapter(idx); }
+
+function toggleSettings() {
+    document.getElementById('settingsPanel').classList.toggle('open');
+}
+
+function toggleToc() {
+    document.getElementById('tocSidebar').classList.toggle('open');
+    document.getElementById('tocOverlay').classList.toggle('open');
+}
+
+function closeTocMobile() {
+    if (window.innerWidth <= 768) {
+        document.getElementById('tocSidebar').classList.remove('open');
+        document.getElementById('tocOverlay').classList.remove('open');
+    }
+}
+
+document.addEventListener('click', (e) => {
+    const panel = document.getElementById('settingsPanel');
+    const btn = document.getElementById('settingsToggle');
+    if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(22, fontSize + delta));
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+    document.getElementById('fontSizeVal').textContent = fontSize + 'px';
+}
+
+function setFont(type) {
+    document.body.style.fontFamily = type === 'sans'
+        ? "-apple-system, BlinkMacSystemFont, 'Inter', sans-serif"
+        : "Georgia, 'Times New Roman', serif";
+    document.getElementById('fontSerif').classList.toggle('active', type === 'serif');
+    document.getElementById('fontSans').classList.toggle('active', type === 'sans');
+}
+
+function setTheme(theme) {
+    document.body.classList.remove('dark', 'sepia');
+    if (theme !== 'light') document.body.classList.add(theme);
+    ['light','sepia','dark'].forEach(t => {
+        document.getElementById('theme' + t.charAt(0).toUpperCase() + t.slice(1))
+            .classList.toggle('active', t === theme);
+    });
+}
+
+renderChapter(0);
+</script>
+</body>
+</html>
