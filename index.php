@@ -1900,7 +1900,7 @@
             .categories-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .features-grid,
             .testimonials-grid {
                 grid-template-columns: 1fr;
@@ -1909,6 +1909,20 @@
             .celebrity-showcase {
                 grid-template-columns: 1fr;
                 text-align: center;
+            }
+
+            .celebrity-profile {
+                align-items: center;
+            }
+
+            .books-horizontal {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .view-all-btn {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
             }
 
             .stats-grid {
@@ -1924,7 +1938,7 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
+
             .floating-books {
                 display: none;
             }
@@ -1938,6 +1952,16 @@
 
             .celebrity-showcase {
                 grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            .celebrities {
+                padding: 4rem 1rem;
+                overflow-x: hidden;
+            }
+
+            .books-horizontal {
+                grid-template-columns: repeat(2, 1fr);
             }
 
 
