@@ -1289,13 +1289,6 @@ function starsHtml($rating) {
                 }
                 ?>
             </div>
-            <div class="author-card">
-                <div class="author-header">
-                    <div class="author-name"><?= htmlspecialchars($book['author']) ?></div>
-                        <div class="author-title"><?= htmlspecialchars($d['author_card_title']) ?></div>
-                </div>
-                <div class="author-bio"><?= htmlspecialchars($book['pro_avtora']['tsykavy_fakt']) ?></div>
-            </div>
         </div>
 
         <!-- TAB: REVIEWS -->

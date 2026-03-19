@@ -1,6 +1,5 @@
 <?php
 // header.php — єдиний хедер для всіх сторінок
-// Використання: <?php include 'header.php'; ?>
 // Опційно перед include задати: $active_page = 'catalog'; (landing/catalog/leaders/cabinet)
 if (!isset($active_page)) $active_page = '';
 ?>
