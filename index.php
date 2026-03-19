@@ -2031,11 +2031,22 @@
             }
 
             .celebrities {
-                padding: 4rem 1rem;
+                padding: 2.5rem 1rem;
                 overflow-x: hidden;
             }
 
-
+            .hero { padding: 6rem 1.5rem 3rem; }
+            .features { padding: 2.5rem 1rem; }
+            .new-releases { padding: 2.5rem 1rem; }
+            .categories { padding: 2.5rem 1rem; }
+            .how-it-works { padding: 2.5rem 1rem; }
+            .time-comparison { padding: 2.5rem 1rem; }
+            .personalization { padding: 2.5rem 1rem; }
+            .testimonials { padding: 2.5rem 1rem; }
+            .pricing { padding: 2.5rem 1rem; }
+            .faq { padding: 2.5rem 1rem; }
+            .newsletter { padding: 2.5rem 1rem; }
+            .section-header { margin-bottom: 1.5rem; }
 
             .newsletter-form {
                 flex-direction: column;
