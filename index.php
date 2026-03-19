@@ -1967,6 +1967,15 @@
                 grid-template-columns: 1fr;
             }
 
+            .features-split {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .features {
+                padding: 4rem 1rem;
+            }
+
             .celebrity-showcase {
                 grid-template-columns: 1fr;
                 padding: 1.5rem;

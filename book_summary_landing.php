@@ -1977,6 +1977,15 @@
                 overflow-x: hidden;
             }
 
+            .features-split {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .features {
+                padding: 4rem 1rem;
+            }
+
 
 
             .newsletter-form {
