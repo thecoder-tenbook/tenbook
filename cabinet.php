@@ -67,15 +67,7 @@
         <!-- Заповнюється JS -->
     </main>
     <script>
-    var firebaseConfig = {
-        apiKey: "AIzaSyBITou6TONUHIR1IPcc2yXmUCrSiA7KoJA",
-        authDomain: "tenbook-bd3eb.firebaseapp.com",
-        projectId: "tenbook-bd3eb",
-        storageBucket: "tenbook-bd3eb.firebasestorage.app",
-        messagingSenderId: "619158652539",
-        appId: "1:619158652539:web:4619616a2fa66d1a1204de"
-    };
-    firebase.initializeApp(firebaseConfig);
+    // Firebase вже ініціалізовано в header.php
     var auth = firebase.auth();
     var db = firebase.firestore();
 
@@ -188,5 +180,6 @@
         }
     });
     </script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </body>
 </html>

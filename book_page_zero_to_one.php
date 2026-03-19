@@ -291,7 +291,7 @@
         .btn-fav.active svg { fill: #e11d48; stroke: #e11d48; }
     </style>
 </head>
-<body>
+<body data-book-id="zero_to_one">
 <?php include 'header.php'; ?>
 <main style="padding-top: 96px;">
 <!-- PAGE LAYOUT -->
@@ -733,6 +733,60 @@ function setStars(n) {
         btn.classList.toggle('active', i < n);
     });
 }
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script>
+(function() {
+    var db = firebase.firestore();
+    var currentUser = null;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        currentUser = user;
+        if (user) { loadFavoriteState(); }
+    });
+
+    function loadFavoriteState() {
+        if (!currentUser) return;
+        var bookId = document.body.getAttribute('data-book-id');
+        var btn = document.querySelector('.btn-fav');
+        if (!btn) return;
+        db.collection('users').doc(currentUser.uid).get().then(function(doc) {
+            var favs = doc.exists ? (doc.data().favorites || []) : [];
+            if (favs.indexOf(bookId) !== -1) {
+                btn.classList.add('active');
+                var txt = btn.querySelector('.btn-fav-text');
+                if (txt) txt.textContent = 'В обраних';
+            }
+        });
+    }
+
+    function toggleFavorite() {
+        if (!currentUser) { window.location.href = 'cabinet'; return; }
+        var bookId = document.body.getAttribute('data-book-id');
+        var btn = document.querySelector('.btn-fav');
+        var ref = db.collection('users').doc(currentUser.uid);
+        ref.get().then(function(doc) {
+            var favs = doc.exists ? (doc.data().favorites || []) : [];
+            var idx = favs.indexOf(bookId);
+            var txt = btn.querySelector('.btn-fav-text');
+            if (idx === -1) {
+                favs.push(bookId);
+                btn.classList.add('active');
+                if (txt) txt.textContent = 'В обраних';
+            } else {
+                favs.splice(idx, 1);
+                btn.classList.remove('active');
+                if (txt) txt.textContent = 'Додати в обрані';
+            }
+            return ref.set({ favorites: favs }, { merge: true });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.querySelector('.btn-fav');
+        if (btn) btn.addEventListener('click', toggleFavorite);
+    });
+})();
 </script>
 </body>
 </html>
