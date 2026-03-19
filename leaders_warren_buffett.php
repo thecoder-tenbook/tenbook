@@ -1,0 +1,352 @@
+<?php $active_page = 'leaders'; ?>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книги Уоррена Баффета — що читає найкращий інвестор світу | TENBOOK</title>
+    <meta name="description" content="Уоррен Баффет читає 500 сторінок щодня. Ось 38 книг, які сформували його унікальне мислення інвестора та підприємця.">
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1a1a1a; }
+
+        header { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f0f0f0; }
+        nav { max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.75rem; font-weight: 900; letter-spacing: -1px; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+        .nav-menu { display: flex; gap: 2rem; align-items: center; }
+        .nav-link { text-decoration: none; color: #4a5568; font-weight: 500; transition: color 0.2s; font-size: 0.95rem; }
+        .nav-link:hover { color: #0ea5e9; }
+        .btn-primary { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; padding: 0.6rem 1.4rem; border-radius: 20px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.9rem; }
+        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #94a3b8; }
+        .breadcrumb a { color: #94a3b8; text-decoration: none; }
+        .breadcrumb a:hover { color: #0ea5e9; }
+        .breadcrumb-sep { color: #cbd5e1; }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 7rem 2rem 0;
+            max-width: 1400px; margin: 0 auto;
+        }
+        .hero-inner {
+            background: white;
+            border-radius: 28px;
+            border: 1px solid #f1f5f9;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2.5rem;
+            align-items: center;
+            position: relative; overflow: hidden;
+        }
+        .hero-inner::after {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #06b6d4);
+        }
+        .hero-photo {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #e0f2fe;
+            flex-shrink: 0;
+        }
+        .hero-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+        .hero-info { min-width: 0; }
+        .hero-breadcrumb { margin-bottom: 0.8rem; }
+        .hero-name { font-size: 2.2rem; font-weight: 900; color: #0f172a; line-height: 1.1; margin-bottom: 0.4rem; }
+        .hero-role { font-size: 1rem; color: #94a3b8; font-weight: 500; margin-bottom: 1.2rem; }
+        .hero-quote {
+            font-size: 1.05rem; color: #475569; font-style: italic; line-height: 1.65;
+            border-left: 4px solid #0ea5e9;
+            padding-left: 1rem; max-width: 560px;
+        }
+        .hero-stats { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 2rem; background: #f0f9ff; border-radius: 16px; border: 1px solid #bae6fd; min-width: 160px; text-align: center; }
+        .stat-num { font-size: 2.2rem; font-weight: 900; color: #0ea5e9; }
+        .stat-label { font-size: 0.78rem; color: #0369a1; font-weight: 500; margin-top: 0.3rem; }
+
+        /* ── BIO ── */
+        .content-wrap { max-width: 1400px; margin: 0 auto; padding: 2.5rem 2rem 5rem; display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
+        .main-col { min-width: 0; }
+        .section-block { background: white; border-radius: 20px; border: 1px solid #f1f5f9; padding: 2rem; margin-bottom: 1.5rem; }
+        .section-block h2 { font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+        .section-block h2 svg { flex-shrink: 0; }
+        .bio-text { font-size: 0.95rem; color: #475569; line-height: 1.8; }
+        .bio-text p + p { margin-top: 0.9rem; }
+
+        /* ── BOOKS ── */
+        .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; }
+        .book-card {
+            border-radius: 14px; border: 1px solid #f1f5f9;
+            overflow: hidden; text-decoration: none; color: inherit;
+            transition: all 0.2s; background: white;
+            display: flex; flex-direction: column;
+        }
+        .book-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.09); border-color: transparent; }
+        .book-cover-wrap { position: relative; padding-top: 148%; background: #f8fafc; }
+        .book-cover-wrap svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .book-info { padding: 0.9rem; }
+        .book-title { font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 0.2rem; line-height: 1.3; }
+        .book-author { font-size: 0.75rem; color: #94a3b8; }
+        .book-time { font-size: 0.72rem; color: #0ea5e9; font-weight: 600; margin-top: 0.4rem; }
+
+        /* ── SIDEBAR ── */
+        .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .sidebar-card { background: white; border-radius: 20px; border: 1px solid #f1f5f9; padding: 1.5rem; }
+        .sidebar-card h3 { font-size: 0.9rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; }
+        .quote-card { background: #f0f9ff; border: 1px solid #bae6fd; }
+        .big-quote { font-size: 2.5rem; color: #0ea5e9; line-height: 1; margin-bottom: 0.5rem; }
+        .quote-text { font-size: 0.9rem; color: #0c4a6e; font-style: italic; line-height: 1.65; }
+        .quote-source { font-size: 0.75rem; color: #0369a1; margin-top: 0.8rem; font-weight: 600; }
+
+        .fact-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .fact-item { display: flex; gap: 0.8rem; align-items: flex-start; }
+        .fact-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(14,165,233,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .fact-text { font-size: 0.83rem; color: #475569; line-height: 1.5; }
+        .fact-text strong { color: #0f172a; }
+
+        .other-leaders { display: flex; flex-direction: column; gap: 0.8rem; }
+        .other-leader { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; padding: 0.6rem; border-radius: 10px; transition: background 0.15s; }
+        .other-leader:hover { background: #f8fafc; }
+        .other-photo { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+        .other-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+        .other-name { font-size: 0.85rem; font-weight: 700; color: #0f172a; }
+        .other-role { font-size: 0.73rem; color: #94a3b8; }
+        .other-arrow { margin-left: auto; color: #cbd5e1; font-size: 1rem; }
+
+        @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: auto 1fr; }
+            .hero-stats { display: none; }
+            .content-wrap { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+        @media (max-width: 600px) {
+            .nav-menu { display: none; }
+            .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 2rem; }
+            .hero-photo { margin: 0 auto; }
+            .hero-quote { border-left: none; border-top: 4px solid #0ea5e9; padding-left: 0; padding-top: 0.8rem; }
+            .books-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .nav-item { position: relative; }
+        .nav-link { display: flex; align-items: center; gap: 0.3rem; }
+        .dropdown { position: absolute; top: 100%; left: 0; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); padding: 1rem 0; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 100; }
+        .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown a { display: block; padding: 0.75rem 1.5rem; color: #4a5568; text-decoration: none; transition: all 0.2s; }
+        .dropdown a:hover { background: #f8fafc; color: #0ea5e9; }
+        .lang-selector { display: flex; gap: 0.5rem; padding: 0.5rem; background: #f8fafc; border-radius: 8px; }
+        .lang-btn { padding: 0.4rem 0.8rem; border: none; background: transparent; cursor: pointer; border-radius: 6px; font-weight: 500; transition: all 0.3s; }
+        .lang-btn.active { background: white; color: #0ea5e9; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .nav-account-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #e2e8f0; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; transition: all 0.2s; flex-shrink: 0; }
+        .nav-account-btn:hover { border-color: #0ea5e9; color: #0ea5e9; background: #f0f9ff; }
+
+        .nav-cta-btn { background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; border: none; cursor: pointer; font-size: 0.95rem; }
+        .nav-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(14,165,233,0.3); }
+    
+    </style>
+</head>
+<body>
+<?php include 'header.php'; ?>
+
+
+<div class="hero">
+    <div class="hero-inner">
+        <div class="hero-photo">
+            <img src="leaders-photos/warren-buffett.jpg" alt="Уоррен Баффет">
+        </div>
+        <div class="hero-info">
+            <div class="hero-breadcrumb">
+                <div class="breadcrumb">
+                    <a href="leaders_page">Лідери</a>
+                    <span class="breadcrumb-sep">›</span>
+                    <span>Уоррен Баффет</span>
+                </div>
+            </div>
+            <div class="hero-name">Книги які рекомендує Уоррен Баффет</div>
+            <div class="hero-role">Інвестор, CEO Berkshire Hathaway · Статки $130 млрд</div>
+            <div class="hero-quote">"Читайте 500 сторінок щодня. Ось як працює знання — воно накопичується, як складні відсотки."</div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-num">6</div>
+            <div class="stat-label">книг у підбірці</div>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrap">
+    <div class="main-col">
+
+        <!-- Bio -->
+        <div class="section-block">
+            <h2>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Про Уоррена Баффета
+            </h2>
+            <div class="bio-text">
+                <p>Уоррен Баффет — один із найуспішніших інвесторів в історії, відомий як «Оракул з Омахи». Він побудував Berkshire Hathaway у багатомільярдну компанію завдяки дисципліні, терпінню та невпинному навчанню.</p>
+                <p>Баффет стверджує, що на початку своєї кар'єри читав по 600–1000 сторінок на день. Навіть зараз він витрачає близько 80% робочого часу на читання та роздуми. «Я просто сиджу у своєму кабінеті і читаю цілий день», — казав він.</p>
+                <p>Його книжкові підборки охоплюють інвестиції, бізнес, психологію та біографії — усе, що допомагає зрозуміти людську природу та механізми ринку.</p>
+            </div>
+        </div>
+
+        <!-- Books -->
+        <div class="section-block">
+            <h2>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Книги, які рекомендує Уоррен Баффет
+            </h2>
+            <div class="books-grid">
+
+                <!-- The Intelligent Investor -->
+                <a href="catalog_page" class="book-card">
+                    <div class="book-cover-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#F5F2E4"/><line x1="28" y1="168" x2="28" y2="52" stroke="#C8A830" stroke-width="1" opacity="0.35"/><line x1="28" y1="168" x2="172" y2="168" stroke="#C8A830" stroke-width="1" opacity="0.35"/><polyline points="40,158 72,140 104,116 136,88 168,62" fill="none" stroke="#C8A830" stroke-width="2.5" opacity="0.82" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="158" r="4" fill="#C8A830" opacity="0.7"/><circle cx="72" cy="140" r="4" fill="#C8A830" opacity="0.7"/><circle cx="104" cy="116" r="4" fill="#C8A830" opacity="0.7"/><circle cx="136" cy="88" r="4" fill="#C8A830" opacity="0.7"/><circle cx="168" cy="62" r="5.5" fill="#C8A830"/><line x1="28" y1="192" x2="172" y2="192" stroke="#C0AE80" stroke-width="0.6"/><text x="100" y="213" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="10" font-weight="900" fill="#1A1005" letter-spacing="0.5">РОЗУМНИЙ</text><text x="100" y="232" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="10" font-weight="900" fill="#1A1005" letter-spacing="0.5">ІНВЕСТОР</text><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" fill="#5A4A20" letter-spacing="0.3">Бенджамін Грем</text></svg>
+                    </div>
+                    <div class="book-info">
+                        <div class="book-title">Розумний Інвестор</div>
+                        <div class="book-author">Benjamin Graham</div>
+                        <div class="book-time">17 хв читання</div>
+                    </div>
+                </a>
+
+                <!-- The 7 Habits -->
+                <a href="book_page_7habits" class="book-card">
+                    <div class="book-cover-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#EEF4F8"/><rect x="30" y="26" width="140" height="14" rx="7" fill="#2A5080" opacity="0.12"/><rect x="30" y="46" width="140" height="14" rx="7" fill="#2A5080" opacity="0.20"/><rect x="30" y="66" width="140" height="14" rx="7" fill="#2A5080" opacity="0.28"/><rect x="30" y="86" width="140" height="14" rx="7" fill="#2A5080" opacity="0.36"/><rect x="30" y="106" width="140" height="14" rx="7" fill="#2A5080" opacity="0.46"/><rect x="30" y="126" width="140" height="14" rx="7" fill="#2A5080" opacity="0.56"/><rect x="30" y="146" width="140" height="14" rx="7" fill="#2A5080" opacity="0.70"/><text x="44" y="38" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.6">1</text><text x="44" y="58" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.65">2</text><text x="44" y="78" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.7">3</text><text x="44" y="98" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.75">4</text><text x="44" y="118" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.82">5</text><text x="44" y="138" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white" opacity="0.88">6</text><text x="44" y="158" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8.5" fill="white">7</text><line x1="28" y1="186" x2="172" y2="186" stroke="#A8C0D0" stroke-width="0.6"/><text x="100" y="208" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="15" font-weight="900" fill="#0A2040" letter-spacing="1">7 ЗВИЧОК</text><line x1="40" y1="218" x2="160" y2="218" stroke="#4A80B0" stroke-width="1.2"/><text x="100" y="234" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="#6A90A8" letter-spacing="1.1">ВИСОКОЕФЕКТИВНИХ ЛЮДЕЙ</text><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" fill="#2A4A60" letter-spacing="0.3">Стівен Кові</text></svg>
+                    </div>
+                    <div class="book-info">
+                        <div class="book-title">7 Звичок Високоефективних Людей</div>
+                        <div class="book-author">Stephen Covey</div>
+                        <div class="book-time">16 хв читання</div>
+                    </div>
+                </a>
+
+                <!-- The Art of War -->
+                <a href="catalog_page" class="book-card">
+                    <div class="book-cover-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#1E0A06"/><circle cx="100" cy="108" r="64" fill="none" stroke="#C03020" stroke-width="4" opacity="0.65" stroke-dasharray="340,30"/><circle cx="100" cy="108" r="8" fill="#C83010" opacity="0.88"/><line x1="100" y1="40" x2="100" y2="172" stroke="#C03020" stroke-width="1" opacity="0.3"/><line x1="36" y1="108" x2="164" y2="108" stroke="#C03020" stroke-width="1" opacity="0.3"/><line x1="28" y1="194" x2="172" y2="194" stroke="#4A1A10" stroke-width="0.5"/><text x="100" y="219" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#E8B860" letter-spacing="1">МИСТЕЦТВО ВІЙНИ</text><line x1="38" y1="229" x2="162" y2="229" stroke="#C03020" stroke-width="1.2" opacity="0.6"/><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#A07840" letter-spacing="1">Сунь Цзи</text></svg>
+                    </div>
+                    <div class="book-info">
+                        <div class="book-title">Мистецтво Війни</div>
+                        <div class="book-author">Sun Tzu</div>
+                        <div class="book-time">10 хв читання</div>
+                    </div>
+                </a>
+
+                <!-- Rich Dad Poor Dad -->
+                <a href="catalog_page" class="book-card">
+                    <div class="book-cover-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#F8F4D8"/><ellipse cx="62" cy="152" rx="28" ry="8" fill="#C0A830" opacity="0.7"/><rect x="34" y="124" width="56" height="28" fill="#C8B040" opacity="0.62"/><ellipse cx="62" cy="124" rx="28" ry="8" fill="#D8C050" opacity="0.78"/><text x="62" y="172" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="#5A4020" opacity="0.55">БІДНИЙ ТАТО</text><ellipse cx="138" cy="152" rx="28" ry="8" fill="#C0A830" opacity="0.72"/><rect x="110" y="56" width="56" height="96" fill="#C8B040" opacity="0.72"/><ellipse cx="138" cy="56" rx="28" ry="8" fill="#D8C050" opacity="0.88"/><text x="138" y="172" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="#2A1A00" opacity="0.75">БАГАТИЙ ТАТО</text><line x1="28" y1="188" x2="172" y2="188" stroke="#C0A040" stroke-width="0.6"/><text x="100" y="211" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="12" font-weight="900" fill="#1A0E00" letter-spacing="0.5">БАГАТИЙ ТАТО,</text><text x="100" y="230" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="12" font-weight="900" fill="#1A0E00" letter-spacing="0.5">БІДНИЙ ТАТО</text><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" fill="#5A4010" letter-spacing="0.3">Роберт Кійосакі</text></svg>
+                    </div>
+                    <div class="book-info">
+                        <div class="book-title">Багатий Тато, Бідний Тато</div>
+                        <div class="book-author">Robert Kiyosaki</div>
+                        <div class="book-time">14 хв читання</div>
+                    </div>
+                </a>
+
+                <!-- Principles -->
+                <a href="catalog_page" class="book-card">
+                    <div class="book-cover-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><defs><pattern id="prn_b" x="7" y="7" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="0" cy="0" r="1.7" fill="#1B2E50"/></pattern></defs><rect width="200" height="296" fill="#EDEEE9"/><rect x="26" y="18" width="148" height="132" fill="url(#prn_b)"/><line x1="28" y1="172" x2="172" y2="172" stroke="#C0BEB4" stroke-width="0.6"/><text x="100" y="208" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="#1B2E50" letter-spacing="2">ПРИНЦИПИ</text><line x1="38" y1="217" x2="162" y2="217" stroke="#7A8FA8" stroke-width="1.2"/><text x="100" y="234" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="#7A8898" letter-spacing="1.3">ЖИТТЯ ТА РОБОТА</text><text x="100" y="278" text-anchor="middle" font-family="Arial,sans-serif" font-size="9.5" fill="#2A3A50" letter-spacing="0.4">Рей Даліо</text></svg>
+                    </div>
+                    <div class="book-info">
+                        <div class="book-title">Принципи</div>
+                        <div class="book-author">Ray Dalio</div>
+                        <div class="book-time">20 хв читання</div>
+                    </div>
+                </a>
+
+                <!-- Atomic Habits -->
+                <a href="book_page" class="book-card">
+                    <div class="book-cover-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice"><rect width="200" height="296" fill="#EBF8EF"/><text x="100" y="44" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#0C3A1E" letter-spacing="3">АТОМНІ</text><text x="100" y="67" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#1E8A48" letter-spacing="3">ЗВИЧКИ</text><line x1="32" y1="78" x2="168" y2="78" stroke="#1E8A48" stroke-width="0.5" opacity="0.4"/><defs><radialGradient id="ah_l2" cx="50%" cy="59%" r="42%"><stop offset="0%" stop-color="#D06820" stop-opacity="0.15"/><stop offset="100%" stop-color="#D06820" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="175" r="48" fill="url(#ah_l2)"/><circle cx="100" cy="175" r="57" fill="none" stroke="#B85A10" stroke-width="1.6" opacity="0.65"/><ellipse cx="100" cy="175" rx="28" ry="11" fill="none" stroke="#C86E28" stroke-width="1.1" opacity="0.7"/><ellipse cx="100" cy="175" rx="28" ry="11" fill="none" stroke="#C86E28" stroke-width="1.1" opacity="0.7" transform="rotate(60, 100, 175)"/><ellipse cx="100" cy="175" rx="28" ry="11" fill="none" stroke="#C86E28" stroke-width="1.1" opacity="0.7" transform="rotate(-60, 100, 175)"/><circle cx="100" cy="175" r="5" fill="#B84E0C"/><line x1="68" y1="262" x2="132" y2="262" stroke="#1E8A48" stroke-width="0.5" opacity="0.35"/><text x="100" y="276" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#3A7050" letter-spacing="0.5">Джеймс Клір</text></svg>
+                    </div>
+                    <div class="book-info">
+                        <div class="book-title">Атомні Звички</div>
+                        <div class="book-author">James Clear</div>
+                        <div class="book-time">12 хв читання</div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-card quote-card">
+            <div class="big-quote">"</div>
+            <div class="quote-text">Я просто сиджу у своєму кабінеті і читаю цілий день. Це дає мені час думати.</div>
+            <div class="quote-source">— Уоррен Баффет, інтерв'ю Forbes</div>
+        </div>
+
+        <div class="sidebar-card">
+            <h3>Цікаві факти</h3>
+            <div class="fact-list">
+                <div class="fact-item">
+                    <div class="fact-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="fact-text"><strong>80% дня</strong> проводить за читанням та роздумами</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="fact-text">Прочитав <strong>книгу Бенджаміна Грема</strong> в 19 років — вона змінила його підхід до інвестицій назавжди</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <div class="fact-text">Каже, що знання — це як <strong>складні відсотки</strong>: накопичуються все швидше</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <h3>Інші лідери</h3>
+            <div class="other-leaders">
+                <a href="leaders_elon_musk" class="other-leader">
+                    <div class="other-photo"><img src="leaders-photos/elon-musk.jpg" alt="Ілон Маск"></div>
+                    <div>
+                        <div class="other-name">Ілон Маск</div>
+                        <div class="other-role">CEO Tesla & SpaceX</div>
+                    </div>
+                    <div class="other-arrow">›</div>
+                </a>
+                <a href="leaders_bill_gates" class="other-leader">
+                    <div class="other-photo"><img src="leaders-photos/bill-gates.jpg" alt="Білл Гейтс"></div>
+                    <div>
+                        <div class="other-name">Білл Гейтс</div>
+                        <div class="other-role">Microsoft</div>
+                    </div>
+                    <div class="other-arrow">›</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+            apiKey: "AIzaSyBITou6TONUHIR1IPcc2yXmUCrSiA7KoJA",
+            authDomain: "tenbook-bd3eb.firebaseapp.com",
+            projectId: "tenbook-bd3eb",
+            storageBucket: "tenbook-bd3eb.firebasestorage.app",
+            messagingSenderId: "619158652539",
+            appId: "1:619158652539:web:4619616a2fa66d1a1204de"
+        });
+    }
+    firebase.auth().onAuthStateChanged(function(user) {
+        var btn = document.querySelector('.nav-account-btn');
+        if (!btn) return;
+        btn.onclick = function() { window.location.href = 'cabinet'; };
+        if (user && user.photoURL) {
+            btn.innerHTML = '<img src="' + user.photoURL + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">';
+        }
+    });
+    </script>
+</body>
+</html>
