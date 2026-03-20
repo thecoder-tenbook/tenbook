@@ -1785,6 +1785,49 @@
             transform: translateY(-2px);
         }
 
+        .app-btn-wrap {
+            position: relative;
+            display: block;
+        }
+
+        .app-btn-wrap .app-btn {
+            width: 100%;
+        }
+
+        .app-btn-icon {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .app-btn-sub {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .app-btn-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .app-wip {
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: #f59e0b;
+            background: #1c1400;
+            border: 1px solid #f59e0b;
+            border-radius: 4px;
+            padding: 0.1rem 0.4rem;
+            letter-spacing: 0.2px;
+            pointer-events: none;
+        }
+
         .footer-links {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -3028,20 +3071,26 @@ ENDNEWSLETTER */ ?>
                     <div class="footer-logo">TENBOOK</div>
                     <p class="footer-tagline">Читай як найуспішніші люди світу</p>
                     <div class="app-buttons">
-                        <button class="app-btn">
-                            <span style="font-size: 1.5rem;">📱</span>
-                            <div>
-                                <div style="font-size: 0.7rem; opacity: 0.8;">Завантажити в</div>
-                                <div style="font-weight: 700;">App Store</div>
-                            </div>
-                        </button>
-                        <button class="app-btn">
-                            <span style="font-size: 1.5rem;">🤖</span>
-                            <div>
-                                <div style="font-size: 0.7rem; opacity: 0.8;">Завантажити в</div>
-                                <div style="font-weight: 700;">Google Play</div>
-                            </div>
-                        </button>
+                        <div class="app-btn-wrap">
+                            <button class="app-btn">
+                                <img src="icons/apple.jpg" class="app-btn-icon" alt="Apple">
+                                <div>
+                                    <div class="app-btn-sub">Завантажити в</div>
+                                    <div class="app-btn-name">App Store</div>
+                                </div>
+                            </button>
+                            <span class="app-wip">В розробці</span>
+                        </div>
+                        <div class="app-btn-wrap">
+                            <button class="app-btn">
+                                <img src="icons/android.png" class="app-btn-icon" alt="Android">
+                                <div>
+                                    <div class="app-btn-sub">Завантажити в</div>
+                                    <div class="app-btn-name">Google Play</div>
+                                </div>
+                            </button>
+                            <span class="app-wip">В розробці</span>
+                        </div>
                     </div>
                 </div>
 
