@@ -884,7 +884,7 @@
         }
         .tc-dotgrid-slow .tc-dotgrid-panel-label { color: #C4756A; }
         .tc-dotgrid-fast .tc-dotgrid-panel-label { color: #4A9070; }
-        .tc-dotgrid { display: grid; grid-template-columns: repeat(13, 1fr); gap: 5px; }
+        .tc-dotgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
         .tc-dot {
             width: 13px; height: 13px; border-radius: 50%;
             background: #D8E2EE;
@@ -2242,23 +2242,23 @@
 
             <div class="tc-header">
                 <span class="tc-badge">⏱ Економія часу</span>
-                <h2>Скільки книг ви прочитаєте за рік?</h2>
+                <h2>Скільки книг ви прочитаєте за місяць?</h2>
                 <p>Порівняйте зростання вашої бібліотеки знань</p>
             </div>
 
             <!-- Book-stack comparison -->
             <!-- Dot-grid year comparison -->
             <div class="tc-dotgrid-wrapper">
-                <div class="tc-dotgrid-year-label">1 рік = 52 тижні</div>
+                <div class="tc-dotgrid-year-label">1 місяць = 30 днів</div>
                 <div class="tc-dotgrid-panels">
 
                     <div class="tc-dotgrid-panel tc-dotgrid-slow">
                         <div class="tc-dotgrid-panel-label">Традиційне читання</div>
                         <div class="tc-dotgrid" id="tcGridSlow"></div>
                         <div class="tc-dotgrid-info">
-                            <div class="tc-dotgrid-number">10</div>
-                            <div class="tc-dotgrid-unit">книги / рік</div>
-                            <div class="tc-dotgrid-sublabel">~1 книга на місяць</div>
+                            <div class="tc-dotgrid-number">3</div>
+                            <div class="tc-dotgrid-unit">книги / місяць</div>
+                            <div class="tc-dotgrid-sublabel">~1 книга на 10 днів</div>
                         </div>
                     </div>
 
@@ -2268,9 +2268,9 @@
                         <div class="tc-dotgrid-panel-label">З Tenbook</div>
                         <div class="tc-dotgrid" id="tcGridFast"></div>
                         <div class="tc-dotgrid-info">
-                            <div class="tc-dotgrid-number">32</div>
-                            <div class="tc-dotgrid-unit">книги / рік</div>
-                            <div class="tc-dotgrid-sublabel">~1 книга кожні 1.5 тижні</div>
+                            <div class="tc-dotgrid-number">15</div>
+                            <div class="tc-dotgrid-unit">книги / місяць</div>
+                            <div class="tc-dotgrid-sublabel">~1 книга кожні 2 дні</div>
                         </div>
                     </div>
 
@@ -2288,11 +2288,11 @@
             </div>
             <script>
             (function(){
-                var slowActive = new Set([0,5,10,16,21,27,32,37,43,48]);
-                var fastActive = new Set([0,1,3,4,6,7,9,10,12,13,15,16,18,19,21,22,24,25,27,28,30,31,33,34,36,37,39,40,42,43,45,46]);
+                var slowActive = new Set([9,19,29]);
+                var fastActive = new Set([0,2,4,6,8,10,12,14,16,18,20,22,24,26,28]);
                 function buildGrid(id, activeSet, cls) {
                     var g = document.getElementById(id);
-                    for (var i = 0; i < 52; i++) {
+                    for (var i = 0; i < 30; i++) {
                         var d = document.createElement('div');
                         d.className = 'tc-dot' + (activeSet.has(i) ? ' ' + cls : '');
                         d.style.setProperty('--dd', (i * 0.022) + 's');
