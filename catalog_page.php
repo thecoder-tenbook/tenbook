@@ -258,8 +258,8 @@
         }
 
         .leaders-filter {
-            margin-bottom: 2rem;
-            padding: 1.5rem;
+            margin-bottom: 0;
+            padding: 0 1.5rem;
             background: white;
             border-radius: 16px;
             border: 2px solid #e2e8f0;
@@ -273,6 +273,7 @@
             max-height: 500px;
             opacity: 1;
             padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .leaders-filter-title {
