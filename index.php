@@ -3109,16 +3109,7 @@ ENDNEWSLETTER */ ?>
                         <h4>Продукт</h4>
                         <a href="#features">Можливості</a>
                         <a href="#celebrities">Рекомендації лідерів</a>
-                        <a href="#pricing">Ціни</a>
-                        <a href="#">Нові надходження</a>
                         <a href="catalog_page">Всі книги</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Компанія</h4>
-                        <a href="#">Про нас</a>
-                        <a href="#">Співпраця</a>
-                        <a href="#">Блог</a>
                     </div>
 
                     <div class="footer-column">
@@ -3138,7 +3129,6 @@ ENDNEWSLETTER */ ?>
                                 <span>Email</span>
                             </a>
                         </div>
-                        <a href="#">FAQ</a>
                     </div>
                 </div>
             </div>
@@ -3151,12 +3141,14 @@ ENDNEWSLETTER */ ?>
                     <span>•</span>
                     <a href="#">Умови використання</a>
                 </div>
+                <?php /* SOCIAL ICONS - HIDDEN
                 <div class="footer-social">
                     <a href="#" class="social-link">📘</a>
                     <a href="#" class="social-link">📷</a>
                     <a href="#" class="social-link">🐦</a>
                     <a href="#" class="social-link">💼</a>
                 </div>
+                ENDSOCIAL */ ?>
             </div>
 
             <div class="footer-copyright">
