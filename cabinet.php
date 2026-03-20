@@ -29,16 +29,19 @@
         .section-title span { font-size: 0.8rem; font-weight: 600; color: #94a3b8; background: #f1f5f9; padding: 0.2rem 0.6rem; border-radius: 20px; }
 
         .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-        .book-card { background: white; border-radius: 20px; border: 1px solid #f1f5f9; overflow: hidden; transition: all 0.25s; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+        /* Book cards — стиль як у каталозі */
+        .book-card { background: white; border-radius: 16px; border: 1px solid #e8edf2; overflow: hidden; transition: all 0.25s; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
         .book-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
-        .book-cover { width: 100%; aspect-ratio: 2/3; position: relative; overflow: hidden; cursor: pointer; }
-        .book-info { padding: 1rem 1.1rem 1.1rem; }
-        .book-title { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 0.25rem; }
-        .book-author { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.9rem; }
-        .book-actions { display: flex; gap: 0.5rem; }
-        .btn-read { flex: 1; padding: 0.6rem; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: opacity 0.2s; }
-        .btn-read:hover { opacity: 0.9; }
-        .btn-remove { padding: 0.6rem 0.75rem; border: 1.5px solid #fee2e2; background: white; color: #ef4444; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; }
+        .book-cover { width: 100%; aspect-ratio: 3/4; position: relative; overflow: hidden; cursor: pointer; flex-shrink: 0; }
+        .book-cover img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+        .book-info { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; flex: 1; }
+        .book-title { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 0.25rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; }
+        .book-author { font-size: 0.8rem; color: #64748b; margin-bottom: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .book-actions { display: flex; gap: 0.5rem; padding-top: 0.6rem; border-top: 1px solid #e8edf2; margin-top: auto; }
+        .btn-read { flex: 1; padding: 0.55rem; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-read:hover { opacity: 0.85; }
+        .btn-remove { padding: 0.55rem 0.7rem; border: 1.5px solid #fee2e2; background: white; color: #ef4444; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-remove:hover { background: #fff1f2; }
 
         /* Empty state */
