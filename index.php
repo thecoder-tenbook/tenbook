@@ -2288,8 +2288,8 @@
             </div>
             <script>
             (function(){
-                var slowActive = new Set([9,19,29]);
-                var fastActive = new Set([0,2,4,6,8,10,12,14,16,18,20,22,24,26,28]);
+                var slowActive = new Set([4,13,25]);
+                var fastActive = new Set([0,1,3,4,7,9,10,12,14,15,18,20,22,25,27]);
                 function buildGrid(id, activeSet, cls) {
                     var g = document.getElementById(id);
                     for (var i = 0; i < 30; i++) {
