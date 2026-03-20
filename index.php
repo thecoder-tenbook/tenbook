@@ -2078,6 +2078,18 @@
                 padding: 4rem 1rem;
             }
 
+            .fi-row {
+                min-height: 80px;
+                align-items: flex-start;
+            }
+
+            .fi-text p {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
             .celebrity-showcase {
                 grid-template-columns: 1fr;
                 padding: 1.5rem;

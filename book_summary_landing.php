@@ -2057,6 +2057,18 @@
                 gap: 2rem;
             }
 
+            .fi-row {
+                min-height: 80px;
+                align-items: flex-start;
+            }
+
+            .fi-text p {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
             .features-cta-desktop { display: none !important; }
             .features-cta-mobile { text-align: center; margin-top: 1.5rem; display: block; }
             .features-cta-mobile .view-all-btn { font-size: 0.95rem; padding: 0.75rem 2rem; }
