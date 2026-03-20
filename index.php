@@ -3103,6 +3103,8 @@ ENDNEWSLETTER */ ?>
                         <a href="catalog_page?category=finance">Фінанси</a>
                         <a href="catalog_page?category=creativity">Креативність</a>
                         <a href="catalog_page?category=science">Наука</a>
+                        <a href="catalog_page?category=biography">Біографії</a>
+                        <a href="catalog_page?category=history">Історія</a>
                     </div>
 
                     <div class="footer-column">
