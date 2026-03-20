@@ -38,10 +38,16 @@
         .book-info { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; flex: 1; }
         .book-title { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 0.25rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; }
         .book-author { font-size: 0.8rem; color: #64748b; margin-bottom: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .book-actions { display: flex; gap: 0.5rem; padding-top: 0.6rem; border-top: 1px solid #e8edf2; margin-top: auto; }
-        .btn-read { flex: 1; padding: 0.55rem; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; }
+        .book-actions { padding-top: 0.6rem; border-top: 1px solid #e8edf2; margin-top: auto; }
+        .book-progress-bar-wrap { height: 6px; background: #f1f5f9; border-radius: 10px; overflow: hidden; margin-bottom: 0.5rem; }
+        .book-progress-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #0ea5e9, #8b5cf6); transition: width 0.6s ease; }
+        .book-progress-meta { display: flex; align-items: center; justify-content: space-between; }
+        .book-progress-pct { font-size: 0.78rem; font-weight: 700; color: #0ea5e9; }
+        .book-progress-label { font-size: 0.75rem; color: #94a3b8; }
+        .book-actions-row { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
+        .btn-read { flex: 1; padding: 0.5rem; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-read:hover { opacity: 0.85; }
-        .btn-remove { padding: 0.55rem 0.7rem; border: 1.5px solid #fee2e2; background: white; color: #ef4444; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-remove { padding: 0.5rem 0.7rem; border: 1.5px solid #fee2e2; background: white; color: #ef4444; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-remove:hover { background: #fff1f2; }
 
         /* Empty state */
@@ -108,7 +114,8 @@
             '</button></div>';
     }
 
-    function renderCabinet(user, favs) {
+    function renderCabinet(user, favs, progressMap) {
+        progressMap = progressMap || {};
         var accountBtn = document.getElementById('accountBtn');
         if (accountBtn && user.photoURL) {
             accountBtn.innerHTML = '<img src="' + user.photoURL + '" style="width:100%;height:100%;object-fit:cover;">';
@@ -139,6 +146,9 @@
             favs.forEach(function(bookId) {
                 var b = BOOKS[bookId];
                 if (!b) return;
+                var pct = (progressMap[bookId] && progressMap[bookId].percent) ? progressMap[bookId].percent : 0;
+                var btnLabel = pct > 0 ? 'Продовжити' : 'Читати';
+                var progressLabel = pct >= 100 ? 'Прочитано!' : (pct > 0 ? 'Прочитано ' + pct + '%' : 'Ще не читали');
                 favsHtml +=
                     '<div class="book-card">' +
                     '<div class="book-cover" style="background:' + b.cover_bg + ';position:relative;overflow:hidden;" onclick="window.location=\'' + b.page + '\'">' +
@@ -148,11 +158,14 @@
                     '<div class="book-title">' + b.title + '</div>' +
                     '<div class="book-author">' + b.author + '</div>' +
                     '<div class="book-actions">' +
-                    '<a href="' + b.reader + '" class="btn-read">Читати</a>' +
+                    '<div class="book-progress-bar-wrap"><div class="book-progress-bar-fill" style="width:' + pct + '%"></div></div>' +
+                    '<div class="book-progress-meta"><span class="book-progress-pct">' + pct + '%</span><span class="book-progress-label">' + progressLabel + '</span></div>' +
+                    '<div class="book-actions-row">' +
+                    '<a href="' + b.reader + '" class="btn-read">' + btnLabel + '</a>' +
                     '<button class="btn-remove" onclick="removeFavorite(\'' + bookId + '\')" title="Видалити з обраних">' +
                     '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
                     '</button>' +
-                    '</div></div></div>';
+                    '</div></div></div></div>';
             });
             favsHtml += '</div>';
         }
@@ -175,7 +188,16 @@
     function loadCabinet(user) {
         db.collection('users').doc(user.uid).get().then(function(doc) {
             var favs = doc.exists ? (doc.data().favorites || []) : [];
-            renderCabinet(user, favs);
+            if (favs.length === 0) { renderCabinet(user, favs, {}); return; }
+            var progressPromises = favs.map(function(bookId) {
+                return db.collection('users').doc(user.uid).collection('progress').doc(bookId).get()
+                    .then(function(d) { return { bookId: bookId, data: d.exists ? d.data() : {} }; });
+            });
+            Promise.all(progressPromises).then(function(results) {
+                var progressMap = {};
+                results.forEach(function(r) { progressMap[r.bookId] = r.data; });
+                renderCabinet(user, favs, progressMap);
+            });
         });
     }
 
