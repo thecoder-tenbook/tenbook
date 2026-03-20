@@ -512,12 +512,20 @@
             margin-bottom: 0.3rem;
             color: #1a1a1a;
             line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.7em;
         }
 
         .book-author {
             font-size: 0.8rem;
             color: #64748b;
             margin-bottom: 0.75rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .book-meta {
@@ -935,7 +943,7 @@
                         </button>
                     </div>
                     <div class="book-category">${categoryNames[book.category].toUpperCase()}</div>
-                    <div class="book-title">${book.title}${book.badge ? `<span class="book-badge">${book.badge}</span>` : ''}</div>
+                    <div class="book-title">${book.title}</div>
                     <div class="book-author">${book.author}</div>
                     <div class="book-meta">
                         <div class="book-duration">
