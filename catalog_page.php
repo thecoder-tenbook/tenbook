@@ -574,21 +574,57 @@
         }
 
         @media (max-width: 768px) {
+            .catalog-container {
+                padding: 5rem 1rem 2rem;
+            }
+
+            .catalog-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .catalog-controls {
+                margin-bottom: 1rem;
+            }
+
             .catalog-header h1 {
                 font-size: 2rem;
             }
 
             .catalog-controls {
-                flex-direction: column;
-                align-items: stretch;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.6rem;
             }
 
             .search-box {
-                min-width: 100%;
+                flex: 1;
+                min-width: 0;
+            }
+
+            .filter-dropdown {
+                flex-shrink: 0;
+            }
+
+            .filter-btn span {
+                display: none;
+            }
+
+            .filter-btn {
+                padding: 0.7rem 0.9rem;
+                gap: 0;
             }
 
             .books-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .book-card {
+                padding: 0.8rem;
+            }
+
+            .book-title {
+                font-size: 0.95rem;
             }
 
             .nav-menu {
