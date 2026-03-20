@@ -2138,7 +2138,6 @@
             <h1>Читай як <span class="gradient-text">найуспішніші</span> люди світу</h1>
             <p>10 хвилин замість 10 годин. Ключові ідеї з книг, які читають Ілон Маск, Білл Гейтс та інші лідери думок</p>
             <div class="hero-buttons">
-                <a href="#" class="btn-primary">Почати безкоштовно</a>
                 <a href="catalog_page" class="btn-secondary">Подивитись бібліотеку</a>
             </div>
         </div>
