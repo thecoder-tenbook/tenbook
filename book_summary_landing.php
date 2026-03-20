@@ -3042,7 +3042,7 @@ ENDNEWSLETTER */ ?>
                     <div class="app-buttons">
                         <div class="app-btn-wrap">
                             <button class="app-btn">
-                                <img src="icons/apple.jpg" class="app-btn-icon" alt="Apple">
+                                <img src="Icons/apple.svg" class="app-btn-icon" alt="Apple">
                                 <div>
                                     <div class="app-btn-sub">Завантажити в</div>
                                     <div class="app-btn-name">App Store</div>
@@ -3052,7 +3052,7 @@ ENDNEWSLETTER */ ?>
                         </div>
                         <div class="app-btn-wrap">
                             <button class="app-btn">
-                                <img src="icons/android.png" class="app-btn-icon" alt="Android">
+                                <img src="Icons/android.svg" class="app-btn-icon" alt="Android">
                                 <div>
                                     <div class="app-btn-sub">Завантажити в</div>
                                     <div class="app-btn-name">Google Play</div>
