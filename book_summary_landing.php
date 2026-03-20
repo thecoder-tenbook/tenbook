@@ -2046,6 +2046,25 @@
             .time-comparison { padding: 1.5rem 1rem; }
             .personalization { padding: 1.5rem 1rem; }
             .testimonials { padding: 1.5rem 1rem; }
+            .testi-row {
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding: 1.2rem;
+                background: white;
+                border-radius: 16px;
+                border: 1px solid #e2e8f0 !important;
+                margin-bottom: 0.8rem;
+            }
+            .testi-row:first-child { border-top: 1px solid #e2e8f0 !important; }
+            .testi-person {
+                order: 2;
+                padding-top: 0.8rem;
+                border-top: 1px solid #f1f5f9;
+            }
+            .testi-row > div:last-child { order: 1; }
+            .testi-review-text { font-size: 0.88rem; }
+            .testi-list { margin-top: 1.5rem; }
             .pricing { padding: 1.5rem 1rem; }
             .faq { padding: 1.5rem 1rem; }
             .newsletter { padding: 1.5rem 1rem; }
