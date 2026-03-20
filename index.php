@@ -2109,10 +2109,10 @@
             .categories { padding: 1.5rem 1rem; }
             .how-it-works { padding: 1.5rem 1rem; }
             .time-comparison { padding: 1.5rem 1rem; }
-            .tc-dotgrid-panels { padding: 0 0.5rem; gap: 0.75rem; }
+            .tc-dotgrid-panels { padding: 0 0.75rem; gap: 1rem; }
             .tc-dotgrid-panel { flex: 1; min-width: 0; }
             .tc-dotgrid { gap: 3px; }
-            .tc-dot { width: auto; height: auto; aspect-ratio: 1; }
+            .tc-dot { width: 8px; height: 8px; }
             .personalization { padding: 1.5rem 1rem; }
             .testimonials { padding: 1.5rem 1rem; }
             .testi-row {
