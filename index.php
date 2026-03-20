@@ -3064,100 +3064,7 @@ ENDPRICING */ ?>
     </section>
 ENDNEWSLETTER */ ?>
 
-    <footer>
-        <div class="footer-container">
-            <div class="footer-main">
-                <div class="footer-brand">
-                    <div class="footer-logo">TENBOOK</div>
-                    <p class="footer-tagline">Читай як найуспішніші люди світу</p>
-                    <div class="app-buttons">
-                        <div class="app-btn-wrap">
-                            <button class="app-btn">
-                                <img src="icons/apple.svg" class="app-btn-icon" alt="Apple">
-                                <div>
-                                    <div class="app-btn-sub">Завантажити в</div>
-                                    <div class="app-btn-name">App Store</div>
-                                </div>
-                            </button>
-                            <span class="app-wip">В розробці</span>
-                        </div>
-                        <div class="app-btn-wrap">
-                            <button class="app-btn">
-                                <img src="icons/android.svg" class="app-btn-icon" alt="Android">
-                                <div>
-                                    <div class="app-btn-sub">Завантажити в</div>
-                                    <div class="app-btn-name">Google Play</div>
-                                </div>
-                            </button>
-                            <span class="app-wip">В розробці</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Категорії</h4>
-                        <a href="catalog_page?category=business">Бізнес</a>
-                        <a href="catalog_page?category=psychology">Психологія</a>
-                        <a href="catalog_page?category=self-dev">Саморозвиток</a>
-                        <a href="catalog_page?category=finance">Фінанси</a>
-                        <a href="catalog_page?category=creativity">Креативність</a>
-                        <a href="catalog_page?category=science">Наука</a>
-                        <a href="catalog_page?category=biography">Біографії</a>
-                        <a href="catalog_page?category=history">Історія</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Продукт</h4>
-                        <a href="#features">Можливості</a>
-                        <a href="#celebrities">Рекомендації лідерів</a>
-                        <a href="catalog_page">Всі книги</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Підтримка</h4>
-                        <button class="support-btn" onclick="toggleMessengers()">💬 Напишіть нам</button>
-                        <div class="messengers-popup" id="messengersPopup">
-                            <a href="https://t.me/tenbook" target="_blank" class="messenger-link">
-                                <span class="messenger-icon">✈️</span>
-                                <span>Telegram</span>
-                            </a>
-                            <a href="viber://chat?number=+380000000000" class="messenger-link">
-                                <span class="messenger-icon">📱</span>
-                                <span>Viber</span>
-                            </a>
-                            <a href="mailto:support@tenbook.com" class="messenger-link">
-                                <span class="messenger-icon">✉️</span>
-                                <span>Email</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <div class="footer-legal">
-                    <a href="#">Політика конфіденційності</a>
-                    <span>•</span>
-                    <a href="#">Публічна оферта</a>
-                    <span>•</span>
-                    <a href="#">Умови використання</a>
-                </div>
-                <?php /* SOCIAL ICONS - HIDDEN
-                <div class="footer-social">
-                    <a href="#" class="social-link">📘</a>
-                    <a href="#" class="social-link">📷</a>
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">💼</a>
-                </div>
-                ENDSOCIAL */ ?>
-            </div>
-
-            <div class="footer-copyright">
-                <p>&copy; 2026 TENBOOK. Всі права захищені.</p>
-            </div>
-        </div>
-    </footer>
+<?php include 'footer.php'; ?>
 
     <script>
         // tc-bars: animation handled entirely by CSS @keyframes (see .tc-bar-fill-slow / fast)
@@ -3189,11 +3096,6 @@ ENDNEWSLETTER */ ?>
             this.reset();
         });
 
-        // Toggle messengers popup
-        function toggleMessengers() {
-            const popup = document.getElementById('messengersPopup');
-            popup.classList.toggle('active');
-        }
 
         // Close messengers popup when clicking outside
         document.addEventListener('click', function(e) {
