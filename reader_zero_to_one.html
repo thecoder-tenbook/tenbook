@@ -652,6 +652,7 @@ function renderChapter(idx) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     currentChapter = idx;
     closeTocMobile();
+    saveProgress();
 }
 
 function goToChapter(idx) { renderChapter(idx); }
