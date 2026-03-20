@@ -1064,6 +1064,20 @@
             line-height: 1.2;
         }
 
+        .fi-wip {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #f59e0b;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 4px;
+            padding: 0.1rem 0.35rem;
+            vertical-align: middle;
+            margin-left: 0.3rem;
+            letter-spacing: 0.2px;
+        }
+
         .fi-text p {
             font-size: 0.78rem;
             color: #94a3b8;
@@ -2768,7 +2782,7 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
                         </div>
                         <div class="fi-text">
-                            <h4>Аудіо версії</h4>
+                            <h4>Аудіо версії <span class="fi-wip">В розробці</span></h4>
                             <p>Озвучка українською мовою</p>
                         </div>
                     </div>
@@ -2795,7 +2809,7 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                         </div>
                         <div class="fi-text">
-                            <h4>Багатомовність</h4>
+                            <h4>Багатомовність <span class="fi-wip">В розробці</span></h4>
                             <p>Українська, англійська, польська</p>
                         </div>
                     </div>
