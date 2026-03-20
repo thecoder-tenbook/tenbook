@@ -18,7 +18,31 @@
       "Bash(do sed:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "WebFetch(domain:tenbook.app)",
+      "Bash(head -20 grep -n \"<header\\\\|<nav\\\\|logo\\\\|nav-menu\\\\|nav-link\\\\|navbar\\\\|\\\\.logo\\\\|nav-logo\" /Users/ruslan/Desktop/Tenbook/leaders_elon_musk.html)",
+      "Bash(head -10 grep -n \"navbar\\\\|nav-logo\\\\|nav-links\\\\|nav-right\\\\|nav-lang\\\\|nav-icon\" /Users/ruslan/Desktop/Tenbook/leaders_elon_musk.html)",
+      "Bash(head -10 grep -n \"navbar\\\\|nav-logo\\\\|nav-links\\\\|nav-right\\\\|nav-lang\\\\|nav-icon\" /Users/ruslan/Desktop/Tenbook/leaders_warren_buffett.html)",
+      "Bash(head -10 grep -n \"navbar\\\\|nav-logo\\\\|nav-links\\\\|nav-right\\\\|nav-lang\\\\|nav-icon\" /Users/ruslan/Desktop/Tenbook/leaders_bill_gates.html)",
+      "Bash(head -10 grep -n \"navbar\\\\|nav-logo\\\\|nav-links\\\\|nav-menu\\\\|<header\\\\|<nav\" /Users/ruslan/Desktop/Tenbook/leaders_elon_musk.html)",
+      "Bash(head -10 grep -n \"navbar\\\\|nav-logo\\\\|nav-links\\\\|nav-menu\\\\|<header\\\\|<nav\" /Users/ruslan/Desktop/Tenbook/leaders_warren_buffett.html)",
+      "Bash(head -10 grep -n \"navbar\\\\|nav-logo\\\\|nav-links\\\\|nav-menu\\\\|<header\\\\|<nav\" /Users/ruslan/Desktop/Tenbook/leaders_bill_gates.html)",
+      "Bash(head -10 grep -n \"<header\\\\|<nav\\\\|logo\\\\|nav-menu\" /Users/ruslan/Desktop/Tenbook/leaders_bill_gates.html)",
+      "Bash(head -10 grep -n \"padding: 8rem\\\\|padding: 7rem\\\\|padding-top\\\\|<div class=\"\"hero\"\"\\\\|\\\\.hero {\" /Users/ruslan/Desktop/Tenbook/leaders_page.html)",
+      "Bash(sed -i '' 's/^\\\\s*\\\\.section-$/.section-header { text-align: center; margin-bottom: 3rem; }/' /Users/ruslan/Desktop/Tenbook/index.php)",
+      "Bash(sed -i '' 's/^\\\\s*\\\\.section-$/.section-header { text-align: center; margin-bottom: 3rem; }/' /Users/ruslan/Desktop/Tenbook/book_summary_landing.php)",
+      "Bash(do)",
+      "Bash(grep -rn \"^\\\\s*\\\\.[a-z][a-z-]*-\\\\s*$\" /Users/ruslan/Desktop/Tenbook/*.php)",
+      "Bash(do echo:*)",
+      "Bash(ls /Users/ruslan/Desktop/Tenbook/*.php)",
+      "Bash(grep -rn \"active_page\" /Users/ruslan/Desktop/Tenbook/*.php)",
+      "Bash(grep -rn \"isset\\\\|active_page\" /Users/ruslan/Desktop/Tenbook/*.html)",
+      "Bash(grep -rln \"book_summary_landing\\\\|index\" /Users/ruslan/Desktop/Tenbook/*.php)",
+      "Bash(ls /Users/ruslan/Desktop/Tenbook/index* /Users/ruslan/Desktop/Tenbook/book_summary*)",
+      "Bash(grep -n \"<body\\\\|</head>\\\\|include ''header\" /Users/ruslan/Desktop/Tenbook/index.php)",
+      "Bash(sed -i '' 's/var slowActive = new Set\\(\\\\[9,19,29\\\\]\\);/var slowActive = new Set\\([4,13,25]\\);/' /Users/ruslan/Desktop/Tenbook/book_summary_landing.php)",
+      "Bash(sed -i '' 's/var fastActive = new Set\\(\\\\[0,2,4,6,8,10,12,14,16,18,20,22,24,26,28\\\\]\\);/var fastActive = new Set\\([0,1,3,4,7,9,10,12,14,15,18,20,22,25,27]\\);/' /Users/ruslan/Desktop/Tenbook/book_summary_landing.php)",
+      "WebFetch(domain:cdn.jsdelivr.net)"
     ]
   }
 }
