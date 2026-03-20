@@ -47,8 +47,9 @@
         .book-actions-row { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
         .btn-read { flex: 1; padding: 0.5rem; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-read:hover { opacity: 0.85; }
-        .btn-remove { padding: 0.5rem 0.7rem; border: 1.5px solid #fee2e2; background: white; color: #ef4444; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-        .btn-remove:hover { background: #fff1f2; }
+        .btn-remove { padding: 0.5rem 0.7rem; border: 1.5px solid #fee2e2; background: #fff1f2; color: #ef4444; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-remove:hover { background: #ffe4e6; }
+        .btn-remove svg { fill: #ef4444; }
 
         /* Empty state */
         .empty-state { text-align: center; padding: 4rem 2rem; color: #94a3b8; }
