@@ -152,9 +152,11 @@ var BOOK_ID = 'zero_to_one';
 function saveProgress() {
     var user = auth.currentUser;
     if (!user) return;
+    var pct = Math.round((readChapters.size / chapters.length) * 100);
     db.collection('users').doc(user.uid).collection('progress').doc(BOOK_ID).set({
         currentChapter: currentChapter,
         readChapters: Array.from(readChapters),
+        percent: pct,
         lastRead: firebase.firestore.FieldValue.serverTimestamp()
     });
 }
