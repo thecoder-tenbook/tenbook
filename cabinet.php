@@ -58,6 +58,8 @@
         @media (max-width: 640px) {
             .profile-stats { display: none; }
             .books-grid { grid-template-columns: repeat(2, 1fr); }
+            .profile-section { flex-wrap: wrap; gap: 1rem; padding: 1.2rem; }
+            .btn-signout { margin-left: 0; width: 100%; text-align: center; }
         }
     </style>
 <?php include 'header_styles.php'; ?>
