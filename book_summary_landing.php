@@ -3252,6 +3252,11 @@
             .celeb-profile .celebrity-info h3 { font-size: 1.1rem; }
             .celeb-profile .celebrity-info p { font-size: 0.85rem; }
             .celeb-books { min-width: 0; overflow: hidden; }
+            .book-item-h:hover {
+                transform: none;
+                box-shadow: none;
+                background: #f8fafc;
+            }
 
             .books-horizontal {
                 display: flex;
