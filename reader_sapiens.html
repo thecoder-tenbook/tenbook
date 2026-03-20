@@ -589,6 +589,7 @@ auth.onAuthStateChanged(function(user) {
             accountBtn.title = user.displayName || user.email;
             accountBtn.onclick = function() { signOut(); };
         }
+        loadProgress();
     } else {
         overlay.style.display = 'flex';
     }
