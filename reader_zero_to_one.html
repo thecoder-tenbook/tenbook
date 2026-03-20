@@ -133,6 +133,7 @@
 <!-- Firebase Auth -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script>
 
 const firebaseConfig = {
@@ -145,6 +146,37 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 var auth = firebase.auth();
+var db = firebase.firestore();
+var BOOK_ID = 'zero_to_one';
+
+function saveProgress() {
+    var user = auth.currentUser;
+    if (!user) return;
+    db.collection('users').doc(user.uid).collection('progress').doc(BOOK_ID).set({
+        currentChapter: currentChapter,
+        readChapters: Array.from(readChapters),
+        lastRead: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
+function loadProgress() {
+    var user = auth.currentUser;
+    if (!user) return;
+    db.collection('users').doc(user.uid).collection('progress').doc(BOOK_ID)
+        .get().then(function(doc) {
+            if (doc.exists) {
+                var data = doc.data();
+                readChapters = new Set(data.readChapters || [0]);
+                var saved = data.currentChapter || 0;
+                if (saved > 0) {
+                    goToChapter(saved);
+                } else {
+                    var pct = Math.round((readChapters.size / chapters.length) * 100);
+                    document.getElementById('progressFill').style.width = pct + '%';
+                }
+            }
+        });
+}
 var provider = new firebase.auth.GoogleAuthProvider();
 
 function signInWithGoogle() {
