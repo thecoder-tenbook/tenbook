@@ -372,7 +372,7 @@
 
         .celebrity-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
         }
 
@@ -492,7 +492,7 @@
 
         .books-horizontal {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
         }
 
@@ -1197,7 +1197,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 3rem;
             margin-top: 3rem;
         }
@@ -1752,7 +1752,7 @@
 
         .footer-links {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
         }
 
@@ -2018,7 +2018,7 @@
             }
 
             .categories-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 0.6rem;
             }
             .category-card {
