@@ -2784,6 +2784,7 @@
         </div>
     </section>
 
+    <?php /* PRICING SECTION - HIDDEN
     <section class="pricing" id="pricing">
         <div class="pricing-container">
             <div class="section-header">
@@ -2821,6 +2822,7 @@
             </div>
         </div>
     </section>
+ENDPRICING */ ?>
 
     <section class="testimonials">
         <div class="testimonials-container">
@@ -2957,6 +2959,7 @@
         </div>
     </div>
 
+    <?php /* NEWSLETTER SECTION - HIDDEN
     <section class="newsletter">
         <div class="newsletter-container">
             <div class="newsletter-content">
@@ -2970,6 +2973,7 @@
             </div>
         </div>
     </section>
+ENDNEWSLETTER */ ?>
 
     <footer>
         <div class="footer-container">
