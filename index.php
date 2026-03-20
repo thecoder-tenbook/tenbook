@@ -2012,10 +2012,28 @@
             }
 
             .celebrity-grid,
-            .categories-grid,
             .pricing-grid,
             .testimonials-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.6rem;
+            }
+            .category-card {
+                padding: 0.9rem 0.4rem;
+            }
+            .category-icon {
+                width: 28px;
+                height: 28px;
+                margin-bottom: 0.5rem;
+            }
+            .category-name {
+                font-size: 0.72rem;
+            }
+            .category-count {
+                font-size: 0.65rem;
             }
 
             .features-split {
