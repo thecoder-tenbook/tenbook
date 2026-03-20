@@ -2009,6 +2009,12 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.6rem;
             }
+            .category-card:hover {
+                transform: none;
+                box-shadow: none;
+                background: #f8fafc;
+                border-color: #e2e8f0;
+            }
             .category-card { padding: 0.9rem 0.4rem; }
             .category-icon { width: 28px; height: 28px; margin-bottom: 0.5rem; }
             .category-name { font-size: 0.72rem; }
