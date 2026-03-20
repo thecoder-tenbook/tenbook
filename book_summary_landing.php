@@ -217,19 +217,41 @@
         }
 
         .btn-secondary {
-            background: white;
-            color: #0ea5e9;
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #0ea5e9;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+            color: white;
+            padding: 0.85rem 2rem;
+            border: none;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .btn-secondary:hover {
-            background: #0ea5e9;
-            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.5);
+        }
+
+        .btn-secondary:hover::after {
+            opacity: 1;
+        }
+
+        .btn-secondary span {
+            position: relative;
+            z-index: 1;
         }
 
         .floating-books {
@@ -2107,7 +2129,7 @@
             <h1>Читай як <span class="gradient-text">найуспішніші</span> люди світу</h1>
             <p>10 хвилин замість 10 годин. Ключові ідеї з книг, які читають Ілон Маск, Білл Гейтс та інші лідери думок</p>
             <div class="hero-buttons">
-                <a href="catalog_page" class="btn-secondary">Подивитись бібліотеку</a>
+                <a href="catalog_page" class="btn-secondary"><span>Подивитись бібліотеку</span></a>
             </div>
         </div>
 
