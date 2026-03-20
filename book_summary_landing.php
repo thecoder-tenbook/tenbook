@@ -2077,7 +2077,8 @@
             .new-releases { padding: 1.5rem 1rem; }
             .categories { padding: 1.5rem 1rem; }
             .how-it-works { padding: 1.5rem 1rem; }
-            .time-comparison { padding: 1.5rem 1rem; }
+            .time-comparison { padding: 1.5rem 1.5rem; }
+            .tc-container { border-radius: 20px; margin: 0 0.25rem; }
             .personalization { padding: 1.5rem 1rem; }
             .testimonials { padding: 1.5rem 1rem; }
             .testi-row {
