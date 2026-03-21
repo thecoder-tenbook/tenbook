@@ -1511,7 +1511,7 @@ function submitReview() {
         db.collection('users').doc(currentUser.uid).collection('progress').doc(bookId).get().then(function(doc) {
             if (!doc.exists) return;
             var data = doc.data();
-            var pct = data.percent || 0;
+            var pct = Math.min(100, data.percent || 0);
             var arcEl = document.getElementById('progressArc');
             var pctEl = document.getElementById('progressPct');
             var subEl = document.querySelector('.progress-info-sub');

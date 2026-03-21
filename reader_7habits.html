@@ -168,12 +168,14 @@ function loadProgress() {
         .get().then(function(doc) {
             if (doc.exists) {
                 var data = doc.data();
-                readChapters = new Set(data.readChapters || [0]);
-                var saved = data.currentChapter || 0;
+                // Фільтруємо старі індекси якщо кількість розділів змінилась
+                var validChapters = (data.readChapters || [0]).filter(function(i) { return i < chapters.length; });
+                readChapters = new Set(validChapters.length ? validChapters : [0]);
+                var saved = Math.min(data.currentChapter || 0, chapters.length - 1);
                 if (saved > 0) {
                     goToChapter(saved);
                 } else {
-                    var pct = Math.round((readChapters.size / chapters.length) * 100);
+                    var pct = Math.min(100, Math.round((readChapters.size / chapters.length) * 100));
                     document.getElementById('progressFill').style.width = pct + '%';
                 }
             }
