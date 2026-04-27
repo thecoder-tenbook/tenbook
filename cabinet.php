@@ -202,7 +202,10 @@
             });
         }).catch(function(err) {
             console.error('Firestore error:', err);
-            renderCabinet(user, [], {});
+            document.getElementById('mainContent').innerHTML =
+                '<div style="padding:4rem 2rem;text-align:center;color:#ef4444;">' +
+                '<b>Помилка завантаження:</b> ' + (err.message || err.code || err) +
+                '</div>';
         });
     }
 
