@@ -192,13 +192,17 @@
             if (favs.length === 0) { renderCabinet(user, favs, {}); return; }
             var progressPromises = favs.map(function(bookId) {
                 return db.collection('users').doc(user.uid).collection('progress').doc(bookId).get()
-                    .then(function(d) { return { bookId: bookId, data: d.exists ? d.data() : {} }; });
+                    .then(function(d) { return { bookId: bookId, data: d.exists ? d.data() : {} }; })
+                    .catch(function() { return { bookId: bookId, data: {} }; });
             });
             Promise.all(progressPromises).then(function(results) {
                 var progressMap = {};
                 results.forEach(function(r) { progressMap[r.bookId] = r.data; });
                 renderCabinet(user, favs, progressMap);
             });
+        }).catch(function(err) {
+            console.error('Firestore error:', err);
+            renderCabinet(user, [], {});
         });
     }
 
