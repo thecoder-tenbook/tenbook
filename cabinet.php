@@ -189,7 +189,7 @@
     function loadCabinet(user) {
         db.collection('users').doc(user.uid).get().then(function(doc) {
             var favs = doc.exists ? (doc.data().favorites || []) : [];
-            console.log('favorites from Firestore:', JSON.stringify(favs));
+            document.getElementById('mainContent').innerHTML = '<div style="padding:2rem;font-family:monospace;background:#f1f5f9;border-radius:8px;margin:2rem;">favorites: ' + JSON.stringify(favs) + '</div>';
             if (favs.length === 0) { renderCabinet(user, favs, {}); return; }
             var progressPromises = favs.map(function(bookId) {
                 return db.collection('users').doc(user.uid).collection('progress').doc(bookId).get()
