@@ -146,7 +146,7 @@
             favsHtml += '<div class="books-grid">';
             favs.forEach(function(bookId) {
                 var b = BOOKS[bookId];
-                if (!b) return;
+                if (!b) { favsHtml += '<div class="book-card" style="padding:1rem;background:#fee2e2;border-radius:12px;">Unknown ID: <b>' + bookId + '</b></div>'; return; }
                 var pct = (progressMap[bookId] && progressMap[bookId].percent) ? progressMap[bookId].percent : 0;
                 var btnLabel = pct > 0 ? 'Продовжити' : 'Читати';
                 var progressLabel = pct >= 100 ? 'Прочитано!' : (pct > 0 ? 'Прочитано ' + pct + '%' : 'Ще не читали');
@@ -189,7 +189,7 @@
     function loadCabinet(user) {
         db.collection('users').doc(user.uid).get().then(function(doc) {
             var favs = doc.exists ? (doc.data().favorites || []) : [];
-            document.getElementById('mainContent').innerHTML = '<div style="padding:2rem;font-family:monospace;background:#f1f5f9;border-radius:8px;margin:2rem;">favorites: ' + JSON.stringify(favs) + '</div>';
+
             if (favs.length === 0) { renderCabinet(user, favs, {}); return; }
             var progressPromises = favs.map(function(bookId) {
                 return db.collection('users').doc(user.uid).collection('progress').doc(bookId).get()
