@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Від хорошого до величного — Читання · TENBOOK</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --border: #e8edf2;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --accent: #0ea5e9;
+        --font-size: 17px;
+        --line-height: 1.85;
+    }
+
+    body.dark {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --border: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+    }
+
+    body.sepia {
+        --bg: #f5f0e8;
+        --surface: #ede8dc;
+        --border: #d4c9b0;
+        --text-primary: #2c1f0e;
+        --text-secondary: #5c4a2a;
+        --text-muted: #8c7a5a;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: 'Georgia', 'Times New Roman', serif;
+        transition: background 0.3s, color 0.3s;
+        min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: 52px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1.5rem;
+        z-index: 100;
+        transition: background 0.3s, border-color 0.3s;
+    }
+
+    .topbar-logo {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-weight: 900;
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+
+    .topbar-title {
+        flex: 1;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        flex-shrink: 0;
+    }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        transition: background 0.15s, color 0.15s;
+    }
+    .icon-btn:hover { background: var(--surface); color: var(--text-primary); }
+    .icon-btn.active { color: var(--accent); }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+        position: fixed;
+        top: 52px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--border);
+        z-index: 99;
+    }
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+        transition: width 0.3s;
+        border-radius: 0 2px 2px 0;
+    }
+
+    /* ── SETTINGS PANEL ── */
+    .settings-panel {
+        position: fixed;
+        top: 55px;
+        right: 1rem;
+        width: 280px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        padding: 1.2rem;
+        z-index: 200;
+        display: none;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+    .settings-panel.open { display: block; }
+
+    .settings-section { margin-bottom: 1.1rem; }
+    .settings-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+    }
+
+    .font-size-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .font-size-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text-primary);
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.15s;
+    }
+    .font-size-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .font-size-val {
+        flex: 1;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .theme-row { display: flex; gap: 0.5rem; }
+    .theme-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transition: border-color 0.15s;
+        display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .theme-btn.light { background: #ffffff; color: #0f172a; }
+    .theme-btn.sepia { background: #f5f0e8; color: #2c1f0e; }
+    .theme-btn.dark  { background: #0f172a; color: #f1f5f9; }
+    .theme-btn.active { border-color: var(--accent); }
+
+    .font-row { display: flex; gap: 0.5rem; }
+    .font-btn {
+        flex: 1;
+        height: 36px;
+        border-radius: 8px;
+        border: 2px solid var(--border);
+        background: var(--surface);
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        transition: all 0.15s;
+    }
+    .font-btn.serif { font-family: Georgia, serif; }
+    .font-btn.sans  { font-family: -apple-system, sans-serif; }
+    .font-btn.active { border-color: var(--accent); color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .reader-wrap {
+        min-height: 100vh;
+        padding-top: 55px;
+    }
+
+    /* ── SIDEBAR / TOC ── */
+    .toc-sidebar {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        bottom: 0;
+        width: 260px;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+        transition: transform 0.3s, background 0.3s, border-color 0.3s;
+        z-index: 80;
+        padding: 1.5rem 0;
+    }
+
+    .toc-header {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 0 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .toc-book-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0 1.2rem 1.2rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1rem;
+    }
+
+    .toc-cover {
+        width: 38px;
+        height: 57px;
+        border-radius: 5px;
+        overflow: hidden;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .toc-cover svg { width: 100%; height: 100%; display: block; }
+
+    .toc-book-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+    .toc-book-author {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .toc-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.7rem;
+        padding: 0.6rem 1.2rem;
+        cursor: pointer;
+        transition: background 0.15s;
+        border-left: 3px solid transparent;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        text-decoration: none;
+    }
+    .toc-item:hover { background: var(--bg); }
+    .toc-item.active {
+        background: var(--bg);
+        border-left-color: var(--accent);
+    }
+
+    .toc-num {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        min-width: 18px;
+        padding-top: 2px;
+    }
+    .toc-item.active .toc-num { color: var(--accent); }
+
+    .toc-text {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.35;
+    }
+    .toc-item.active .toc-text { color: var(--text-primary); font-weight: 600; }
+
+    /* ── MAIN CONTENT ── */
+    .reader-main {
+        margin-left: 260px;
+        min-height: 100vh;
+    }
+
+    .reader-content {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 3rem 2rem 6rem;
+    }
+
+    .chapter-label {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.8rem;
+    }
+
+    .chapter-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1.2;
+        letter-spacing: -0.4px;
+        margin-bottom: 0.6rem;
+    }
+
+    .chapter-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .chapter-time {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .reader-body {
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        color: var(--text-secondary);
+    }
+
+    .reader-body p {
+        margin-bottom: 1.5em;
+    }
+
+    /* Pull quote */
+    .pull-quote {
+        margin: 2rem 0;
+        padding: 1.5rem 1.8rem;
+        background: var(--surface);
+        border-left: 4px solid var(--accent);
+        border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+        font-size: 1.1em;
+        font-style: italic;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.65;
+    }
+
+    /* Key point */
+    .key-point {
+        display: flex;
+        gap: 1rem;
+        margin: 1.8rem 0;
+        padding: 1.2rem 1.4rem;
+        background: rgba(245,158,11,0.06);
+        border: 1px solid rgba(245,158,11,0.22);
+        border-radius: 12px;
+        align-items: flex-start;
+    }
+    .key-point-icon {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    .key-point-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* ── CHAPTER NAVIGATION ── */
+    .chapter-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+        gap: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+
+    .nav-prev, .nav-next {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        background: none;
+        text-decoration: none;
+        transition: all 0.2s;
+        max-width: 48%;
+    }
+    .nav-prev:hover, .nav-next:hover {
+        border-color: var(--accent);
+        background: var(--surface);
+    }
+    .nav-next { text-align: right; margin-left: auto; }
+
+    .nav-direction {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .nav-next .nav-direction { justify-content: flex-end; }
+    .nav-chapter-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+
+    .nav-center {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+        .toc-sidebar { transform: translateX(-100%); }
+        .toc-sidebar.open {
+            transform: translateX(0);
+            box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+        }
+        .toc-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 79;
+        }
+        .toc-overlay.open { display: block; }
+        .reader-main { margin-left: 0; }
+        .reader-content { padding: 2rem 1.2rem 5rem; }
+        .chapter-title { font-size: 1.45rem; }
+        .chapter-nav { flex-wrap: wrap; }
+        .nav-prev, .nav-next { max-width: 100%; flex: 1; }
+        .nav-center { width: 100%; text-align: center; order: -1; }
+        .settings-panel { right: 0.5rem; left: 0.5rem; width: auto; }
+    }
+</style>
+
+<!-- Firebase Auth + Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBITou6TONUHIR1IPcc2yXmUCrSiA7KoJA",
+    authDomain: "tenbook-bd3eb.firebaseapp.com",
+    projectId: "tenbook-bd3eb",
+    storageBucket: "tenbook-bd3eb.firebasestorage.app",
+    messagingSenderId: "619158652539",
+    appId: "1:619158652539:web:4619616a2fa66d1a1204de"
+};
+firebase.initializeApp(firebaseConfig);
+var auth = firebase.auth();
+var db = firebase.firestore();
+var provider = new firebase.auth.GoogleAuthProvider();
+
+var BOOK_ID = 'good_to_great';
+
+function saveProgress() {
+    var user = auth.currentUser;
+    if (!user) return;
+    var pct = Math.round((readChapters.size / chapters.length) * 100);
+    db.collection('users').doc(user.uid).collection('progress').doc(BOOK_ID).set({
+        currentChapter: currentChapter,
+        readChapters: Array.from(readChapters),
+        percent: pct,
+        lastRead: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
+function loadProgress() {
+    var user = auth.currentUser;
+    if (!user) return;
+    db.collection('users').doc(user.uid).collection('progress').doc(BOOK_ID)
+        .get().then(function(doc) {
+            if (doc.exists) {
+                var data = doc.data();
+                readChapters = new Set(data.readChapters || [0]);
+                var saved = data.currentChapter || 0;
+                if (saved > 0) {
+                    goToChapter(saved);
+                } else {
+                    var pct = Math.round((readChapters.size / chapters.length) * 100);
+                    document.getElementById('progressFill').style.width = pct + '%';
+                }
+            }
+        });
+}
+
+function signInWithGoogle() {
+    auth.signInWithPopup(provider).catch(function(err) { console.error(err); });
+}
+
+function signOut() {
+    auth.signOut();
+}
+
+auth.onAuthStateChanged(function(user) {
+    var overlay = document.getElementById('authOverlay');
+    if (user) {
+        overlay.style.display = 'none';
+        var accountBtn = document.querySelector('.nav-account-btn');
+        if (accountBtn) {
+            accountBtn.innerHTML = user.photoURL
+                ? '<img src="' + user.photoURL + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">'
+                : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+            accountBtn.title = user.displayName || user.email;
+            accountBtn.onclick = function() { signOut(); };
+        }
+        loadProgress();
+    } else {
+        overlay.style.display = 'flex';
+    }
+});
+</script>
+</head>
+<body>
+
+<div id="authOverlay" style="display:none;position:fixed;inset:0;background:rgba(248,250,252,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;">
+    <div style="text-align:center;padding:3rem 2.5rem;background:white;border-radius:24px;box-shadow:0 24px 64px rgba(0,0,0,0.12);max-width:420px;width:90%;border:1px solid #e2e8f0;">
+        <div style="font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,#0ea5e9,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem;letter-spacing:-0.5px;">TENBOOK</div>
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(139,92,246,0.1));border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <h2 style="font-size:1.35rem;font-weight:800;color:#1e293b;margin-bottom:0.5rem;">Увійдіть, щоб читати</h2>
+        <p style="color:#64748b;font-size:0.9rem;margin-bottom:2rem;line-height:1.5;">Отримайте доступ до повного розбору книги.<br>Безкоштовно, займає 5 секунд.</p>
+        <button onclick="signInWithGoogle()" style="display:flex;align-items:center;justify-content:center;gap:0.75rem;width:100%;padding:0.9rem 1.5rem;border:2px solid #e2e8f0;border-radius:12px;background:white;font-size:0.95rem;font-weight:600;color:#1e293b;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Увійти через Google
+        </button>
+        <p style="margin-top:1.2rem;font-size:0.78rem;color:#94a3b8;">Безкоштовно. Без спаму.</p>
+    </div>
+</div>
+
+<!-- TOP BAR -->
+<header class="topbar">
+    <a href="book_page_good_to_great" class="topbar-logo">TENBOOK</a>
+    <div class="topbar-title">Від хорошого до величного · Що всередині</div>
+    <div class="topbar-actions">
+        <button class="icon-btn" id="tocToggle" title="Зміст" onclick="toggleToc()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="15" y2="12"/>
+                <line x1="3" y1="18" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <button class="icon-btn" id="settingsToggle" title="Налаштування" onclick="toggleSettings()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+        </button>
+        <a href="book_page_good_to_great" class="icon-btn" title="Закрити">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-section">
+        <div class="settings-label">Розмір тексту</div>
+        <div class="font-size-row">
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A−</button>
+            <div class="font-size-val" id="fontSizeVal">17px</div>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-label">Шрифт</div>
+        <div class="font-row">
+            <button class="font-btn serif active" id="fontSerif" onclick="setFont('serif')">Serif</button>
+            <button class="font-btn sans" id="fontSans" onclick="setFont('sans')">Sans</button>
+        </div>
+    </div>
+    <div class="settings-section" style="margin-bottom:0">
+        <div class="settings-label">Тема</div>
+        <div class="theme-row">
+            <button class="theme-btn light active" id="themeLight" onclick="setTheme('light')">☀️ Світла</button>
+            <button class="theme-btn sepia" id="themeSepia" onclick="setTheme('sepia')">📜 Сепія</button>
+            <button class="theme-btn dark" id="themeDark" onclick="setTheme('dark')">🌙 Темна</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOC OVERLAY (mobile) -->
+<div class="toc-overlay" id="tocOverlay" onclick="toggleToc()"></div>
+
+<!-- TOC SIDEBAR -->
+<aside class="toc-sidebar" id="tocSidebar">
+    <div class="toc-book-info">
+        <div class="toc-cover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 296" preserveAspectRatio="xMidYMid slice">
+                <rect width="200" height="296" fill="#1a2744"/>
+                <rect x="0" y="200" width="200" height="96" fill="#c41e1e"/>
+                <text x="100" y="90" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="#ffffff" letter-spacing="1">GOOD</text>
+                <text x="100" y="110" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="11" font-weight="400" fill="#aabbdd">TO</text>
+                <text x="100" y="132" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="#ffffff" letter-spacing="1">GREAT</text>
+                <line x1="30" y1="150" x2="170" y2="150" stroke="#c41e1e" stroke-width="2"/>
+                <text x="100" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">JIM COLLINS</text>
+            </svg>
+        </div>
+        <div>
+            <div class="toc-book-title">Від хорошого до величного</div>
+            <div class="toc-book-author">Джим Коллінз</div>
+        </div>
+    </div>
+
+    <div class="toc-header">Зміст</div>
+
+    <a class="toc-item active" href="#" onclick="goToChapter(0); return false;">
+        <span class="toc-num">Вст</span>
+        <span class="toc-text">Коли "добре" стає пасткою</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(1); return false;">
+        <span class="toc-num">1</span>
+        <span class="toc-text">Тихий лідер з твердою рукою</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(2); return false;">
+        <span class="toc-num">2</span>
+        <span class="toc-text">Спочатку людина, потім маршрут</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(3); return false;">
+        <span class="toc-num">3</span>
+        <span class="toc-text">Дивитися правді в очі і не здаватися</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(4); return false;">
+        <span class="toc-num">4</span>
+        <span class="toc-text">Принцип їжака: менше, але точніше</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(5); return false;">
+        <span class="toc-num">5</span>
+        <span class="toc-text">Дисципліна без примусу</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(6); return false;">
+        <span class="toc-num">6</span>
+        <span class="toc-text">Маховик: як повільне стає невпинним</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(7); return false;">
+        <span class="toc-num">7</span>
+        <span class="toc-text">Технологія, яка прискорює, а не рятує</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(8); return false;">
+        <span class="toc-num">8</span>
+        <span class="toc-text">Спіраль вниз: як гарні компанії руйнуються</span>
+    </a>
+    <a class="toc-item" href="#" onclick="goToChapter(9); return false;">
+        <span class="toc-num">Фін</span>
+        <span class="toc-text">Велич - це вибір, не доля</span>
+    </a>
+</aside>
+
+<!-- MAIN -->
+<div class="reader-wrap">
+    <div class="reader-main">
+        <div class="reader-content" id="readerContent">
+            <!-- Content injected by JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+// ── CHAPTERS DATA ──
+const KP = (text) => `
+    <div class="key-point">
+        <div class="key-point-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.2 4.16-3 5.2V17H9v-2.8C7.2 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/></svg></div>
+        <p class="key-point-text">${text}</p>
+    </div>`;
+
+const PQ = (text) => `<div class="pull-quote"><p>${text}</p></div>`;
+
+const chapters = [
+    {
+        label: 'Вступ',
+        title: 'Коли "добре" стає пасткою',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Найбільша загроза для компанії - не криза і не конкуренти. Це слово "нормально".')}
+
+            <p>Джим Коллінз починає книгу з незручного спостереження: більшість хороших компаній ніколи не стають великими - і не тому, що їм не щастить або бракує ресурсів. А тому, що вони вже "достатньо хороші". Досягнувши певного рівня, організація зупиняється - непомітно, поступово, із задоволеним виглядом. Саме ця зупинка і є пасткою.</p>
+
+            <p>"Від хорошого до величного" - не мотиваційна книга і не черговий набір порад для менеджерів. Це результат п'яти років систематичного дослідження. Коллінз з командою проаналізували 28 компаній: ті, що зробили стрибок від посередніх результатів до стійкого успіху, і ті, що залишились на місці за аналогічних умов. Мета - зрозуміти, що саме відрізняє перших від других. Не теорія, не інтуїція - дані.</p>
+
+            <p>Для українського контексту ця книга звучить особливо гостро. Ми звикли виживати в умовах нестабільності, і "вижити та бути в плюсі" вже сприймається як успіх. Але Коллінз ставить інше питання: чому деякі організації в таких самих умовах не просто тримаються, а перетворюються на щось принципово інше?</p>
+
+            <p>Відповідь, яку він знаходить, суперечить більшості популярних уявлень про лідерство і стратегію. Велич не приходить від харизматичного лідера з натхненними промовами. Не від великої ідеї, яка змінює ринок. Не від вдалого моменту. Вона приходить від системної, дисциплінованої роботи з кількома простими але важкими принципами - послідовно, без гучних оголошень, роками.</p>
+
+            ${KP('Коллінз не пише про те, як стати великим. Він пише про те, чому більшість "хороших" ніколи ним не стануть - і що конкретно відділяє одних від інших.')}
+
+            <p>Ця книга змушує задати незручне питання: чи не є наша "достатня хорошість" насправді найбільшим стримувачем? І якщо так - що треба змінити першим?</p>
+        `
+    },
+    {
+        label: 'Розділ 1',
+        title: 'Тихий лідер з твердою рукою',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Ми шукаємо лідерів, які надихають з трибуни. Коллінз знайшов тих, хто будує в тиші - і виграє на десятиліття вперед.')}
+
+            <p>Є стійке уявлення про те, яким має бути великий керівник: харизматичний, помітний, натхненний. Він дає інтерв'ю, виступає на конференціях, його цитують у ЗМІ. Коллінз перевірив це уявлення на даних - і воно розсипалось. Майже всі керівники компаній, що зробили стрибок від хорошого до великого, мали спільну рису: їх ніхто особливо не знав. Вони не будували особистий бренд. Вони будували організацію.</p>
+
+            <p>Дослідники назвали це "лідерством п'ятого рівня" - найвища точка в ієрархії управлінської зрілості. Її парадокс у поєднанні двох речей, які здається суперечать одна одній: залізна воля і глибока особиста скромність. Такий керівник готовий приймати жорсткі рішення, що змінюють компанію до невпізнаваності, - але ніколи не робить це заради власної слави. Амбіції такого лідера спрямовані не на себе, а на справу.</p>
+
+            <p>Коллінз наводить показовий приклад: генеральний директор, який отримав компанію у важкому стані і за двадцять років перетворив її на лідера галузі. Коли журналісти питали про секрет успіху, він говорив про команду, про ринок, про вдалий збіг обставин. Але ніколи - про себе. Натомість за провали він брав відповідальність особисто. Цей розподіл - успіх назовні, відповідальність всередину - виявився не позою, а реальним способом мислення.</p>
+
+            <p>Найцікавіший висновок дослідження: компанії з "зірковими" CEO, яких запрошують як зовнішніх рятівників з гучним іміджем, в середньому показували гірші результати. Бо харизматичний лідер мимоволі замикає організацію на собі. Рішення йдуть через нього, культура тримається на його особистості, а не на системі. Коли він іде - компанія дезорієнтована.</p>
+
+            ${KP('Лідер п\'ятого рівня будує так, щоб компанія працювала краще після його відходу. Це не скромність заради скромності - це стратегія, яка закладає тривалість.')}
+
+            <p>Це ставить незручне питання для будь-якого керівника: чи залежить ваша організація від вас особисто? Чи вона працювала б добре без вас? Коллінз каже: якщо відповідь - "ні", то попереду ще багато роботи. Незалежно від того, наскільки хороші зараз результати.</p>
+        `
+    },
+    {
+        label: 'Розділ 2',
+        title: 'Спочатку людина, потім маршрут',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Більшість керівників шукають правильну стратегію, а потім набирають людей під неї. Великі компанії роблять навпаки.')}
+
+            <p>Логіка здається очевидною: спочатку визначаєш напрямок, потім формуєш команду, яка туди дійде. Коллінз перевірив цю логіку і з'ясував, що вона хибна - принаймні для компаній, що зробили справжній стрибок. У них послідовність була зворотною: спочатку потрібні люди, потім - маршрут.</p>
+
+            <p>Чому це працює? Бо стратегія змінюється, ринок змінюється, обставини змінюються. Якщо ваша команда зібрана під конкретний план, вона розгубиться, коли план доведеться переписати. А сильні люди адаптуються. Вони не прив'язані до однієї відповіді - вони здатні знайти нову. Тому правильна команда цінніша за правильну стратегію: перша переживе будь-яку зміну курсу, друга - ні.</p>
+
+            <p>Коллінз робить важливе розрізнення між "жорстким" і "суворим" підходом до людей. Жорсткість - це звільняти всіх, хто не вписується в поточну схему. Суворість - це чесно і своєчасно визнавати, що людина не на своєму місці, і діяти відповідно. Великі компанії не тримали "майже підходящих" людей з жалю або зручності. Але й не будували культуру страху. Вони просто ставили планку і тримали її - послідовно.</p>
+
+            <p>Є ще один нюанс, який легко пропустити: "правильна людина" у Коллінза - це не обов'язково найталановитіша або найдосвідченіша. Це людина, цінності якої збігаються з культурою організації і яка готова нести відповідальність за результат. Такі люди не потребують постійної мотивації - вони вже мотивовані. Керівнику не треба їх штовхати - треба лише не заважати.</p>
+
+            ${KP('Якщо вам доводиться постійно мотивувати людину, яка вже давно в команді - можливо, справа не в мотивації. Можливо, вона просто не на своєму місці.')}
+
+            <p>Для українських організацій, де кадровий ринок часто обмежений і де "своя людина" цінується більше за компетентну - цей принцип звучить як виклик. Але саме він пояснює, чому одні компанії витримують кризи і ростуть далі, а інші розсипаються при першому серйозному струсі.</p>
+        `
+    },
+    {
+        label: 'Розділ 3',
+        title: 'Дивитися правді в очі і не здаватися',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Оптимізм без тверезості - це не сила. Це спосіб не помічати проблему, поки вона не стане катастрофою.')}
+
+            <p>Є дві типові реакції на погані новини в організації. Перша: не визнавати їх, шукати виправдання, пояснювати чому "насправді не так погано". Друга: впадати в паніку, робити різкі рухи, втрачати напрямок. Коллінз стверджує, що великі компанії не роблять ні того, ні іншого. Вони культивують третє: дивитися на реальність без прикрас - і при цьому зберігати непохитну впевненість, що вийдуть переможцями.</p>
+
+            <p>Цей принцип він описує через досвід американського адмірала, який провів вісім років у в'єтнамському полоні. Той, хто не виживав - це не песиміст і не людина без волі. Це оптиміст, який казав: "Нас звільнять до Різдва". Потім до Великодня. Потім до наступного Різдва. Коли термін минав - серце ламалось. Ті, хто виживав, думали інакше: "Не знаю коли вийдемо. Але вийдемо. А поки - що я можу зробити сьогодні?"</p>
+
+            <p>Для українського контексту це звучить особливо впізнавано. Ми пережили роки, коли "все буде добре" було і захисним механізмом, і культурною нормою. Але є різниця між вірою, яка дає силу триматись, і відмовою бачити реальність, яка лише відтягує потрібні рішення. Компанії, що пережили кризи 2008, 2014, 2022 років - здебільшого ті, що першими визнали масштаб проблеми і почали діяти, поки інші ще переконували себе, що "розсмокчеться".</p>
+
+            <p>Тут є нюанс, який Коллінз оминає: він описує що роблять великі компанії, але не пояснює як створити середовище, де люди взагалі наважуються казати правду. Бо в більшості організацій погана новина - це ризик для того, хто її приносить. Керівник каже "говоріть мені правду", але реагує так, що наступного разу до нього йдуть лише з хорошими новинами. Це структурна проблема, і жоден принцип сам по собі її не вирішить.</p>
+
+            ${KP('Культура, де правду говорити безпечно, важливіша за будь-яку стратегію. Без неї рішення приймаються на основі того, що керівник хоче почути, а не того, що відбувається насправді.')}
+
+            <p>Запитання, яке варто поставити собі: коли востаннє хтось у вашій команді приніс справді погану новину - і що з ним сталось після цього? Відповідь розкаже про культуру більше, ніж будь-яка декларація цінностей.</p>
+        `
+    },
+    {
+        label: 'Розділ 4',
+        title: 'Принцип їжака: менше, але точніше',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Лисиця знає багато всього. Їжак знає одну важливу річ. Коллінз з\'ясував, хто з них будує великі компанії.')}
+
+            <p>Є стара грецька притча: лисиця знає багато хитрощів, їжак - лише один прийом. Але коли лисиця атакує, їжак згортається в кулю і виставляє голки. Кожного разу. Це і є його перевага - не різноманітність, а абсолютна ясність в одному. Коллінз використовує цю метафору, щоб описати різницю між компаніями, які намагаються робити все, і тими, що знайшли свою єдину точку фокусу і тримаються її роками.</p>
+
+            <p>Суть принципу - перетин трьох питань. Що ви можете робити краще за всіх у світі? Що рухає вашу економічну модель? Що ви робите з щирим захопленням? Відповідь на кожне з них окремо нічого не вирішує. Але там, де всі три перетинаються - є ваш "принцип їжака". Не стратегія і не ціль. Розуміння. І з цього розуміння виростають і стратегія, і рішення, і пріоритети.</p>
+
+            <p>Для українського контексту цей принцип особливо незручний. Ми виросли в культурі, де "не клади всі яйця в один кошик" - це мудрість, а диверсифікація - захист від ризику. Малий бізнес часто і ресторан, і кейтеринг, і доставка, і тімбілдінг. Середній - і виробництво, і торгівля, і консалтинг. Результат: жодного напрямку, де є справжня перевага. Коллінз каже, що це не обережність - це розмитість, яка заважає стати справді хорошим хоч у чомусь.</p>
+
+            <p>Тут є чесна критика. Коллінз досліджував великі публічні компанії, які вже мали ресурси, щоб чекати. Середня компанія з вибірки витратила чотири роки, щоб сформулювати свій принцип їжака. Але що робити стартапу або малому бізнесу, якому немає чотирьох років на роздуми? Де межа між "ми знаходимо свій фокус" і "ми просто повільно гинемо, чекаючи осяяння"? На це запитання книга не відповідає.</p>
+
+            ${KP('Принцип їжака - це не про те, щоб відмовитись від можливостей. Це про те, щоб чесно відповісти: в чому ми можемо бути справді найкращими - і зосередити на цьому всі сили.')}
+
+            <p>Практичне запитання, яке варто поставити своїй команді: якби нам довелось займатись лише однією річчю - що б це було? І чи є ця річ тою, в якій ми реально можемо перевершити всіх? Якщо відповідь не з'являється одразу - це вже діагноз.</p>
+        `
+    },
+    {
+        label: 'Розділ 5',
+        title: 'Дисципліна без примусу',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Найсильніша дисципліна - та, яку ніхто не нав\'язує. Вона або є в культурі, або її немає взагалі.')}
+
+            <p>Слово "дисципліна" в корпоративному контексті майже завжди означає контроль: регламенти, звіти, перевірки, KPI. Коллінз знайшов щось інше. Компанії, що зробили стрибок, мали надзвичайно дисципліновані культури - але в них майже не було бюрократії. Парадокс пояснюється просто: якщо у вас правильні люди з правильними цінностями, їм не потрібен зовнішній контроль. Вони самі тримають планку - і не терплять поруч тих, хто її опускає.</p>
+
+            <p>Ключова ідея тут не в процесах, а в поєднанні двох речей: культури свободи і культури відповідальності. Людям дають простір діяти самостійно - але в чітких рамках принципів, які не обговорюються. Ніхто не стоїть над душею і не перевіряє кожен крок. Але всі розуміють: є речі, які ми робимо, і є речі, які ми не робимо - незалежно від обставин і тиску.</p>
+
+            <p>Для порівняння Коллінз описує компанії, де дисципліна трималась на сильній особистості керівника. Поки він є - все в порядку. Але така дисципліна крихка: вона залежить від присутності однієї людини, а не від того, що вбудоване в саму організацію. Варто лідеру піти або відвернутись - і система починає розсипатись. Це, до речі, одна з найпоширеніших проблем українських компаній, де засновник досі є головним "тримачем стандартів".</p>
+
+            <p>Є питання, яке Коллінз лишає відкритим: як побудувати цю культуру, якщо її немає? Він фіксує результат - дисципліновані організації виграють. Але шлях від "в нас хаос" до "в нас культура відповідальності" залишається за кадром. Це не критика - просто чесне визнання межі книги. Вона про те, що є в чудових компаніях, а не про те, як туди дійти з нуля.</p>
+
+            ${KP('Бюрократія - це компенсація за відсутність довіри. Чим більше правил і перевірок, тим чіткіший сигнал: керівник не вірить людям. А не вірить - бо або набрав не тих, або сам не дав культурі сформуватись.')}
+
+            <p>Запитання, що варто задати собі: якби завтра зникли всі ваші інструкції, регламенти і системи контролю - як би поводились ваші люди? Якщо відповідь лякає - проблема не в процесах.</p>
+        `
+    },
+    {
+        label: 'Розділ 6',
+        title: 'Маховик: як повільне стає невпинним',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Ніхто не пам\'ятає моменту, коли компанія стала великою. Бо такого моменту не було - був роками маховик, який нарешті не можна зупинити.')}
+
+            <p>Якщо запитати керівників компаній, що зробили стрибок, коли саме відбувся перелом - більшість не можуть відповісти. Не було одного рішення, одного продукту, однієї кампанії. Коллінз описує це через образ важкого металевого маховика: спочатку його майже неможливо зрушити. Потім - перший оберт, другий, десятий. Кожен наступний дається легше, бо попередні вже дали імпульс. У якийсь момент маховик крутиться сам - і зупинити його так само важко, як було важко запустити.</p>
+
+            <p>Зовні це виглядає як раптовий успіх. ЗМІ пишуть про "прорив", інвестори кажуть "вони вистрілили". Але зсередини - це роки послідовних рішень в одному напрямку, без гучних оголошень і радикальних змін курсу. Саме ця послідовність і є секретом - не окремі рішення, а їхня безперервність.</p>
+
+            <p>Для нас це особливо актуально. Українська підприємницька культура схильна до великих жестів: ребрендинг, "ми повністю змінюємо концепцію", новий напрямок, новий продукт. Часто це відбувається саме тоді, коли маховик вже почав набирати оберти - але результат ще не видно. І замість того, щоб продовжувати штовхати, ми зупиняємось і починаємо спочатку. Потім знову. Коллінз називає це "петлею приреченості" - і це точна назва.</p>
+
+            <p>Тут є важлива критика, яку варто озвучити: маховик - потужна метафора, але вона передбачає, що ви штовхаєте в правильному напрямку. Що як ви роками дисципліновано і послідовно рухаєтесь не туди? Коллінз не дає відповіді на це запитання - він описує компанії, що вже знайшли правильний вектор. Але в реальному житті маховик і правильний напрямок треба знаходити одночасно, і це набагато складніше.</p>
+
+            ${KP('Найнебезпечніший момент для компанії - не криза, а перші ознаки успіху. Саме тоді найбільша спокуса зупинитись і "святкувати", замість того щоб продовжувати штовхати маховик далі.')}
+
+            <p>Запитання для роздумів: де у вашій організації вже є маховик, який набирає оберти - але ви ще не помітили цього, бо шукаєте "великий момент"? Можливо, він вже давно крутиться.</p>
+        `
+    },
+    {
+        label: 'Розділ 7',
+        title: 'Технологія, яка прискорює, а не рятує',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Компанії, що шукають порятунку в новій технології, зазвичай рятуються від симптому. Проблема залишається.')}
+
+            <p>Коллінз досліджував компанії на початку 2000-х - в розпал інтернет-буму, коли здавалось, що технології змінять усе і назавжди. Але висновок, до якого він прийшов, був контрінтуїтивним: жодна з компаній, що зробила стрибок, не досягла цього завдяки технології. Технологія була присутня - але як прискорювач того, що вже працювало, а не як причина трансформації.</p>
+
+            <p>Різниця принципова. Прискорювач - це коли у вас є маховик, правильні люди і зрозуміла стратегія, і ви використовуєте технологію, щоб рухатись швидше. Рятівник - це коли у вас проблеми з основним бізнесом, і ви сподіваєтесь, що нова система, нова платформа або новий інструмент вирішить їх замість вас. Перше працює. Друге - майже ніколи.</p>
+
+            <p>Для сьогоднішнього контексту, де штучний інтелект став новим "рятівником" у свідомості багатьох керівників, це звучить особливо актуально. Скільки компаній зараз впроваджують AI-інструменти не тому, що розуміють як вони прискорять конкретний процес, а тому, що "всі так роблять" і страшно відстати? Технологія без ясності - це витрати без результату.</p>
+
+            <p>В українському бізнесі це проявляється по-своєму. CRM-система, яку купили, але не впровадили. ERP, яка "не прижилась". Чат-боти, що замінили живе спілкування там, де воно було перевагою. В кожному з цих випадків технологія прийшла раніше, ніж компанія зрозуміла що саме вона хоче прискорити.</p>
+
+            ${KP('Перед тим як питати "яку технологію нам впровадити" - варто запитати "що саме ми хочемо зробити швидше або краще?" Якщо відповіді немає, технологія не допоможе.')}
+
+            <p>Коллінз написав це у 2001 році. З тих пір з'явились соціальні мережі, смартфони, хмарні сервіси і штучний інтелект. Принцип не змінився - змінився лише масштаб спокуси. Технологія сьогодні доступніша і потужніша, ніж будь-коли. Саме тому питання "навіщо" стало важливішим, ніж питання "як".</p>
+        `
+    },
+    {
+        label: 'Розділ 8',
+        title: 'Спіраль вниз: як гарні компанії руйнуються',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Компанії рідко руйнуються через одне велике рішення. Частіше - через десятки малих, кожне з яких здавалось розумним.')}
+
+            <p>Коллінз описує дві траєкторії. Одна - маховик, де послідовність і фокус поступово будують незупинний імпульс. Друга - петля приреченості, де компанія реагує на розчаровуючі результати не глибшим розумінням, а новими програмами, новими лідерами, новими "стратегічними напрямками". Кожен цикл починається з ентузіазму і закінчується розчаруванням. Потім - новий цикл. І так по колу, тільки вниз.</p>
+
+            <p>Найнебезпечніше в цій петлі те, що кожне окреме рішення виглядає логічно. Результати не ті - треба щось змінити. Запросили зовнішнього CEO з великим ім'ям - він приніс нові ідеї, команда надихнулась. Через рік результати знову не ті - значить, треба нову стратегію. Оголосили "трансформацію". Найняли консультантів. Кожен крок виправданий, кожне рішення обґрунтоване. Але разом вони утворюють спіраль, яка витягує з організації найцінніше - послідовність і довіру.</p>
+
+            <p>Впізнати цю петлю в українському бізнесі неважко. Компанія, яка кожні два роки "повністю переосмислює" свою модель. Команда, яка пережила вже четвертого "рятівника" за п'ять років і навчилась не вірити жодному новому курсу - бо знає, що наступного року буде інший. Саме цей цинізм, який накопичується з кожним циклом, і є справжньою ціною петлі.</p>
+
+            <p>Тут варто зробити чесне застереження: Коллінз не дає чіткого критерію, як відрізнити петлю приреченості від виправданого стратегічного розвороту. Іноді компанія справді повинна змінити напрямок - ринок змінився, продукт застарів, модель не працює. Сліпа послідовність у хибному напрямку - теж пастка. Де межа між "ми адаптуємось" і "ми в петлі" - питання, на яке немає простої відповіді.</p>
+
+            ${KP('Петля приреченості - це не про погані компанії. Це про гарні компанії, які замінили розуміння активністю. Коли немає ясності, рух імітує прогрес.')}
+
+            <p>Запитання, що варто поставити чесно: скільки "нових напрямків" ваша організація оголошувала за останні три роки - і скільки з них довели до результату? Якщо активність висока, а імпульс не накопичується - можливо, маховик крутиться, але в різні боки щороку.</p>
+        `
+    },
+    {
+        label: 'Висновок',
+        title: 'Велич - це вибір, не доля',
+        time: '2 хв читання',
+        content: `
+            ${PQ('Коллінз не знайшов жодної компанії, якій велич "трапилась". Кожна її обрала - і платила за цей вибір роками дисциплінованої роботи.')}
+
+            <p>П'ять років дослідження, 28 компаній, тисячі сторінок інтерв'ю і фінансових даних - і головний висновок виявився простим до незручності. Компанії, що стали великими, не мали кращих умов, удачливіших моментів або геніальніших ідей. Вони зробили інші вибори - і тримались їх довше, ніж більшість готова терпіти.</p>
+
+            <p>Що реально залишається після цієї книги? Не набір інструментів і не покроковий план. Скоріше - система запитань, які варто задавати собі регулярно. Чи є в нас люди, яким ми справді довіряємо? Чи дивимось ми на реальність такою, якою вона є, а не такою, якою хочемо її бачити? Чи знаємо ми, в чому можемо бути справді найкращими - і чи зосереджені на цьому? Чи штовхаємо маховик в одному напрямку достатньо довго, щоб він набрав оберти?</p>
+
+            <p>Є чесна критика, яку варто зробити. Коллінз досліджував американські публічні компанії кінця XX століття - з відносно стабільним ринком, доступом до капіталу і горизонтом планування на десятиліття. Для малого бізнесу в країні, де правила змінюються щороку, де війна коригує будь-який план, де горизонт часто вимірюється кварталами - деякі принципи потребують адаптації. Не відкидання, а переосмислення під контекст.</p>
+
+            <p>При цьому ядро книги витримало час. Ідея про те, що велич будується зсередини - через людей, культуру і послідовність, а не через зовнішні фактори - залишається актуальною незалежно від епохи. І для України, яка зараз переживає один з найскладніших і водночас найважливіших періодів своєї історії, це звучить як виклик: які організації, які компанії, яких лідерів ми будуємо сьогодні - і чи стануть вони великими завтра?</p>
+
+            ${KP('Велич не приходить до тих, хто її чекає. Вона виростає там, де роками роблять правильні, часто непомітні речі - без гарантій і без оплесків.')}
+
+            <p>"Від хорошого до величного" - не книга про те, як стати успішним. Це книга про те, що відділяє організації, які залишають слід, від тих, що просто існували. Різниця виявилась не в ресурсах і не в таланті - а у виборах, які робляться щодня, і в готовності тримати напрямок, коли простіше було б все змінити.</p>
+        `
+    }
+];
+
+let currentChapter = 0;
+let fontSize = 17;
+let currentFont = 'serif';
+let currentTheme = 'light';
+let readChapters = new Set([0]);
+
+function renderChapter(idx) {
+    const ch = chapters[idx];
+    const isLast = idx === chapters.length - 1;
+    const isFirst = idx === 0;
+    const prevCh = !isFirst ? chapters[idx - 1] : null;
+    const nextCh = !isLast ? chapters[idx + 1] : null;
+
+    document.getElementById('readerContent').innerHTML = `
+        <div class="chapter-label">${ch.label}</div>
+        <div class="chapter-title">${ch.title}</div>
+        <div class="chapter-meta">
+            <span class="chapter-time">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                ${ch.time}
+            </span>
+        </div>
+        <div class="reader-body">${ch.content}</div>
+        <div class="chapter-nav">
+            ${prevCh ? `<button class="nav-prev" onclick="goToChapter(${idx-1})">
+                <span class="nav-direction"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Попередня</span>
+                <span class="nav-chapter-title">${prevCh.title}</span>
+            </button>` : '<div></div>'}
+            <span class="nav-center">${idx + 1} / ${chapters.length}</span>
+            ${nextCh ? `<button class="nav-next" onclick="goToChapter(${idx+1})">
+                <span class="nav-direction">Наступна <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">${nextCh.title}</span>
+            </button>` : `<button class="nav-next" onclick="window.location='book_page_good_to_great'">
+                <span class="nav-direction">Готово <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                <span class="nav-chapter-title">Повернутися до книги</span>
+            </button>`}
+        </div>
+    `;
+
+    document.querySelector('.topbar-title').textContent = `Від хорошого до величного · ${ch.label}`;
+
+    document.querySelectorAll('.toc-item').forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+    });
+
+    readChapters.add(idx);
+    const pct = Math.round((readChapters.size / chapters.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    currentChapter = idx;
+    closeTocMobile();
+    saveProgress();
+}
+
+function goToChapter(idx) {
+    renderChapter(idx);
+}
+
+function toggleSettings() {
+    const panel = document.getElementById('settingsPanel');
+    panel.classList.toggle('open');
+}
+
+function toggleToc() {
+    const sidebar = document.getElementById('tocSidebar');
+    const overlay = document.getElementById('tocOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+function closeTocMobile() {
+    if (window.innerWidth <= 768) {
+        document.getElementById('tocSidebar').classList.remove('open');
+        document.getElementById('tocOverlay').classList.remove('open');
+    }
+}
+
+document.addEventListener('click', (e) => {
+    const panel = document.getElementById('settingsPanel');
+    const btn = document.getElementById('settingsToggle');
+    if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(22, fontSize + delta));
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+    document.getElementById('fontSizeVal').textContent = fontSize + 'px';
+}
+
+function setFont(type) {
+    currentFont = type;
+    document.body.style.fontFamily = type === 'sans'
+        ? "-apple-system, BlinkMacSystemFont, 'Inter', sans-serif"
+        : "Georgia, 'Times New Roman', serif";
+    document.getElementById('fontSerif').classList.toggle('active', type === 'serif');
+    document.getElementById('fontSans').classList.toggle('active', type === 'sans');
+}
+
+function setTheme(theme) {
+    document.body.classList.remove('dark', 'sepia');
+    if (theme !== 'light') document.body.classList.add(theme);
+    ['light','sepia','dark'].forEach(t => {
+        document.getElementById('theme' + t.charAt(0).toUpperCase() + t.slice(1))
+            .classList.toggle('active', t === theme);
+    });
+    currentTheme = theme;
+}
+
+renderChapter(0);
+</script>
+</body>
+</html>

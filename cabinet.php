@@ -91,6 +91,7 @@
         '7habits':       { title: '7 Навичок', author: 'Стівен Кові', cover_bg: '#EEF4F8', cover_img: 'covers_ua/The 7 Habits.svg', page: 'book_page_7habits', reader: 'reader_7habits' },
         'sapiens':       { title: 'Сапієнс', author: 'Юваль Ной Харарі', cover_bg: '#F6F1E8', cover_img: 'covers_ua/Sapiens.svg', page: 'book_page_sapiens', reader: 'reader_sapiens' },
         'principles':    { title: 'Принципи', author: 'Рей Даліо', cover_bg: '#EDEEE9', cover_img: 'covers_ua/Principles.svg', page: 'book_page_principles', reader: 'reader_principles' },
+        'good_to_great': { title: 'Від хорошого до величного', author: 'Джим Коллінз', cover_bg: '#F0EDE8', cover_img: 'covers_ua/Good to Great.svg', page: 'book_page_good_to_great', reader: 'reader_good_to_great' },
     };
 
     function signInWithGoogle() {
