@@ -146,7 +146,7 @@
             favsHtml += '<div class="books-grid">';
             favs.forEach(function(bookId) {
                 var b = BOOKS[bookId];
-                if (!b) { favsHtml += '<div class="book-card" style="padding:1rem;background:#fee2e2;border-radius:12px;">Unknown ID: <b>' + bookId + '</b></div>'; return; }
+                if (!b) return;
                 var pct = (progressMap[bookId] && progressMap[bookId].percent) ? progressMap[bookId].percent : 0;
                 var btnLabel = pct > 0 ? 'Продовжити' : 'Читати';
                 var progressLabel = pct >= 100 ? 'Прочитано!' : (pct > 0 ? 'Прочитано ' + pct + '%' : 'Ще не читали');
@@ -203,10 +203,7 @@
             });
         }).catch(function(err) {
             console.error('Firestore error:', err);
-            document.getElementById('mainContent').innerHTML =
-                '<div style="padding:4rem 2rem;text-align:center;color:#ef4444;">' +
-                '<b>Помилка завантаження:</b> ' + (err.message || err.code || err) +
-                '</div>';
+            renderCabinet(user, [], {});
         });
     }
 
